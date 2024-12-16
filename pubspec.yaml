@@ -1,0 +1,41 @@
+name: aucorsa
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  auto_size_text:
+  flutter:
+    sdk: flutter
+  html:
+  dio:
+  flutter_widget_from_html:
+  material_symbols_icons:
+  flutter_bloc:
+  hydrated_bloc: ^9.1.5
+  path_provider:
+  go_router: ^14.6.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^7.0.0-dev.1
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Rubik-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Rubik-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Rubik-Bold.ttf
+          weight: 700
+
