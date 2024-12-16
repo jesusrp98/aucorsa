@@ -21,13 +21,7 @@ class BusLineTile extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: _resolveLineColor(context, line.color),
         foregroundColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: AutoSizeText(
-            line.id,
-            maxLines: 1,
-          ),
-        ),
+        child: Text(line.id),
       ),
       title: AutoSizeText(
         line.name,
@@ -35,16 +29,16 @@ class BusLineTile extends StatelessWidget {
         maxLines: 1,
       ),
       trailing: const Icon(Symbols.chevron_forward_rounded),
-      onTap: () => context.push(BusLinePage.path, extra: line.id),
+      onTap: () => context.push(
+        BusLinePage.path,
+        extra: line.id,
+      ),
     );
   }
 
-  Color _resolveLineColor(BuildContext context, Color color) {
-    final brightness = Theme.of(context).colorScheme.brightness;
-
-    return switch (brightness) {
-      Brightness.light => color,
-      Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
-    };
-  }
+  Color _resolveLineColor(BuildContext context, Color color) =>
+      switch (Theme.of(context).colorScheme.brightness) {
+        Brightness.light => color,
+        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
+      };
 }

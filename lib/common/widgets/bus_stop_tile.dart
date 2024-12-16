@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
+// TODO(any): Clean up this file
 class BusStopTile extends StatefulWidget {
   final int stopId;
 

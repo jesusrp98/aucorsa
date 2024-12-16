@@ -14,9 +14,8 @@ class BusStopListView extends StatelessWidget {
     return SliverSafeArea(
       minimum: const EdgeInsets.only(bottom: 64),
       top: false,
-      sliver: SliverList.separated(
+      sliver: SliverList.builder(
         itemCount: stopIds.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 0),
         itemBuilder: (context, index) => BusStopTile(
           stopId: stopIds[index],
         ),
