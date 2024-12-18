@@ -8,6 +8,8 @@ class BusLineUtils {
   static BusLine getLine(String id) =>
       lines.singleWhere((line) => line.id == id);
 
+  static bool isLineAvailable(String id) => lines.any((line) => line.id == id);
+
   static const lines = [
     BusLine(
       id: '1',

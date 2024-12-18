@@ -1,7 +1,9 @@
+import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
 import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class FavoriteStopsPage extends StatelessWidget {
   static const path = '/favorite-stops';
@@ -25,6 +27,13 @@ class FavoriteStopsPage extends StatelessWidget {
             stopIds: favoriteStops,
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showBusStopSearch(
+          context: context,
+          stops: favoriteStops,
+        ),
+        child: const Icon(Symbols.search_rounded),
       ),
     );
   }

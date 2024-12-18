@@ -7,38 +7,50 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class BusLineTile extends StatelessWidget {
   final String lineId;
+  final bool embedded;
 
   const BusLineTile({
     required this.lineId,
+    this.embedded = false,
     super.key,
   });
+
+  static Color resolveLineColor(BuildContext context, Color color) =>
+      switch (Theme.of(context).colorScheme.brightness) {
+        Brightness.light => color,
+        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
+      };
 
   @override
   Widget build(BuildContext context) {
     final line = BusLineUtils.getLine(lineId);
 
     return ListTile(
+      contentPadding: embedded
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(horizontal: 16),
       leading: CircleAvatar(
-        backgroundColor: _resolveLineColor(context, line.color),
+        backgroundColor: resolveLineColor(context, line.color),
         foregroundColor: Colors.white,
         child: Text(line.id),
       ),
       title: AutoSizeText(
         line.name,
-        style: const TextStyle(fontWeight: FontWeight.w500),
+        style: embedded ? null : const TextStyle(fontWeight: FontWeight.w500),
         maxLines: 1,
       ),
-      trailing: const Icon(Symbols.chevron_forward_rounded),
-      onTap: () => context.push(
-        BusLinePage.path,
-        extra: line.id,
-      ),
+      leadingAndTrailingTextStyle:
+          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w500,
+              ),
+      trailing: embedded ? null : const Icon(Symbols.chevron_forward_rounded),
+      onTap: embedded
+          ? null
+          : () => context.push(
+                BusLinePage.path,
+                extra: line.id,
+              ),
     );
   }
-
-  Color _resolveLineColor(BuildContext context, Color color) =>
-      switch (Theme.of(context).colorScheme.brightness) {
-        Brightness.light => color,
-        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
-      };
 }

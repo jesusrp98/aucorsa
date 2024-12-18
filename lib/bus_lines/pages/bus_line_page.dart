@@ -1,6 +1,8 @@
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
+import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class BusLinePage extends StatelessWidget {
   static const path = '/bus-line';
@@ -29,6 +31,13 @@ class BusLinePage extends StatelessWidget {
             stopIds: line.stops,
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showBusStopSearch(
+          context: context,
+          stops: line.stops,
+        ),
+        child: const Icon(Symbols.search_rounded),
       ),
     );
   }

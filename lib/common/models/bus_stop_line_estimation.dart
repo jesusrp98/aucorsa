@@ -1,0 +1,48 @@
+import 'package:html/parser.dart';
+
+class BusStopLineEstimation {
+  static final estimationTimeRegExp = RegExp('^([0-9]*)');
+
+  final String lineId;
+  final List<Duration> estimations;
+
+  const BusStopLineEstimation({
+    required this.lineId,
+    required this.estimations,
+  });
+
+  static List<BusStopLineEstimation> fromHtml(String rawDocument) {
+    final containers = parse(rawDocument).querySelectorAll('.ppp-container');
+
+    final estimationList = <BusStopLineEstimation>[];
+
+    for (final container in containers) {
+      final line = container.querySelector('.ppp-line-number')!.text;
+      final estimations = container.querySelectorAll('.ppp-estimation');
+
+      estimationList.add(
+        BusStopLineEstimation(
+          lineId: line,
+          estimations: [
+            for (final estimation in estimations)
+              _parseDuration(estimation.querySelector('strong')!.text),
+          ],
+        ),
+      );
+    }
+
+    return estimationList;
+  }
+
+  static Duration _parseDuration(String data) {
+    final parsedMinutes = int.tryParse(
+      estimationTimeRegExp.firstMatch(data)!.group(1)!,
+    );
+
+    if (parsedMinutes != null) {
+      return Duration(minutes: parsedMinutes);
+    }
+
+    return Duration.zero;
+  }
+}

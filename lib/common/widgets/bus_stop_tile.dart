@@ -1,16 +1,19 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:aucorsa/common/cubits/bus_service_cubit.dart';
+import 'package:aucorsa/common/models/bus_stop_line_estimation.dart';
+import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
+import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
+import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dio/dio.dart';
+import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
-// TODO(any): Clean up this file
 class BusStopTile extends StatefulWidget {
   final int stopId;
 
@@ -25,25 +28,23 @@ class BusStopTile extends StatefulWidget {
 
 class _BusStopTileState extends State<BusStopTile>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-
-  static final _easeInCurve = CurveTween(curve: Curves.easeInOutCubic);
+  static final _easeInCurve = CurveTween(curve: Curves.easeInOut);
   static final _halfTurn = Tween<double>(begin: 0, end: 0.5);
 
-  late Animation<double> _heightFactor;
-  late Animation<double> _iconTurns;
+  late final Animation<double> _heightFactor;
+  late final Animation<double> _iconTurns;
+  late final AnimationController _controller;
 
+  final _busStopLineEstimations = <BusStopLineEstimation>[];
   var _expanded = false;
-
-  String? _busStopData;
 
   @override
   void initState() {
     super.initState();
 
     _controller = AnimationController(
+      duration: Durations.medium1,
       vsync: this,
-      duration: const Duration(milliseconds: 200),
     );
 
     _heightFactor = _controller.drive(_easeInCurve);
@@ -62,97 +63,94 @@ class _BusStopTileState extends State<BusStopTile>
       (FavoriteStopsCubit cubit) => cubit.isFavorite(widget.stopId),
     );
 
-    return AnimatedPadding(
-      duration: const Duration(milliseconds: 200),
-      padding:
-          _expanded ? const EdgeInsets.symmetric(vertical: 8) : EdgeInsets.zero,
-      child: Card(
-        elevation: _expanded ? 3 : 0,
-        color: Theme.of(context).colorScheme.surface,
-        shadowColor: Colors.transparent,
-        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-        margin: EdgeInsets.zero,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: _onTap,
-          child: AnimatedPadding(
-            duration: const Duration(milliseconds: 200),
-            padding:
-                _expanded ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
-                    foregroundColor:
-                        Theme.of(context).colorScheme.onSecondaryContainer,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: AutoSizeText(
-                        widget.stopId.toString(),
-                        maxLines: 1,
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    BusStopUtils.resolveName(widget.stopId),
-                    style: const TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                  trailing: RotationTransition(
-                    turns: _iconTurns,
-                    child: Transform.rotate(
-                      angle: pi / 2,
-                      child: const Icon(Symbols.chevron_forward_rounded),
+    return Card(
+      elevation: 1,
+      shadowColor: Colors.transparent,
+      color: Theme.of(context).colorScheme.surface,
+      surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+      margin: EdgeInsets.zero,
+      clipBehavior: Clip.antiAlias,
+      child: GestureDetector(
+        onTap: _onTap,
+        child: Column(
+          children: [
+            Material(
+              type: MaterialType.card,
+              elevation: _expanded ? 6 : 1,
+              shadowColor: Colors.transparent,
+              color: Theme.of(context).colorScheme.surface,
+              surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                leading: CircleAvatar(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.secondaryContainer,
+                  foregroundColor:
+                      Theme.of(context).colorScheme.onSecondaryContainer,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: AutoSizeText(
+                      widget.stopId.toString(),
+                      maxLines: 1,
                     ),
                   ),
                 ),
-                SizeTransition(
-                  sizeFactor: _heightFactor,
-                  child: _busStopData == null
-                      ? const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Center(child: CircularProgressIndicator()),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(16).copyWith(
-                            bottom: 8,
-                            top: 0,
-                          ),
-                          child: Column(
-                            children: [
-                              HtmlWidget(_busStopData!),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  if (isFavorite)
-                                    TextButton.icon(
-                                      onPressed: _toggleFavorite,
-                                      icon: const Icon(Symbols.delete_rounded),
-                                      label: const Text('Eliminar'),
-                                    )
-                                  else
-                                    TextButton.icon(
-                                      onPressed: _toggleFavorite,
-                                      icon:
-                                          const Icon(Symbols.favorite_rounded),
-                                      label: const Text('Favorito'),
-                                    ),
-                                  TextButton.icon(
-                                    onPressed: _requestData,
-                                    icon: const Icon(Symbols.refresh_rounded),
-                                    label: const Text('Recargar'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                title: Text(
+                  BusStopUtils.resolveName(widget.stopId),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
-              ],
+                trailing: RotationTransition(
+                  turns: _iconTurns,
+                  child: Transform.rotate(
+                    angle: pi / 2,
+                    child: const Icon(Symbols.chevron_forward_rounded),
+                  ),
+                ),
+              ),
             ),
-          ),
+            SizeTransition(
+              sizeFactor: _heightFactor,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: Column(
+                  children: [
+                    if (_busStopLineEstimations.isNotEmpty)
+                      _BusStopTileBody(_busStopLineEstimations)
+                    else
+                      const _BusStopTileLoading(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (isFavorite)
+                          TextButton.icon(
+                            onPressed: _toggleFavorite,
+                            icon: const Icon(Symbols.delete_rounded),
+                            label: const Text('Eliminar'),
+                          )
+                        else
+                          TextButton.icon(
+                            onPressed: _toggleFavorite,
+                            icon: const Icon(Symbols.favorite_rounded),
+                            label: const Text('Favorito'),
+                          ),
+                        TextButton.icon(
+                          onPressed: _requestData,
+                          icon: const Icon(Symbols.refresh_rounded),
+                          label: const Text('Recargar'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -170,15 +168,117 @@ class _BusStopTileState extends State<BusStopTile>
   }
 
   Future<void> _requestData() async {
-    setState(() => _busStopData = null);
+    if (_busStopLineEstimations.isNotEmpty) {
+      setState(_busStopLineEstimations.clear);
+    }
 
-    final response = await Dio().get<dynamic>(
-      'https://aucorsa.es/wp-json/aucorsa/v1/estimations/stop?stop_id=${widget.stopId}&_wpnonce=b67f2b8b77',
-    );
+    final response = await context.read<BusServiceCubit>().requestBusStopData(
+          widget.stopId,
+        );
 
-    return setState(() => _busStopData = response.data.toString());
+    return setState(() => _busStopLineEstimations.addAll(response));
   }
 
   void _toggleFavorite() =>
       context.read<FavoriteStopsCubit>().toggle(widget.stopId);
+}
+
+class _BusStopTileLoading extends StatelessWidget {
+  static const rows = 2;
+
+  const _BusStopTileLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (var i = 0; i < rows; i++)
+          AucorsaShimmer(
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Container(
+                height: 40,
+                width: 40,
+                decoration: const ShapeDecoration(
+                  shape: CircleBorder(),
+                  color: Colors.white,
+                ),
+              ),
+              title: Container(
+                height: 16,
+                width: 196,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                  color: Colors.white,
+                ),
+              ),
+              trailing: Container(
+                height: 16,
+                width: 48,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _BusStopTileBody extends StatelessWidget {
+  final List<BusStopLineEstimation> lineEstimations;
+
+  const _BusStopTileBody(this.lineEstimations);
+
+  @override
+  Widget build(BuildContext context) {
+    final filteredLineEstimations = lineEstimations.where(
+      (lineEstimation) => BusLineUtils.isLineAvailable(
+        lineEstimation.lineId,
+      ),
+    );
+
+    return Column(
+      children: [
+        for (final lineEstimation in filteredLineEstimations) ...[
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: BusLineTile(
+                  lineId: lineEstimation.lineId,
+                  embedded: true,
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    for (final estimation in lineEstimation.estimations)
+                      Text(
+                        estimation == Duration.zero
+                            ? 'Ahora'
+                            : estimation.pretty(
+                                abbreviated: true,
+                                delimiter: ' ',
+                              ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
 }
