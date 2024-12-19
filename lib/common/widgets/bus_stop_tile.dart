@@ -78,7 +78,7 @@ class _BusStopTileState extends State<BusStopTile>
           children: [
             Material(
               type: MaterialType.card,
-              elevation: _expanded ? 6 : 1,
+              elevation: _expanded ? 4 : 1,
               shadowColor: Colors.transparent,
               color: Theme.of(context).colorScheme.surface,
               surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
