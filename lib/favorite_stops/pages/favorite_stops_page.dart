@@ -1,3 +1,4 @@
+import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
 import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
@@ -31,7 +32,8 @@ class FavoriteStopsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => showBusStopSearch(
           context: context,
-          stops: favoriteStops,
+          stops:
+              BusLineUtils.lines.expand((line) => line.stops).toSet().toList(),
         ),
         child: const Icon(Symbols.search_rounded),
       ),

@@ -1,9 +1,7 @@
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
-import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class BusLinesPages extends StatelessWidget {
@@ -40,7 +38,7 @@ class BusLinesPages extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => showBusStopSearch(
           context: context,
-          stops: context.read<FavoriteStopsCubit>().state,
+          stops: lines.expand((line) => line.stops).toSet().toList(),
         ),
         child: const Icon(Symbols.search_rounded),
       ),

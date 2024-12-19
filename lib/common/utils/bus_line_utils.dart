@@ -10,6 +10,9 @@ class BusLineUtils {
 
   static bool isLineAvailable(String id) => lines.any((line) => line.id == id);
 
+  static int getStopsLength(int stopId) =>
+      lines.where((line) => line.stops.contains(stopId)).length;
+
   static const lines = [
     BusLine(
       id: '1',

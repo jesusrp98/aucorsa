@@ -28,7 +28,7 @@ class BusStopTile extends StatefulWidget {
 
 class _BusStopTileState extends State<BusStopTile>
     with SingleTickerProviderStateMixin {
-  static final _easeInCurve = CurveTween(curve: Curves.easeInOut);
+  static final _easeInCurve = CurveTween(curve: Curves.easeInOutCubic);
   static final _halfTurn = Tween<double>(begin: 0, end: 0.5);
 
   late final Animation<double> _heightFactor;
@@ -38,12 +38,14 @@ class _BusStopTileState extends State<BusStopTile>
   final _busStopLineEstimations = <BusStopLineEstimation>[];
   var _expanded = false;
 
+  late final _stopsLength = BusLineUtils.getStopsLength(widget.stopId);
+
   @override
   void initState() {
     super.initState();
 
     _controller = AnimationController(
-      duration: Durations.medium1,
+      duration: Durations.medium2,
       vsync: this,
     );
 
@@ -113,40 +115,43 @@ class _BusStopTileState extends State<BusStopTile>
             ),
             SizeTransition(
               sizeFactor: _heightFactor,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: Column(
-                  children: [
-                    if (_busStopLineEstimations.isNotEmpty)
-                      _BusStopTileBody(_busStopLineEstimations)
-                    else
-                      const _BusStopTileLoading(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        if (isFavorite)
+              child: FadeTransition(
+                opacity: _heightFactor,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Column(
+                    children: [
+                      if (_busStopLineEstimations.isNotEmpty)
+                        _BusStopTileBody(_busStopLineEstimations)
+                      else
+                        _BusStopTileLoading(_stopsLength),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (isFavorite)
+                            TextButton.icon(
+                              onPressed: _toggleFavorite,
+                              icon: const Icon(Symbols.delete_rounded),
+                              label: const Text('Eliminar'),
+                            )
+                          else
+                            TextButton.icon(
+                              onPressed: _toggleFavorite,
+                              icon: const Icon(Symbols.favorite_rounded),
+                              label: const Text('Favorito'),
+                            ),
                           TextButton.icon(
-                            onPressed: _toggleFavorite,
-                            icon: const Icon(Symbols.delete_rounded),
-                            label: const Text('Eliminar'),
-                          )
-                        else
-                          TextButton.icon(
-                            onPressed: _toggleFavorite,
-                            icon: const Icon(Symbols.favorite_rounded),
-                            label: const Text('Favorito'),
+                            onPressed: _requestData,
+                            icon: const Icon(Symbols.refresh_rounded),
+                            label: const Text('Recargar'),
                           ),
-                        TextButton.icon(
-                          onPressed: _requestData,
-                          icon: const Icon(Symbols.refresh_rounded),
-                          label: const Text('Recargar'),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -184,9 +189,9 @@ class _BusStopTileState extends State<BusStopTile>
 }
 
 class _BusStopTileLoading extends StatelessWidget {
-  static const rows = 2;
+  final int rows;
 
-  const _BusStopTileLoading();
+  const _BusStopTileLoading(this.rows);
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +251,7 @@ class _BusStopTileBody extends StatelessWidget {
 
     return Column(
       children: [
-        for (final lineEstimation in filteredLineEstimations) ...[
+        for (final lineEstimation in filteredLineEstimations)
           Row(
             children: [
               Expanded(
@@ -277,7 +282,6 @@ class _BusStopTileBody extends StatelessWidget {
               ),
             ],
           ),
-        ],
       ],
     );
   }
