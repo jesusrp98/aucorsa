@@ -11,7 +11,6 @@ class AucorsaTheme {
           surfaceTintColor: Colors.transparent,
           backgroundColor: colorScheme.surface,
           shadowColor: colorScheme.shadow,
-          centerTitle: true,
         ),
       );
 }

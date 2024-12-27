@@ -15,12 +15,6 @@ class BusLineTile extends StatelessWidget {
     super.key,
   });
 
-  static Color resolveLineColor(BuildContext context, Color color) =>
-      switch (Theme.of(context).colorScheme.brightness) {
-        Brightness.light => color,
-        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
-      };
-
   @override
   Widget build(BuildContext context) {
     final line = BusLineUtils.getLine(lineId);
@@ -30,8 +24,8 @@ class BusLineTile extends StatelessWidget {
           ? EdgeInsets.zero
           : const EdgeInsets.symmetric(horizontal: 16),
       leading: CircleAvatar(
-        backgroundColor: resolveLineColor(context, line.color),
-        foregroundColor: Colors.white,
+        backgroundColor: _resolveLineBackgroundColor(context, line.color),
+        foregroundColor: _resolveLineForegroundColor(context),
         child: Text(line.id),
       ),
       title: AutoSizeText(
@@ -53,4 +47,16 @@ class BusLineTile extends StatelessWidget {
               ),
     );
   }
+
+  Color _resolveLineBackgroundColor(BuildContext context, Color color) =>
+      switch (Theme.of(context).colorScheme.brightness) {
+        Brightness.light => color,
+        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
+      };
+
+  Color _resolveLineForegroundColor(BuildContext context) =>
+      switch (Theme.of(context).colorScheme.brightness) {
+        Brightness.light => Colors.white,
+        Brightness.dark => Theme.of(context).colorScheme.onSurface,
+      };
 }

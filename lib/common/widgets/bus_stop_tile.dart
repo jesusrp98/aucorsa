@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:aucorsa/common/cubits/bus_service_cubit.dart';
-import 'package:aucorsa/common/models/bus_stop_line_estimation.dart';
+import 'package:aucorsa/common/cubits/bus_stop_cubit.dart';
+import 'package:aucorsa/common/utils/aucorsa_state_status.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
-class BusStopTile extends StatefulWidget {
+class BusStopTile extends StatelessWidget {
   final int stopId;
 
   const BusStopTile({
@@ -23,10 +24,27 @@ class BusStopTile extends StatefulWidget {
   });
 
   @override
-  State<BusStopTile> createState() => _BusStopTileState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => BusStopCubit(
+        busServiceCubit: context.read<BusServiceCubit>(),
+        stopId: stopId,
+      ),
+      child: _BusStopTileView(stopId),
+    );
+  }
 }
 
-class _BusStopTileState extends State<BusStopTile>
+class _BusStopTileView extends StatefulWidget {
+  final int stopId;
+
+  const _BusStopTileView(this.stopId);
+
+  @override
+  State<_BusStopTileView> createState() => _BusStopTileViewState();
+}
+
+class _BusStopTileViewState extends State<_BusStopTileView>
     with SingleTickerProviderStateMixin {
   static final _easeInCurve = CurveTween(curve: Curves.easeInOutCubic);
   static final _halfTurn = Tween<double>(begin: 0, end: 0.5);
@@ -35,10 +53,7 @@ class _BusStopTileState extends State<BusStopTile>
   late final Animation<double> _iconTurns;
   late final AnimationController _controller;
 
-  final _busStopLineEstimations = <BusStopLineEstimation>[];
   var _expanded = false;
-
-  late final _stopsLength = BusLineUtils.getStopsLength(widget.stopId);
 
   @override
   void initState() {
@@ -124,10 +139,7 @@ class _BusStopTileState extends State<BusStopTile>
                   ),
                   child: Column(
                     children: [
-                      if (_busStopLineEstimations.isNotEmpty)
-                        _BusStopTileBody(_busStopLineEstimations)
-                      else
-                        _BusStopTileLoading(_stopsLength),
+                      const _BusStopTileBody(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -172,17 +184,8 @@ class _BusStopTileState extends State<BusStopTile>
     return _controller.reverse();
   }
 
-  Future<void> _requestData() async {
-    if (_busStopLineEstimations.isNotEmpty) {
-      setState(_busStopLineEstimations.clear);
-    }
-
-    final response = await context.read<BusServiceCubit>().requestBusStopData(
-          widget.stopId,
-        );
-
-    return setState(() => _busStopLineEstimations.addAll(response));
-  }
+  Future<void> _requestData() =>
+      context.read<BusStopCubit>().fetchEstimations();
 
   void _toggleFavorite() =>
       context.read<FavoriteStopsCubit>().toggle(widget.stopId);
@@ -237,13 +240,33 @@ class _BusStopTileLoading extends StatelessWidget {
 }
 
 class _BusStopTileBody extends StatelessWidget {
-  final List<BusStopLineEstimation> lineEstimations;
-
-  const _BusStopTileBody(this.lineEstimations);
+  const _BusStopTileBody();
 
   @override
   Widget build(BuildContext context) {
-    final filteredLineEstimations = lineEstimations.where(
+    final busStopState = context.watch<BusStopCubit>().state;
+
+    if (busStopState.status == AucorsaStateStatus.loading ||
+        busStopState.status == AucorsaStateStatus.initial) {
+      return _BusStopTileLoading(
+        BusLineUtils.getStopsLength(busStopState.stopId),
+      );
+    }
+
+    if (busStopState.status == AucorsaStateStatus.error ||
+        busStopState.estimations.isEmpty) {
+      return ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: CircleAvatar(
+          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onTertiaryContainer,
+          child: const Icon(Symbols.schedule_rounded),
+        ),
+        title: const Text('No hay estimaciones disponibles'),
+      );
+    }
+
+    final filteredLineEstimations = busStopState.estimations.where(
       (lineEstimation) => BusLineUtils.isLineAvailable(
         lineEstimation.lineId,
       ),
