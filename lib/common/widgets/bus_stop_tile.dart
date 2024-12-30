@@ -12,6 +12,7 @@ import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
@@ -80,94 +81,100 @@ class _BusStopTileViewState extends State<_BusStopTileView>
       (FavoriteStopsCubit cubit) => cubit.isFavorite(widget.stopId),
     );
 
-    return Card(
-      elevation: 1,
-      shadowColor: Colors.transparent,
-      color: Theme.of(context).colorScheme.surface,
-      surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-      margin: EdgeInsets.zero,
-      clipBehavior: Clip.antiAlias,
-      child: GestureDetector(
-        onTap: _onTap,
-        child: Column(
-          children: [
-            Material(
-              type: MaterialType.card,
-              elevation: _expanded ? 4 : 1,
-              shadowColor: Colors.transparent,
-              color: Theme.of(context).colorScheme.surface,
-              surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                leading: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).colorScheme.secondaryContainer,
-                  foregroundColor:
-                      Theme.of(context).colorScheme.onSecondaryContainer,
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: AutoSizeText(
-                      widget.stopId.toString(),
-                      maxLines: 1,
-                    ),
-                  ),
-                ),
-                title: Text(
-                  BusStopUtils.resolveName(widget.stopId),
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-                trailing: RotationTransition(
-                  turns: _iconTurns,
-                  child: Transform.rotate(
-                    angle: pi / 2,
-                    child: const Icon(Symbols.chevron_forward_rounded),
-                  ),
-                ),
-              ),
-            ),
-            SizeTransition(
-              sizeFactor: _heightFactor,
-              child: FadeTransition(
-                opacity: _heightFactor,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: Card(
+        elevation: 1,
+        shadowColor: Colors.transparent,
+        color: Theme.of(context).colorScheme.surface,
+        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+        child: GestureDetector(
+          onTap: _onTap,
+          child: Column(
+            children: [
+              Material(
+                type: MaterialType.card,
+                elevation: _expanded ? 4 : 1,
+                shadowColor: Colors.transparent,
+                color: Theme.of(context).colorScheme.surface,
+                surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
                   ),
-                  child: Column(
-                    children: [
-                      const _BusStopTileBody(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if (isFavorite)
-                            TextButton.icon(
-                              onPressed: _toggleFavorite,
-                              icon: const Icon(Symbols.delete_rounded),
-                              label: const Text('Eliminar'),
-                            )
-                          else
-                            TextButton.icon(
-                              onPressed: _toggleFavorite,
-                              icon: const Icon(Symbols.favorite_rounded),
-                              label: const Text('Favorito'),
-                            ),
-                          TextButton.icon(
-                            onPressed: _requestData,
-                            icon: const Icon(Symbols.refresh_rounded),
-                            label: const Text('Recargar'),
-                          ),
-                        ],
+                  leading: CircleAvatar(
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    foregroundColor:
+                        Theme.of(context).colorScheme.onSecondaryContainer,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: AutoSizeText(
+                        widget.stopId.toString(),
+                        maxLines: 1,
                       ),
-                    ],
+                    ),
+                  ),
+                  title: Text(
+                    BusStopUtils.resolveName(widget.stopId),
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  trailing: RotationTransition(
+                    turns: _iconTurns,
+                    child: Transform.rotate(
+                      angle: pi / 2,
+                      child: const Icon(Symbols.chevron_forward_rounded),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              SizeTransition(
+                sizeFactor: _heightFactor,
+                child: FadeTransition(
+                  opacity: _heightFactor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      children: [
+                        const _BusStopTileBody(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            if (isFavorite)
+                              TextButton.icon(
+                                onPressed: _toggleFavorite,
+                                icon: const Icon(Symbols.delete_rounded),
+                                label: const Text('Eliminar'),
+                              )
+                            else
+                              TextButton.icon(
+                                onPressed: _toggleFavorite,
+                                icon: const Icon(Symbols.favorite_rounded),
+                                label: const Text('Favorito'),
+                              ),
+                            TextButton.icon(
+                              onPressed: () => _requestData(
+                                hapticFeedback: true,
+                              ),
+                              icon: const Icon(Symbols.refresh_rounded),
+                              label: const Text('Recargar'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -184,11 +191,17 @@ class _BusStopTileViewState extends State<_BusStopTileView>
     return _controller.reverse();
   }
 
-  Future<void> _requestData() =>
-      context.read<BusStopCubit>().fetchEstimations();
+  Future<void> _requestData({bool hapticFeedback = false}) {
+    if (hapticFeedback) HapticFeedback.selectionClick();
 
-  void _toggleFavorite() =>
-      context.read<FavoriteStopsCubit>().toggle(widget.stopId);
+    return context.read<BusStopCubit>().fetchEstimations();
+  }
+
+  void _toggleFavorite() {
+    HapticFeedback.selectionClick();
+
+    context.read<FavoriteStopsCubit>().toggle(widget.stopId);
+  }
 }
 
 class _BusStopTileLoading extends StatelessWidget {
@@ -258,8 +271,8 @@ class _BusStopTileBody extends StatelessWidget {
       return ListTile(
         contentPadding: EdgeInsets.zero,
         leading: CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-          foregroundColor: Theme.of(context).colorScheme.onTertiaryContainer,
+          backgroundColor: Theme.of(context).colorScheme.errorContainer,
+          foregroundColor: Theme.of(context).colorScheme.onErrorContainer,
           child: const Icon(Symbols.schedule_rounded),
         ),
         title: const Text('No hay estimaciones disponibles'),
