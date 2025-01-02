@@ -18,6 +18,7 @@ class AucorsaApp extends StatelessWidget {
         BlocProvider(create: (_) => FavoriteStopsCubit()),
       ],
       child: MaterialApp.router(
+        title: 'Aucorsa GO!',
         routerConfig: router,
         debugShowCheckedModeBanner: false,
         theme: AucorsaTheme.from(

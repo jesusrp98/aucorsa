@@ -1,3 +1,4 @@
+import 'package:aucorsa/about/pages/about_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/favorite_stops/pages/favorite_stops_page.dart';
@@ -40,6 +41,10 @@ class AucorsaRouter {
             builder: (context, state) => BusLinePage(
               lineId: state.extra! as String,
             ),
+          ),
+          GoRoute(
+            path: AboutPage.path,
+            builder: (context, state) => const AboutPage(),
           ),
         ],
       );

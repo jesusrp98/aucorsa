@@ -1,3 +1,4 @@
+import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
@@ -23,6 +24,7 @@ class FavoriteStopsPage extends StatelessWidget {
               'Favoritos',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
+            actions: [AboutButton()],
           ),
           BusStopListView(
             stopIds: favoriteStops,

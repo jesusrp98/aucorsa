@@ -1,3 +1,4 @@
+import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
@@ -21,6 +22,7 @@ class BusLinesPages extends StatelessWidget {
               'Líneas',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
+            actions: [AboutButton()],
           ),
           SliverPadding(
             padding: EdgeInsets.only(
