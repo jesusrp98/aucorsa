@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aucorsa/common/utils/urls.dart';
+import 'package:aucorsa/common/widgets/theme_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -50,7 +51,7 @@ class _AboutPageState extends State<AboutPage> {
                 leading: const Icon(Symbols.palette_rounded),
                 title: const Text('Apariencia'),
                 subtitle: const Text('Elige entre luz y oscuridad'),
-                onTap: () {},
+                onTap: () => showThemeBottomSheet(context),
               ),
               const _AboutSectionTitle('Información'),
               _AboutSectionTile(

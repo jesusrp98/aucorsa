@@ -4,3 +4,4 @@ linter:
   rules:
     public_member_api_docs: false
     sort_constructors_first: false
+    avoid_positional_boolean_parameters: false
