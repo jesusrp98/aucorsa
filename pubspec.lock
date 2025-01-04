@@ -188,10 +188,10 @@ packages:
     dependency: transitive
     description:
       name: http_parser
-      sha256: "76d306a1c3afb33fe82e2bbacad62a61f409b5634c915fceb0d799de1a913360"
+      sha256: "178d74305e7866013777bab2c3d8726205dc5a4dd935297175b19a23a2e66571"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.1"
+    version: "4.1.2"
   hydrated_bloc:
     dependency: "direct main"
     description:
@@ -268,10 +268,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: "64404f47f8e0a9d20478468e5decef867a688660bad7173adcd20418d7f892c9"
+      sha256: "89aac72d25dd49303f71b3b1e70f8374791846729365b25bebc2a2531e5b86cd"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2801.0"
+    version: "4.2801.1"
   meta:
     dependency: transitive
     description:

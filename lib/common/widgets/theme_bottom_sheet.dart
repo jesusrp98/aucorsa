@@ -62,7 +62,10 @@ class _ThemeListTile extends StatelessWidget {
           ),
       trailing: selected
           ? const Icon(Symbols.check_circle_rounded, fill: 1)
-          : const Icon(Symbols.circle_rounded),
+          : Icon(
+              Symbols.circle_rounded,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
     );
   }
 

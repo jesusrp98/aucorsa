@@ -13,7 +13,9 @@ class AucorsaShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-      highlightColor: Theme.of(context).colorScheme.surfaceBright,
+      highlightColor: Theme.of(context).brightness == Brightness.light
+          ? Theme.of(context).colorScheme.surfaceDim
+          : Theme.of(context).colorScheme.surfaceBright,
       child: child,
     );
   }
