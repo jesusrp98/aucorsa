@@ -27,9 +27,36 @@ dependencies:
   url_launcher: ^6.3.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.2
+  flutter_native_splash: ^2.4.4
   flutter_test:
     sdk: flutter
   very_good_analysis: ^7.0.0
+
+flutter_launcher_icons:
+  image_path: assets/icons/icon_app.png
+
+  ios: true
+  remove_alpha_ios: true
+  image_path_ios_dark_transparent: assets/icons/icon_app_foreground.png
+  image_path_ios_tinted_grayscale: assets/icons/icon_app_grayscale.png
+  background_color_ios: "#FFFFFF"
+
+  android: true
+  adaptive_icon_foreground: assets/icons/icon_app_foreground.png
+  adaptive_icon_monochrome: "assets/icons/icon_app_grayscale.png"
+  adaptive_icon_background: "#FFFFFF"
+
+flutter_native_splash:
+  image: assets/icons/icon_app_foreground.png
+  color: "#FFFFFF"
+  color_dark: "#000000"
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#000000"
+    icon_background_color: "#FFFFFF"
+    icon_background_color_dark: "#000000"
 
 flutter:
   uses-material-design: true
