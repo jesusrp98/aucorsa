@@ -14,23 +14,12 @@ class _ThemeBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeState = context.watch<ThemeCubit>().state;
-
     return SafeArea(
       minimum: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (ThemeCubit.supportsDeviceTint(context)) ...[
-            SwitchListTile(
-              secondary: const Icon(Symbols.colorize_rounded, fill: 1),
-              title: const Text('Usar color del dispositivo'),
-              value: themeState.useDeviceTint,
-              onChanged: context.read<ThemeCubit>().setUseDeviceTint,
-            ),
-            const Divider(),
-          ],
           for (final themeMode in ThemeMode.values) _ThemeListTile(themeMode),
         ],
       ),
@@ -45,8 +34,7 @@ class _ThemeListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeState = context.watch<ThemeCubit>().state;
-    final selected = themeState.themeMode == themeMode;
+    final selected = context.watch<ThemeCubit>().state == themeMode;
     final foregroundColor = selected
         ? Theme.of(context).colorScheme.onPrimaryFixed
         : Theme.of(context).colorScheme.onSurface;
