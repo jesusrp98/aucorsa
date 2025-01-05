@@ -1,3 +1,4 @@
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
@@ -23,7 +24,7 @@ class BusLinePage extends StatelessWidget {
         slivers: [
           SliverAppBar.medium(
             title: Text(
-              'Línea $lineId',
+              context.l10n.busLine(line.id),
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
           ),

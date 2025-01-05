@@ -5,6 +5,7 @@ import 'package:aucorsa/common/utils/aucorsa_theme.dart';
 import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AucorsaApp extends StatelessWidget {
   static final router = AucorsaRouter.initialize();
@@ -24,6 +25,8 @@ class AucorsaApp extends StatelessWidget {
           title: 'Aucorsa GO!',
           routerConfig: router,
           debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           themeMode: context.watch<ThemeCubit>().state,
           theme: AucorsaTheme.from(
             colorScheme: AucorsaTheme.defaultLightColorScheme,

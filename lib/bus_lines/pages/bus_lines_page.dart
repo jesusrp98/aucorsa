@@ -1,4 +1,5 @@
 import 'package:aucorsa/about/widgets/about_button.dart';
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
@@ -17,12 +18,12 @@ class BusLinesPages extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar.medium(
+          SliverAppBar.medium(
             title: Text(
-              'Líneas',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              context.l10n.busLines,
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            actions: [AboutButton()],
+            actions: const [AboutButton()],
           ),
           SliverPadding(
             padding: EdgeInsets.only(

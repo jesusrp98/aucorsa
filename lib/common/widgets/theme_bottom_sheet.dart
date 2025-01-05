@@ -1,4 +1,5 @@
 import 'package:aucorsa/common/cubits/theme_cubit.dart';
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -41,7 +42,7 @@ class _ThemeListTile extends StatelessWidget {
 
     return ListTile(
       leading: Icon(_iconData, fill: 1),
-      title: Text(_title),
+      title: Text(_title(context)),
       onTap: () => context.read<ThemeCubit>().setThemeMode(themeMode),
       iconColor: foregroundColor,
       tileColor: selected ? Theme.of(context).colorScheme.primaryFixed : null,
@@ -63,9 +64,9 @@ class _ThemeListTile extends StatelessWidget {
         ThemeMode.dark => Symbols.dark_mode_rounded,
       };
 
-  String get _title => switch (themeMode) {
-        ThemeMode.system => 'Tema del sistema',
-        ThemeMode.light => 'Tema claro',
-        ThemeMode.dark => 'Tema oscuro',
+  String _title(BuildContext context) => switch (themeMode) {
+        ThemeMode.system => context.l10n.systemTheme,
+        ThemeMode.light => context.l10n.lightTheme,
+        ThemeMode.dark => context.l10n.darkTheme,
       };
 }

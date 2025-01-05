@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:aucorsa/common/cubits/bus_service_cubit.dart';
 import 'package:aucorsa/common/cubits/bus_stop_cubit.dart';
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/aucorsa_state_status.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
@@ -151,20 +152,23 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                               TextButton.icon(
                                 onPressed: _toggleFavorite,
                                 icon: const Icon(Symbols.delete_rounded),
-                                label: const Text('Eliminar'),
+                                label: Text(
+                                  MaterialLocalizations.of(context)
+                                      .deleteButtonTooltip,
+                                ),
                               )
                             else
                               TextButton.icon(
                                 onPressed: _toggleFavorite,
                                 icon: const Icon(Symbols.favorite_rounded),
-                                label: const Text('Favorito'),
+                                label: Text(context.l10n.busStopTileFavorite),
                               ),
                             TextButton.icon(
                               onPressed: () => _requestData(
                                 hapticFeedback: true,
                               ),
                               icon: const Icon(Symbols.refresh_rounded),
-                              label: const Text('Recargar'),
+                              label: Text(context.l10n.busStopTileReload),
                             ),
                           ],
                         ),
@@ -275,7 +279,7 @@ class _BusStopTileBody extends StatelessWidget {
           foregroundColor: Theme.of(context).colorScheme.onErrorContainer,
           child: const Icon(Symbols.schedule_rounded),
         ),
-        title: const Text('No hay estimaciones disponibles'),
+        title: Text(context.l10n.busStopTileNoEstimations),
       );
     }
 
@@ -304,7 +308,7 @@ class _BusStopTileBody extends StatelessWidget {
                     for (final estimation in lineEstimation.estimations)
                       Text(
                         estimation == Duration.zero
-                            ? 'Ahora'
+                            ? context.l10n.busStopTileNow
                             : estimation.pretty(
                                 abbreviated: true,
                                 delimiter: ' ',

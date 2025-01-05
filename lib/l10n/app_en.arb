@@ -1,0 +1,47 @@
+{
+    "settings": "Settings",
+    "info": "About",
+    "appearanceTitle": "Appearance",
+    "appearanceSubtitle": "Choose between light and dark",
+    "ratingTitle": "Enjoying the app?",
+    "ratingSubtitle": "Leave your review in the store",
+    "freeSoftwareTitle": "This is free software",
+    "freeSoftwareSubtitle": "Source code available for everyone",
+    "authorTitle": "Created by Chechu Rodríguez",
+    "authorSubtitle": "Well-designed free applications",
+    "emailTitle": "Send me an email",
+    "emailSubtitle": "Report bugs or request features",
+    "dataOriginTitle": "Data provided by AUCORSA",
+    "dataOriginSubtitle": "This application is not affiliated with nor the official app developed by AUCORSA. All information related to bus lines, routes, stops, and arrival times is provided by AUCORSA, the company responsible for urban public transport.\n\nThe main goal of this app is to facilitate intuitive and accessible access to public information, enhancing the experience of public transport users. We aim to promote sustainable and efficient mobility by offering tools that encourage the use of public transport as a convenient and responsible alternative for urban mobility.\n\nThis independent initiative is committed to providing accurate and up-to-date data, though it is important to note that AUCORSA is the original source of all information. We recommend always verifying the data with official channels to ensure maximum accuracy.",
+    "licenseTitle": "Free software licenses",
+    "versionTitle": "Version {version} ({buildNumber})",
+    "@versionTitle": {
+        "placeholders": {
+            "version": {
+                "type": "String"
+            },
+            "buildNumber": {
+                "type": "String"
+            }
+        }
+    },
+    "busLine": "Line {lineNumber}",
+    "@busLine": {
+        "placeholders": {
+            "lineNumber": {
+                "type": "String"
+            }
+        }
+    },
+    "busLines": "Lines",
+    "busStopTileFavorite": "Favorite",
+    "busStopTileReload": "Reload",
+    "busStopTileNoEstimations": "No estimations available",
+    "busStopTileNow": "Now",
+    "systemTheme": "System theme",
+    "lightTheme": "Light theme",
+    "darkTheme": "Dark theme",
+    "favoritesPageTitle": "Favorites",
+    "noFavoritesTitle": "You have no favorites",
+    "noFavoritesSubtitle": "Add stops to your favorites to see them here"
+}

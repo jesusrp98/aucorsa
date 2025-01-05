@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
 import 'package:aucorsa/common/widgets/theme_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -46,18 +47,18 @@ class _AboutPageState extends State<AboutPage> {
           ),
           SliverList.list(
             children: [
-              const _AboutSectionTitle('Ajustes'),
+              _AboutSectionTitle(context.l10n.settings),
               _AboutSectionTile(
                 leading: const Icon(Symbols.palette_rounded),
-                title: const Text('Apariencia'),
-                subtitle: const Text('Elige entre luz y oscuridad'),
+                title: Text(context.l10n.appearanceTitle),
+                subtitle: Text(context.l10n.appearanceSubtitle),
                 onTap: () => showThemeBottomSheet(context),
               ),
-              const _AboutSectionTitle('Información'),
+              _AboutSectionTitle(context.l10n.info),
               _AboutSectionTile(
                 leading: const Icon(Symbols.star_rounded),
-                title: const Text('¿Disfrutando de la app?'),
-                subtitle: const Text('Deja tu reseña en la tienda'),
+                title: Text(context.l10n.ratingTitle),
+                subtitle: Text(context.l10n.ratingSubtitle),
                 onTap: () async {
                   final inAppReview = InAppReview.instance;
                   if (await inAppReview.isAvailable()) {
@@ -67,25 +68,25 @@ class _AboutPageState extends State<AboutPage> {
               ),
               _AboutSectionTile(
                 leading: const Icon(Symbols.public_rounded),
-                title: const Text('Esto es software libre'),
-                subtitle: const Text('Código fuente disponible para todos'),
+                title: Text(context.l10n.freeSoftwareTitle),
+                subtitle: Text(context.l10n.freeSoftwareSubtitle),
                 onTap: () => launchUrlString(Urls.appSource),
               ),
               _AboutSectionTile(
                 leading: const Icon(Symbols.account_circle_rounded),
-                title: const Text('Creado por Chechu Rodríguez'),
-                subtitle: const Text('Aplicaciones libres bien diseñadas'),
+                title: Text(context.l10n.authorTitle),
+                subtitle: Text(context.l10n.authorSubtitle),
                 onTap: () => launchUrlString(Urls.authorProfile),
               ),
               _AboutSectionTile(
                 leading: const Icon(Symbols.email_rounded),
-                title: const Text('Envíame un correo'),
-                subtitle: const Text('Reporta fallos o solicita funciones'),
+                title: Text(context.l10n.emailTitle),
+                subtitle: Text(context.l10n.emailSubtitle),
                 onTap: () => launchUrlString(Urls.emailUrl),
               ),
               const Divider(),
               _AboutSectionTile(
-                title: const Text('Datos proporcionados por AUCORSA'),
+                title: Text(context.l10n.dataOriginTitle),
                 onTap: () => showModalBottomSheet<void>(
                   context: context,
                   showDragHandle: true,
@@ -94,13 +95,16 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
               _AboutSectionTile(
-                title: const Text('Licencias de software libre'),
+                title: Text(context.l10n.licenseTitle),
                 onTap: () => showLicensePage(context: context),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  'Versión ${_packageInfo?.version} (${_packageInfo?.buildNumber})',
+                  context.l10n.versionTitle(
+                    _packageInfo?.version ?? '',
+                    _packageInfo?.buildNumber ?? '',
+                  ),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -181,12 +185,7 @@ class _DataOriginBottomSheet extends StatelessWidget {
         spacing: 8,
         children: [
           Text(
-            '''
-Esta aplicación no está afiliada ni es la aplicación oficial desarrollada por AUCORSA. Toda la información relacionada con las líneas de autobuses, los recorridos, las paradas y los tiempos de paso es proporcionada por AUCORSA, la empresa responsable del transporte público urbano.
-
-El objetivo principal de esta aplicación es facilitar el acceso a la información pública de manera más intuitiva y accesible para los usuarios, mejorando así la experiencia de quienes utilizan los servicios de transporte público. Buscamos contribuir al fomento de una movilidad sostenible y eficiente al brindar herramientas que promuevan el uso del transporte colectivo como una alternativa cómoda y responsable para la movilidad urbana.
-
-Esta iniciativa independiente se compromete a ofrecer datos precisos y actualizados, aunque es importante tener en cuenta que la fuente original de toda la información es AUCORSA. Recomendamos siempre contrastar los datos con los canales oficiales para garantizar la máxima precisión.''',
+            context.l10n.dataOriginSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -194,7 +193,7 @@ Esta iniciativa independiente se compromete a ofrecer datos precisos y actualiza
           ),
           TextButton(
             onPressed: Navigator.of(context).pop,
-            child: const Text('Aceptar'),
+            child: Text(MaterialLocalizations.of(context).okButtonLabel),
           ),
         ],
       ),

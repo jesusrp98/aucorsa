@@ -1,4 +1,5 @@
 import 'package:aucorsa/about/widgets/about_button.dart';
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
@@ -21,24 +22,22 @@ class FavoriteStopsPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           if (favoriteStops.isNotEmpty) ...[
-            const SliverAppBar.medium(
+            SliverAppBar.medium(
               title: Text(
-                'Favoritos',
-                style: TextStyle(fontWeight: FontWeight.w500),
+                context.l10n.favoritesPageTitle,
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              actions: [AboutButton()],
+              actions: const [AboutButton()],
             ),
             BusStopListView(
               stopIds: favoriteStops,
             ),
           ] else
-            const SliverFillRemaining(
+            SliverFillRemaining(
               child: BigTip(
-                title: Text('No hay favoritos'),
-                subtitle: Text(
-                  'Agrega paradas a tus favoritos para verlas aquí',
-                ),
-                child: Icon(Symbols.favorite_rounded),
+                title: Text(context.l10n.noFavoritesTitle),
+                subtitle: Text(context.l10n.noFavoritesSubtitle),
+                child: const Icon(Symbols.favorite_rounded),
               ),
             ),
         ],

@@ -14,10 +14,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_localizations:
+    sdk: flutter
   go_router: ^14.6.2
   html: ^0.15.5
   hydrated_bloc: ^9.1.5
   in_app_review: ^2.0.10
+  intl: ^0.19.0
   material_symbols_icons: ^4.2801.0
   package_info_plus: ^8.1.2
   path_provider: ^2.1.5
@@ -59,6 +62,7 @@ flutter_native_splash:
 
 flutter:
   uses-material-design: true
+  generate: true
   fonts:
     - family: Rubik
       fonts:
