@@ -1,10 +1,24 @@
+import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const path = '/';
 
+  final Widget child;
+
+  const HomePage({
+    required this.child,
+    super.key,
+  });
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   static const destinations = {
     '/favorite-stops': NavigationDestination(
       icon: Icon(Symbols.favorite_rounded),
@@ -18,17 +32,21 @@ class HomePage extends StatelessWidget {
     ),
   };
 
-  final Widget child;
+  @override
+  void initState() {
+    super.initState();
 
-  const HomePage({
-    required this.child,
-    super.key,
-  });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.read<FavoriteStopsCubit>().state.isEmpty) {
+        context.go(destinations.keys.elementAt(1));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: child,
+      body: widget.child,
       bottomNavigationBar: SizedBox(
         height: 72 + MediaQuery.of(context).padding.bottom,
         child: NavigationBar(

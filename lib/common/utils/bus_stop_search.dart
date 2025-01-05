@@ -20,6 +20,7 @@ Future<void> showBusStopSearch({
         builder: (stopId) => Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: BusStopTile(
+            key: ValueKey(stopId),
             stopId: stopId,
           ),
         ),
