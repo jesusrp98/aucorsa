@@ -306,16 +306,18 @@ class _BusStopTileBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     for (final estimation in lineEstimation.estimations)
-                      Text(
-                        estimation == Duration.zero
-                            ? context.l10n.busStopTileNow
-                            : estimation.pretty(
-                                abbreviated: true,
-                                delimiter: ' ',
-                              ),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      DefaultTextStyle(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               fontWeight: FontWeight.w500,
                             ),
+                        child: estimation == Duration.zero
+                            ? const _BusStopCloseEstimation()
+                            : Text(
+                                estimation.pretty(
+                                  abbreviated: true,
+                                  delimiter: ' ',
+                                ),
+                              ),
                       ),
                   ],
                 ),
@@ -323,6 +325,54 @@ class _BusStopTileBody extends StatelessWidget {
             ],
           ),
       ],
+    );
+  }
+}
+
+class _BusStopCloseEstimation extends StatefulWidget {
+  const _BusStopCloseEstimation();
+
+  @override
+  State<StatefulWidget> createState() => _BusStopCloseEstimationState();
+}
+
+class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late CurvedAnimation _curvedAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      duration: Durations.extralong1,
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _curvedAnimation = CurvedAnimation(
+      curve: Curves.easeInOutCubicEmphasized,
+      parent: _animationController,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _curvedAnimation,
+      child: Text(
+        context.l10n.busStopTileNow,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
     );
   }
 }
