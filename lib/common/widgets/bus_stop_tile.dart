@@ -339,7 +339,10 @@ class _BusStopCloseEstimation extends StatefulWidget {
 class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late CurvedAnimation _curvedAnimation;
+  late Animation<double> _curvedAnimation;
+
+  final _curveTween = CurveTween(curve: Curves.easeInOutCubic);
+  final _opacityTween = Tween(begin: .32, end: .99);
 
   @override
   void initState() {
@@ -350,9 +353,8 @@ class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
       vsync: this,
     )..repeat(reverse: true);
 
-    _curvedAnimation = CurvedAnimation(
-      curve: Curves.easeInOutCubicEmphasized,
-      parent: _animationController,
+    _curvedAnimation = _animationController.drive(
+      _opacityTween.chain(_curveTween),
     );
   }
 

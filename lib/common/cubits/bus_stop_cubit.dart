@@ -25,10 +25,12 @@ class BusStopCubit extends Cubit<BusStopState> {
             ),
           ),
         )
-        .catchError(
-          (_) => emit(
-            state.copyWith(status: AucorsaStateStatus.error),
-          ),
-        );
+        .catchError((_) {
+      if (isClosed) return;
+
+      return emit(
+        state.copyWith(status: AucorsaStateStatus.error),
+      );
+    });
   }
 }
