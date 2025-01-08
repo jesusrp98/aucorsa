@@ -8,6 +8,7 @@ Future<void> showThemeBottomSheet(BuildContext context) =>
     showModalBottomSheet<void>(
       context: context,
       builder: (_) => const _ThemeBottomSheet(),
+      useSafeArea: true,
     );
 
 class _ThemeBottomSheet extends StatelessWidget {

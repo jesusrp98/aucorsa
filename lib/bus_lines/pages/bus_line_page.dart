@@ -34,6 +34,7 @@ class BusLinePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: MaterialLocalizations.of(context).searchFieldLabel,
         onPressed: () => showBusStopSearch(
           context: context,
           stops: line.stops,

@@ -91,6 +91,7 @@ class _AboutPageState extends State<AboutPage> {
                   context: context,
                   showDragHandle: true,
                   isScrollControlled: true,
+                  useSafeArea: true,
                   builder: (_) => const _DataOriginBottomSheet(),
                 ),
               ),
@@ -98,8 +99,9 @@ class _AboutPageState extends State<AboutPage> {
                 title: Text(context.l10n.licenseTitle),
                 onTap: () => showLicensePage(context: context),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
+              SafeArea(
+                top: false,
+                minimum: const EdgeInsets.all(16),
                 child: Text(
                   context.l10n.versionTitle(
                     _packageInfo?.version ?? '',
@@ -125,8 +127,10 @@ class _AboutSectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8).copyWith(left: 16),
+    return SafeArea(
+      top: false,
+      bottom: false,
+      minimum: const EdgeInsets.symmetric(vertical: 8).copyWith(left: 16),
       child: Text(
         data,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
