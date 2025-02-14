@@ -312,11 +312,14 @@ class _BusStopTileBody extends StatelessWidget {
                             ),
                         child: estimation == Duration.zero
                             ? const _BusStopCloseEstimation()
-                            : Text(
+                            : AutoSizeText(
                                 estimation.pretty(
                                   abbreviated: true,
                                   delimiter: ' ',
                                 ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.end,
                               ),
                       ),
                   ],

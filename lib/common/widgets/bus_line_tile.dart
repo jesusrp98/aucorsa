@@ -30,8 +30,8 @@ class BusLineTile extends StatelessWidget {
       ),
       title: AutoSizeText(
         line.name,
-        style: embedded ? null : const TextStyle(fontWeight: FontWeight.w500),
         maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       leadingAndTrailingTextStyle:
           Theme.of(context).textTheme.bodyMedium?.copyWith(

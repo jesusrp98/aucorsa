@@ -13,12 +13,12 @@ dependencies:
   equatable: ^2.0.7
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc: 8.1.6
   flutter_localizations:
     sdk: flutter
   go_router: ^14.6.2
   html: ^0.15.5
-  hydrated_bloc: ^9.1.5
+  hydrated_bloc: 9.1.5
   in_app_review: ^2.0.10
   intl: ^0.19.0
   material_symbols_icons: ^4.2801.0
@@ -51,14 +51,14 @@ flutter_launcher_icons:
 
 flutter_native_splash:
   image: assets/icons/icon_app_foreground.png
-  color: "#FFFFFF"
-  color_dark: "#000000"
+  color: "#F8FBF2"
+  color_dark: "#11140F"
 
   android_12:
-    color: "#FFFFFF"
-    color_dark: "#000000"
-    icon_background_color: "#FFFFFF"
-    icon_background_color_dark: "#000000"
+    color: "#F8FBF2"
+    color_dark: "#11140F"
+    icon_background_color: "#F8FBF2"
+    icon_background_color_dark: "#11140F"
 
 flutter:
   uses-material-design: true
