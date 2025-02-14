@@ -2,23 +2,26 @@
   <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/master/icons/icon_app.png" width="200">
 </p>
 <h1 align="center">Aucorsa GO!</h1>
-<h3 align="center">Simple & open-source public transport app for Cordoba, Spain</h3>
+<h3 align="center">Simple yet beautiful, public transport app for Cordoba, Spain</h3>
 
 <p align="center">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
-    <img src="https://img.shields.io/github/license/jesusrp98/aucorsa.svg?style=for-the-badge">
+    <img src="https://img.shields.dev/github/license/jesusrp98/aucorsa.svg?style=for-the-badge">
   </a>
   <a href="https://github.com/jesusrp98/aucorsa/stargazers">
-    <img src="https://img.shields.io/github/stars/jesusrp98/aucorsa.svg?style=for-the-badge">
+    <img src="https://img.shields.dev/github/stars/jesusrp98/aucorsa.svg?style=for-the-badge">
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.chechu.aucorsa">
-    <img src="https://img.shields.io/badge/Google-PlayStore-green.svg?style=for-the-badge">
+    <img src="https://img.shields.dev/badge/Google-PlayStore-green.svg?style=for-the-badge">
+  </a>
+    <a href="https://play.google.com/store/apps/details?id=com.chechu.aucorsa">
+    <img src="https://img.shields.dev/badge/APPLE-APP STORE-blue.svg?style=for-the-badge">
   </a>
 </p>
 
 ### About the project
 
-The purpose of this project is to deliver an extremely easy and simple way to get timing info about public transport in Cordoba, Spain, from a single codebase.
+The purpose of this project is to deliver an extremely easy and simple way to get schedule information about public transport in Cordoba, Spain, from a single codebase.
 
 This project has been built using the [Flutter](https://flutter.dev/) framework, which allows to build an app for mobile, desktop & web, from a single codebase.
 
@@ -30,7 +33,7 @@ This project has been built using the [Flutter](https://flutter.dev/) framework,
 
 ## Features
 
-Feature set is small by default, because the app aims to be as lean as possible
+Feature set is small by design, because the app aims to be as lean as possible.
 
 - **Bus lines and stops**: detailed list of all available bus lines & stops.
 - **Favorites**: save your favorite bus stops for quick access.
@@ -52,9 +55,9 @@ First, clone the repository with the 'clone' command, or just download the zip.
 $ git clone git@github.com:jesusrp98/aucorsa.git
 ```
 
-Then, download either Android Studio or Visual Studio Code, with their respective [Flutter editor plugins](https://flutter.io/get-started/editor/). For more information about Flutter installation procedure, check the [official install guide](https://flutter.io/get-started/install/).
+Then, download either Android Studio or Visual Studio Code, with their respective [Flutter editor plugins](https://flutter.dev/get-started/editor/). For more information about Flutter installation procedure, check the [official install guide](https://flutter.dev/get-started/install/).
 
-Install dependencies from pubspec.yaml by running `flutter packages get` from the project root (see [using packages documentation](https://flutter.io/using-packages/#adding-a-package-dependency-to-an-app) for details and how to do this in the editor).
+Install dependencies from pubspec.yaml by running `flutter packages get` from the project root (see [using packages documentation](https://flutter.dev/using-packages/#adding-a-package-dependency-to-an-app) for details and how to do this in the editor).
 
 There you go, you can now open & edit the project. Enjoy!
 
