@@ -7,6 +7,10 @@ class BusServiceCubit extends HydratedCubit<String?> {
 
   BusServiceCubit() : super(null);
 
+  /// Save the 'nonce' cookie from the website, which is present in plain text
+  /// in the HTML of the index page.
+  ///
+  /// This cookie is required to make requests to the API.
   Future<void> reloadCookie() async {
     final page = await httpClient.get<dynamic>('https://aucorsa.es/');
 
@@ -15,6 +19,8 @@ class BusServiceCubit extends HydratedCubit<String?> {
     return emit(cookie);
   }
 
+  /// Use the stored 'nonce' cookie to make a request to the API and get the
+  /// estimated arrival times for a bus stop.
   Future<List<BusStopLineEstimation>> requestBusStopData(int stopId) async {
     if (state == null) await reloadCookie();
 

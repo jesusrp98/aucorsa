@@ -17,6 +17,7 @@ class AboutButton extends StatelessWidget {
     );
   }
 
+  // Code extracted from Flutter's [PlatformAdaptiveIcons] widget
   bool _isCupertino(BuildContext context) {
     switch (Theme.of(context).platform) {
       case TargetPlatform.android:

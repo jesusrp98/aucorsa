@@ -11,6 +11,10 @@ class BusStopLineEstimation {
     required this.estimations,
   });
 
+  /// Parse the HTML response from the API
+  /// and return a list of [BusStopLineEstimation].
+  ///
+  /// This implementation is directly tied to the HTML file returned by the API.
   static List<BusStopLineEstimation> fromHtml(String rawDocument) {
     final containers = parse(rawDocument).querySelectorAll('.ppp-container');
 
