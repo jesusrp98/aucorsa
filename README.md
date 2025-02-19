@@ -1,21 +1,21 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/master/icons/icon_app.png" width="200">
+  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/main/assets/icons/icon_app.png" width="200">
 </p>
 <h1 align="center">Aucorsa GO!</h1>
 <h3 align="center">Simple yet beautiful, public transport app for Cordoba, Spain</h3>
 
 <p align="center">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
-    <img src="https://img.shields.dev/github/license/jesusrp98/aucorsa.svg?style=for-the-badge">
+    <img src="https://img.shields.io/github/license/jesusrp98/aucorsa.svg?style=for-the-badge">
   </a>
   <a href="https://github.com/jesusrp98/aucorsa/stargazers">
-    <img src="https://img.shields.dev/github/stars/jesusrp98/aucorsa.svg?style=for-the-badge">
+    <img src="https://img.shields.io/github/stars/jesusrp98/aucorsa.svg?style=for-the-badge">
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.chechu.aucorsa">
-    <img src="https://img.shields.dev/badge/Google-PlayStore-green.svg?style=for-the-badge">
+    <img src="https://img.shields.io/badge/Google-PlayStore-green.svg?style=for-the-badge">
   </a>
     <a href="https://play.google.com/store/apps/details?id=com.chechu.aucorsa">
-    <img src="https://img.shields.dev/badge/APPLE-APP STORE-blue.svg?style=for-the-badge">
+    <img src="https://img.shields.io/badge/APPLE-APP STORE-blue.svg?style=for-the-badge">
   </a>
 </p>
 
@@ -26,9 +26,9 @@ The purpose of this project is to deliver an extremely easy and simple way to ge
 This project has been built using the [Flutter](https://flutter.dev/) framework, which allows to build an app for mobile, desktop & web, from a single codebase.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/master/screenshots/0.png" width="256" hspace="4">
-  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/master/screenshots/1.png" width="256" hspace="4">
-  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/master/screenshots/2.png" width="256" hspace="4">
+  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/main/assets/screenshots/0.png" width="256" hspace="4">
+  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/main/assets/screenshots/1.png" width="256" hspace="4">
+  <img src="https://raw.githubusercontent.com/jesusrp98/aucorsa/main/assets/screenshots/2.png" width="256" hspace="4">
 </p>
 
 ## Features
