@@ -14,7 +14,7 @@
   <a href="https://play.google.com/store/apps/details?id=com.chechu.aucorsa">
     <img src="https://img.shields.io/badge/Google-PlayStore-green.svg?style=for-the-badge">
   </a>
-    <a href="https://play.google.com/store/apps/details?id=com.chechu.aucorsa">
+    <a href="https://apps.apple.com/us/app/aucorsa-go/id6742031381">
     <img src="https://img.shields.io/badge/APPLE-APP STORE-blue.svg?style=for-the-badge">
   </a>
 </p>
