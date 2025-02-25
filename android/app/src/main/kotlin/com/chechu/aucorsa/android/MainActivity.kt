@@ -1,4 +1,4 @@
-package com.chechu.aucorsa
+package com.chechu.aucorsa.android
 
 import io.flutter.embedding.android.FlutterActivity
 
