@@ -82,6 +82,13 @@ class _BusStopTileViewState extends State<_BusStopTileView>
       (FavoriteStopsCubit cubit) => cubit.isFavorite(widget.stopId),
     );
 
+    final linesIds = BusLineUtils.getLinesByStop(widget.stopId);
+    final joinedLineIds = linesIds.join(', ');
+
+    final subtitle = linesIds.length == 1
+        ? context.l10n.busLine(joinedLineIds)
+        : '${context.l10n.busLines} $joinedLineIds';
+
     return SafeArea(
       top: false,
       bottom: false,
@@ -103,10 +110,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                 color: Theme.of(context).colorScheme.surface,
                 surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: CircleAvatar(
                     backgroundColor:
                         Theme.of(context).colorScheme.secondaryContainer,
@@ -124,6 +128,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                     BusStopUtils.resolveName(widget.stopId),
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
+                  subtitle: Text(subtitle),
                   trailing: RotationTransition(
                     turns: _iconTurns,
                     child: Transform.rotate(

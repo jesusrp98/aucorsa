@@ -13,6 +13,14 @@ class BusLineUtils {
   static int getStopsLength(int stopId) =>
       lines.where((line) => line.stops.contains(stopId)).length;
 
+  static List<String> getLinesByStop(int stopId) => lines
+      .where((line) => line.stops.contains(stopId))
+      .map((line) => line.id)
+      .toList();
+
+  static int getLineIndex(String lineId) =>
+      lines.indexWhere((line) => line.id == lineId);
+
   static const lines = [
     BusLine(
       id: '1',

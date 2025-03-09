@@ -1,6 +1,7 @@
+import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:html/parser.dart';
 
-class BusStopLineEstimation {
+class BusStopLineEstimation implements Comparable<BusStopLineEstimation> {
   static final estimationTimeRegExp = RegExp('^([0-9]*)');
 
   final String lineId;
@@ -35,7 +36,7 @@ class BusStopLineEstimation {
       );
     }
 
-    return estimationList;
+    return estimationList..sort();
   }
 
   static Duration _parseDuration(String data) {
@@ -49,4 +50,10 @@ class BusStopLineEstimation {
 
     return Duration.zero;
   }
+
+  @override
+  int compareTo(BusStopLineEstimation other) =>
+      BusLineUtils.getLineIndex(lineId).compareTo(
+        BusLineUtils.getLineIndex(other.lineId),
+      );
 }
