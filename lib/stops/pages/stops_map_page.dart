@@ -1,30 +1,31 @@
+import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
-import 'package:aucorsa/map/cubits/bus_line_selector_cubit.dart';
-import 'package:aucorsa/map/utils/map_path_bearing_utils.dart';
-import 'package:aucorsa/map/widgets/bus_line_selector_dialog.dart';
-import 'package:aucorsa/map/widgets/bus_stop_dialog.dart';
-import 'package:aucorsa/map/widgets/map_attribution_dialog.dart';
+import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
+import 'package:aucorsa/stops/utils/map_path_bearing_utils.dart';
+import 'package:aucorsa/stops/widgets/bus_line_selector_dialog.dart';
+import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
+import 'package:aucorsa/stops/widgets/map_attribution_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
-class MapPage extends StatefulWidget {
-  static const path = '/map';
+class StopsMapPage extends StatefulWidget {
+  static const path = '/stops-map';
 
-  const MapPage({super.key});
+  const StopsMapPage({super.key});
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  State<StopsMapPage> createState() => _StopsMapPageState();
 }
 
 enum _MarkerSize { dot, normal }
 
-class _MapPageState extends State<MapPage> {
+class _StopsMapPageState extends State<StopsMapPage> {
   static const hotelCordobaCenterLocation = LatLng(37.8916417, -4.7871324);
   static const thresholdZoom = 15.5;
   static const markerSizeValues = {
@@ -222,7 +223,7 @@ class _MapPageState extends State<MapPage> {
                   child: const Icon(Symbols.signpost_rounded, fill: 0.5),
                 ),
                 title: Text(
-                  'All stops',
+                  context.l10n.allStops,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 trailing: Padding(

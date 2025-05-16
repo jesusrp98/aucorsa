@@ -2,7 +2,7 @@ import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
 import 'package:aucorsa/favorite_stops/pages/favorite_stops_page.dart';
-import 'package:aucorsa/map/pages/map_page.dart';
+import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,10 +29,10 @@ class _HomePageState extends State<HomePage> {
       selectedIcon: const Icon(Symbols.favorite_rounded, fill: 1),
       label: context.l10n.favoritesPageTitle,
     ),
-    MapPage.path: NavigationDestination(
+    StopsMapPage.path: NavigationDestination(
       icon: const Icon(Symbols.map_rounded),
       selectedIcon: const Icon(Symbols.map_rounded, fill: 1),
-      label: 'Stops',
+      label: context.l10n.stops,
     ),
     BusLinesPages.path: NavigationDestination(
       icon: const Icon(Symbols.format_list_bulleted_rounded),

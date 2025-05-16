@@ -3,7 +3,7 @@ import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/favorite_stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/home/pages/home_page.dart';
-import 'package:aucorsa/map/pages/map_page.dart';
+import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,9 +30,9 @@ class AucorsaRouter {
                 ),
               ),
               GoRoute(
-                path: MapPage.path,
+                path: StopsMapPage.path,
                 pageBuilder: (context, state) => const MaterialPage(
-                  child: MapPage(),
+                  child: StopsMapPage(),
                 ),
               ),
               GoRoute(
