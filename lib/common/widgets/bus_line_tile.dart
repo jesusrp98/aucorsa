@@ -1,17 +1,32 @@
-import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class BusLineTile extends StatelessWidget {
   final String lineId;
-  final bool embedded;
+  final EdgeInsets padding;
+  final TextStyle? titleStyle;
+  final VoidCallback? onTap;
+  final Widget? trailing;
+
+  static Color resolveLineBackgroundColor(BuildContext context, Color color) =>
+      switch (Theme.of(context).colorScheme.brightness) {
+        Brightness.light => color,
+        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
+      };
+
+  static Color resolveLineForegroundColor(BuildContext context) =>
+      switch (Theme.of(context).colorScheme.brightness) {
+        Brightness.light => Colors.white,
+        Brightness.dark => Theme.of(context).colorScheme.onSurface,
+      };
 
   const BusLineTile({
     required this.lineId,
-    this.embedded = false,
+    this.padding = const EdgeInsets.symmetric(horizontal: 16),
+    this.onTap,
+    this.titleStyle,
+    this.trailing,
     super.key,
   });
 
@@ -20,17 +35,16 @@ class BusLineTile extends StatelessWidget {
     final line = BusLineUtils.getLine(lineId);
 
     return ListTile(
-      contentPadding: embedded
-          ? EdgeInsets.zero
-          : const EdgeInsets.symmetric(horizontal: 16),
+      contentPadding: padding,
       leading: CircleAvatar(
-        backgroundColor: _resolveLineBackgroundColor(context, line.color),
-        foregroundColor: _resolveLineForegroundColor(context),
+        backgroundColor: resolveLineBackgroundColor(context, line.color),
+        foregroundColor: resolveLineForegroundColor(context),
         child: Text(line.id),
       ),
       title: AutoSizeText(
         line.name,
         maxLines: 1,
+        style: titleStyle,
         overflow: TextOverflow.ellipsis,
       ),
       leadingAndTrailingTextStyle:
@@ -38,25 +52,8 @@ class BusLineTile extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w500,
               ),
-      trailing: embedded ? null : const Icon(Symbols.chevron_forward_rounded),
-      onTap: embedded
-          ? null
-          : () => context.push(
-                BusLinePage.path,
-                extra: line.id,
-              ),
+      trailing: trailing,
+      onTap: onTap,
     );
   }
-
-  Color _resolveLineBackgroundColor(BuildContext context, Color color) =>
-      switch (Theme.of(context).colorScheme.brightness) {
-        Brightness.light => color,
-        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
-      };
-
-  Color _resolveLineForegroundColor(BuildContext context) =>
-      switch (Theme.of(context).colorScheme.brightness) {
-        Brightness.light => Colors.white,
-        Brightness.dark => Theme.of(context).colorScheme.onSurface,
-      };
 }

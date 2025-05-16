@@ -18,11 +18,11 @@ class AucorsaTheme {
         colorScheme: colorScheme,
         fontFamily: 'Rubik',
         iconTheme: const IconThemeData(opticalSize: 24),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          },
-        ),
+        // pageTransitionsTheme: const PageTransitionsTheme(
+        //   builders: {
+        //     TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+        //   },
+        // ),
         appBarTheme: AppBarTheme(
           surfaceTintColor: Colors.transparent,
           backgroundColor: colorScheme.surface,
