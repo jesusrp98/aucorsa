@@ -104,7 +104,7 @@ class _StopsMapPageState extends State<StopsMapPage> {
                         height: markerSizeValues[markerSize]!,
                         child: Material(
                           animationDuration: Duration.zero,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context).colorScheme.primaryFixed,
                           clipBehavior: Clip.antiAlias,
                           shape: const CircleBorder(),
                           elevation: markerSize == MapMarkerSize.normal ? 4 : 0,
@@ -115,8 +115,9 @@ class _StopsMapPageState extends State<StopsMapPage> {
                                   child: Icon(
                                     Symbols.directions_bus_rounded,
                                     fill: 1,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryFixed,
                                   ),
                                 )
                               : null,

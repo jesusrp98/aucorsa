@@ -12,13 +12,7 @@ class BusLineTile extends StatelessWidget {
   static Color resolveLineBackgroundColor(BuildContext context, Color color) =>
       switch (Theme.of(context).colorScheme.brightness) {
         Brightness.light => color,
-        Brightness.dark => Color.lerp(color, Colors.black, 0.32)!,
-      };
-
-  static Color resolveLineForegroundColor(BuildContext context) =>
-      switch (Theme.of(context).colorScheme.brightness) {
-        Brightness.light => Colors.white,
-        Brightness.dark => Theme.of(context).colorScheme.onSurface,
+        Brightness.dark => Color.lerp(color, Colors.black, .24)!,
       };
 
   const BusLineTile({
@@ -38,7 +32,7 @@ class BusLineTile extends StatelessWidget {
       contentPadding: padding,
       leading: CircleAvatar(
         backgroundColor: resolveLineBackgroundColor(context, line.color),
-        foregroundColor: resolveLineForegroundColor(context),
+        foregroundColor: Colors.white,
         child: Text(line.id),
       ),
       title: AutoSizeText(
