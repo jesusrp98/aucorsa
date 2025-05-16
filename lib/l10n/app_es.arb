@@ -43,5 +43,7 @@
     "darkTheme": "Tema oscuro",
     "favoritesPageTitle": "Favoritos",
     "noFavoritesTitle": "No tienes favoritos",
-    "noFavoritesSubtitle": "Agrega paradas a tus favoritos para verlas aquí"
+    "noFavoritesSubtitle": "Agrega paradas a tus favoritos para verlas aquí",
+    "stops": "Paradas",
+    "allStops": "Todas las paradas"
 }

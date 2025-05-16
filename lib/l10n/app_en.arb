@@ -43,5 +43,7 @@
     "darkTheme": "Dark theme",
     "favoritesPageTitle": "Favorites",
     "noFavoritesTitle": "You have no favorites",
-    "noFavoritesSubtitle": "Add stops to your favorites to see them here"
+    "noFavoritesSubtitle": "Add stops to your favorites to see them here",
+    "stops": "Stops",
+    "allStops": "All stops"
 }
