@@ -12,6 +12,7 @@ import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
 import 'package:aucorsa/stops/widgets/map_attribution_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -79,7 +80,7 @@ class _StopsMapPageState extends State<StopsMapPage> {
                 TileLayer(
                   urlTemplate: Urls.resolveMapStyleUrl(
                     brightness: Theme.of(context).brightness,
-                    apiKey: '0a781f97-5aed-4ac9-bcb9-e15c13d65806',
+                    apiKey: dotenv.env['CHART_STYLE_API_KEY']!,
                   ),
                 ),
                 if (linePath.isNotEmpty)
