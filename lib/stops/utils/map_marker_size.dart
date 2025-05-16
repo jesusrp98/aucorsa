@@ -1,0 +1,1 @@
+enum MapMarkerSize { dot, normal }
