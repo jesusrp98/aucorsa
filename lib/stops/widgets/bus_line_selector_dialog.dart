@@ -6,26 +6,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-Future<String?> showBusLineSelector(BuildContext context) {
-  const lines = BusLineUtils.lines;
-  const dragHandleSize = Size(32, 4);
+Future<String?> showBusLineSelector(BuildContext context) =>
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      clipBehavior: Clip.antiAlias,
+      useSafeArea: true,
+      builder: (_) => const _BusLineSelectorDialogView(),
+    );
 
-  final selectedLine = context.read<BusLineSelectorCubit>().state;
+class _BusLineSelectorDialogView extends StatelessWidget {
+  static const lines = BusLineUtils.lines;
+  static const dragHandleSize = Size(32, 4);
+  static const initialDialogSize = 0.64;
 
-  final screenHeight = MediaQuery.sizeOf(context).height;
-  final maxChildSize =
-      (screenHeight - MediaQuery.paddingOf(context).top) / screenHeight;
-  final backgroundColor = Theme.of(context).colorScheme.surfaceContainerLow;
+  const _BusLineSelectorDialogView();
 
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    useRootNavigator: true,
-    clipBehavior: Clip.antiAlias,
-    builder: (context) => DraggableScrollableSheet(
-      maxChildSize: maxChildSize,
-      initialChildSize: 0.64,
-      minChildSize: 0.64,
+  @override
+  Widget build(BuildContext context) {
+    final backgroundColor = Theme.of(context).colorScheme.surfaceContainerLow;
+    final selectedLine = context.read<BusLineSelectorCubit>().state;
+
+    return DraggableScrollableSheet(
+      initialChildSize: initialDialogSize,
+      minChildSize: initialDialogSize,
       expand: false,
       snap: true,
       builder: (context, scrollController) => MediaQuery.removePadding(
@@ -80,6 +85,6 @@ Future<String?> showBusLineSelector(BuildContext context) {
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

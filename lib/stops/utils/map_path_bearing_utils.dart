@@ -15,15 +15,20 @@ class MapPathBearingUtils {
   }) {
     final arrowMarkers = <Marker>[];
 
+    // Iterate through the path, skipping every 3 points to reduce density
     for (var i = 0; i < path.length - 1; i += 3) {
+      // Get the start and end points of the current segment
       final start = path[i];
       final end = path[i + 1];
 
+      // Calculate the midpoint of the segment
       final midLat = (start.latitude + end.latitude) / 2;
       final midLng = (start.longitude + end.longitude) / 2;
 
+      // Calculate the bearing angle between the start and end points
       final angle = _bearingBetween(start, end);
 
+      // Add a marker at the midpoint, rotated to match the bearing angle
       arrowMarkers.add(
         Marker(
           width: size,
