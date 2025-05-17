@@ -19,14 +19,14 @@ Future<String?> showBusLineSelector(BuildContext context) =>
 class _BusLineSelectorDialogView extends StatelessWidget {
   static const lines = BusLineUtils.lines;
   static const dragHandleSize = Size(32, 4);
-  static const initialDialogSize = 0.64;
+  static const initialDialogSize = 0.72;
 
   const _BusLineSelectorDialogView();
 
   @override
   Widget build(BuildContext context) {
     final backgroundColor = Theme.of(context).colorScheme.surfaceContainerLow;
-    final selectedLine = context.read<BusLineSelectorCubit>().state;
+    final selectedLine = context.read<BusLineSelectorCubit>().state.lineId;
 
     return DraggableScrollableSheet(
       initialChildSize: initialDialogSize,

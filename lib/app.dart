@@ -20,7 +20,7 @@ class AucorsaApp extends StatelessWidget {
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => BusServiceCubit()),
         BlocProvider(create: (_) => FavoriteStopsCubit()),
-        BlocProvider(create: (_) => BusLineSelectorCubit()),
+        const BlocProvider(create: BusLineSelectorCubit.new),
       ],
       child: Builder(
         builder: (context) => MaterialApp.router(
