@@ -1,7 +1,7 @@
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
-import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
-import 'package:aucorsa/favorite_stops/pages/favorite_stops_page.dart';
+import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
+import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

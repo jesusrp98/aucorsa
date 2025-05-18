@@ -1,8 +1,9 @@
 import 'package:aucorsa/about/pages/about_page.dart';
+import 'package:aucorsa/bus_lines/pages/bus_line_map_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
-import 'package:aucorsa/favorite_stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/home/pages/home_page.dart';
+import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,6 +53,12 @@ class AucorsaRouter {
           GoRoute(
             path: AboutPage.path,
             builder: (context, state) => const AboutPage(),
+          ),
+          GoRoute(
+            path: BusLineMapPage.path,
+            builder: (context, state) => BusLineMapPage(
+              lineId: state.extra! as String,
+            ),
           ),
         ],
       );
