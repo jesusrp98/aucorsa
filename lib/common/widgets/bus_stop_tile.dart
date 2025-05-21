@@ -143,7 +143,12 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                     BusStopUtils.resolveName(widget.stopId),
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  subtitle: Text(subtitle),
+                  subtitle: AutoSizeText(
+                    subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    minFontSize: 14,
+                  ),
                   trailing: widget.alwaysExpanded
                       ? const Icon(Symbols.close_rounded)
                       : RotationTransition(

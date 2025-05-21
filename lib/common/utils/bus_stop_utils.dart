@@ -727,6 +727,7 @@ class BusStopUtils {
     919: LatLng(37.963233235247, -4.7668025577026),
     920: LatLng(37.935907615318, -4.7602880723068),
     921: LatLng(37.934094174967, -4.7640338089876),
+    463: LatLng(37.874821642892, -4.7658819616314),
   };
 
   static const _busStopNames = {
@@ -824,7 +825,7 @@ class BusStopUtils {
     208: 'Ministerio de la Vivienda',
     381: 'Virgen de la Fuensanta 1ª',
     443: 'Virgen de la Fuensanta 2ª',
-    171: 'Campo Madre de Dios ( Agustín Moreno)',
+    171: 'Campo Madre de Dios (Agustín Moreno)',
     93: 'El Potro (La Ribera) D.C.',
     282: 'Puerta del Puente',
     2019: 'Alcázar de los Reyes Cristianos',
@@ -1441,5 +1442,31 @@ class BusStopUtils {
     919: 'Albarisa',
     920: 'Doña Manuela DC',
     921: 'Torreblanca DC',
+    463: 'Terminal Feria',
+    // TODO(me): Add lat lng values for these bus stops
+    464: 'Bulevar G. Capitán',
+    465: 'Gen. Lázaro Cárdenas (L.J.R. Mora)',
+    580: 'Carlos III (C. Lasso)',
+    466: 'Fátima Iglesia',
+    41: 'Campo Madre de Dios D.C.',
+    599: 'Acera de Guerrita (Molinos Alta)',
+    566: 'Avda. Arruzafa (O. Azcagorta)',
+    469: 'Avda. Almogávares (Ollerías)',
+    470: 'Glorieta Almogávares',
+    471: 'Alonso El Sabio',
+    537: 'Vial Norte (Renfe-Est. Buses)',
+    538: 'Ctra. Trassierra (T. de Victoria)',
+    539: 'Antonio de Cabezón (T. Lavirgen)',
+    596: 'Mozárabes',
+    540: 'Conde Zamora (Avda. Manolete)',
+    389: 'Barriada de Occidente',
+    512: 'Jose Mª Aguilar Blanco',
+    133: 'Gran Vía Parque',
+    220: 'Gran Vía Parque (Avda. Manolete)',
+    543: 'Avda. Almogávares (Marrubial)',
+    568: 'Tenor P. Lavirgen (Goya)',
+    541: 'Cañito Bazán (A. Storni)',
+    496: 'Arroyo de San Lorenzo',
+    468: 'Avda. del Linneo',
   };
 }

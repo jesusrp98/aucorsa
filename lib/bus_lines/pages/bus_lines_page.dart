@@ -15,7 +15,7 @@ class BusLinesPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const lines = BusLineUtils.lines;
+    final lines = BusLineUtils.lines;
 
     return Scaffold(
       body: CustomScrollView(

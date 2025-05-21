@@ -1,5 +1,5 @@
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
-import 'package:aucorsa/stops/widgets/aucrosa_map.dart';
+import 'package:aucorsa/stops/widgets/aucorsa_map.dart';
 import 'package:aucorsa/stops/widgets/bus_line_selector_bar.dart';
 import 'package:aucorsa/stops/widgets/bus_line_selector_dialog.dart';
 import 'package:flutter/material.dart';

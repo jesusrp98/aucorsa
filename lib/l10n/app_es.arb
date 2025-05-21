@@ -1,4 +1,5 @@
 {
+    "appName": "Aucorsa GO!",
     "settings": "Ajustes",
     "info": "Información",
     "appearanceTitle": "Apariencia",
@@ -45,5 +46,8 @@
     "noFavoritesTitle": "No tienes favoritos",
     "noFavoritesSubtitle": "Agrega paradas a tus favoritos para verlas aquí",
     "stops": "Paradas",
-    "allStops": "Todas las paradas"
+    "allStops": "Todas las paradas",
+    "feriaEventDescription": "Servicios especiales de AUCORSA",
+    "events": "Eventos",
+    "feriaDialogBody": "Aprovecha las líneas de autobuses especiales que te llevarán a la Feria de Córdoba"
 }

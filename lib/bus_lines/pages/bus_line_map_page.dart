@@ -1,6 +1,6 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
-import 'package:aucorsa/stops/widgets/aucrosa_map.dart';
+import 'package:aucorsa/stops/widgets/aucorsa_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +49,7 @@ class _BusLineMapPageState extends State<BusLineMapPage> {
           context.l10n.busLine(widget.lineId),
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
+        elevation: 4,
       ),
       body: const AucorsaMap(),
     );

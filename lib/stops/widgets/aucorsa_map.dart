@@ -21,6 +21,10 @@ class AucorsaMap extends StatefulWidget {
 
 class _AucorsaMapState extends State<AucorsaMap> {
   static const hotelCordobaCenterLocation = LatLng(37.8916417, -4.7871324);
+  static const cameraConstraints = [
+    LatLng(38.01969806372978, -4.60963757540793),
+    LatLng(37.800721380628374, -4.915884463739758),
+  ];
   static const thresholdZoom = 15.5;
   static const markerSizeValues = {
     MapMarkerSize.dot: 8.0,
@@ -41,6 +45,9 @@ class _AucorsaMapState extends State<AucorsaMap> {
           mapController: mapController,
           options: MapOptions(
             backgroundColor: Theme.of(context).colorScheme.surface,
+            cameraConstraint: CameraConstraint.containCenter(
+              bounds: LatLngBounds.fromPoints(cameraConstraints),
+            ),
             interactionOptions: const InteractionOptions(
               flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
             ),
