@@ -12,10 +12,7 @@ class BusLinePage extends StatelessWidget {
 
   final String lineId;
 
-  const BusLinePage({
-    required this.lineId,
-    super.key,
-  });
+  const BusLinePage({required this.lineId, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +27,7 @@ class BusLinePage extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
-          BusStopListView(
-            stopIds: line.stops,
-          ),
+          BusStopListView(stopIds: line.stops),
         ],
       ),
       floatingActionButton: Column(
@@ -45,18 +40,13 @@ class BusLinePage extends StatelessWidget {
             shape: const CircleBorder(),
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
-            onPressed: () => context.push(
-              BusLineMapPage.path,
-              extra: lineId,
-            ),
+            onPressed: () => context.push(BusLineMapPage.path, extra: lineId),
             child: const Icon(Symbols.map_rounded),
           ),
           FloatingActionButton(
             tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-            onPressed: () => showBusStopSearch(
-              context: context,
-              stops: line.stops,
-            ),
+            onPressed: () =>
+                showBusStopSearch(context: context, stops: line.stops),
             child: const Icon(Symbols.search_rounded),
           ),
         ],

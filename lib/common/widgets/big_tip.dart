@@ -41,9 +41,9 @@ class BigTip extends StatelessWidget {
     this.subtitle,
     this.action,
   }) : assert(
-          child != null || title != null || subtitle != null,
-          'One of the these parameters should not be null',
-        );
+         child != null || title != null || subtitle != null,
+         'One of the these parameters should not be null',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +57,9 @@ class BigTip extends StatelessWidget {
             if (child != null)
               IconTheme.merge(
                 data: Theme.of(context).iconTheme.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      size: 128,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  size: 128,
+                ),
                 child: child!,
               ),
             if (child != null && (title != null || subtitle != null))
@@ -74,8 +74,8 @@ class BigTip extends StatelessWidget {
               if (title != null) SizedBox(height: subtitleSpace),
               DefaultTextStyle(
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
                 textAlign: TextAlign.center,
                 child: subtitle!,
               ),

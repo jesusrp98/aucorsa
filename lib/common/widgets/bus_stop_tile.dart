@@ -34,10 +34,7 @@ class BusStopTile extends StatelessWidget {
         busServiceCubit: context.read<BusServiceCubit>(),
         stopId: stopId,
       ),
-      child: _BusStopTileView(
-        stopId: stopId,
-        alwaysExpanded: alwaysExpanded,
-      ),
+      child: _BusStopTileView(stopId: stopId, alwaysExpanded: alwaysExpanded),
     );
   }
 }
@@ -46,10 +43,7 @@ class _BusStopTileView extends StatefulWidget {
   final int stopId;
   final bool alwaysExpanded;
 
-  const _BusStopTileView({
-    required this.stopId,
-    this.alwaysExpanded = false,
-  });
+  const _BusStopTileView({required this.stopId, this.alwaysExpanded = false});
 
   @override
   State<_BusStopTileView> createState() => _BusStopTileViewState();
@@ -127,10 +121,12 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: CircleAvatar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
-                    foregroundColor:
-                        Theme.of(context).colorScheme.onSecondaryContainer,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.secondaryContainer,
+                    foregroundColor: Theme.of(
+                      context,
+                    ).colorScheme.onSecondaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: AutoSizeText(
@@ -184,14 +180,16 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                               if (isFavorite)
                                 TextButton.icon(
                                   style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        Theme.of(context).colorScheme.error,
+                                    foregroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.error,
                                   ),
                                   onPressed: _toggleFavorite,
                                   icon: const Icon(Symbols.delete_rounded),
                                   label: Text(
-                                    MaterialLocalizations.of(context)
-                                        .deleteButtonTooltip,
+                                    MaterialLocalizations.of(
+                                      context,
+                                    ).deleteButtonTooltip,
                                   ),
                                 )
                               else
@@ -201,9 +199,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                                   label: Text(context.l10n.busStopTileFavorite),
                                 ),
                               TextButton.icon(
-                                onPressed: () => _requestData(
-                                  hapticFeedback: true,
-                                ),
+                                onPressed: () =>
+                                    _requestData(hapticFeedback: true),
                                 icon: const Icon(Symbols.refresh_rounded),
                                 label: Text(context.l10n.busStopTileReload),
                               ),
@@ -249,6 +246,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 }
 
 class _BusStopTileLoading extends StatelessWidget {
+  static const _maxRows = 5;
+
   final int rows;
 
   const _BusStopTileLoading(this.rows);
@@ -257,7 +256,7 @@ class _BusStopTileLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (var i = 0; i < rows; i++)
+        for (var i = 0; i < (rows > _maxRows ? _maxRows : rows); i++)
           AucorsaShimmer(
             child: ListTile(
               contentPadding: EdgeInsets.zero,
@@ -324,9 +323,7 @@ class _BusStopTileBody extends StatelessWidget {
     }
 
     final filteredLineEstimations = busStopState.estimations.where(
-      (lineEstimation) => BusLineUtils.isLineAvailable(
-        lineEstimation.lineId,
-      ),
+      (lineEstimation) => BusLineUtils.isLineAvailable(lineEstimation.lineId),
     );
 
     return Column(
@@ -348,8 +345,8 @@ class _BusStopTileBody extends StatelessWidget {
                     for (final estimation in lineEstimation.estimations)
                       DefaultTextStyle(
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                          fontWeight: FontWeight.w500,
+                        ),
                         child: estimation == Duration.zero
                             ? const _BusStopCloseEstimation()
                             : AutoSizeText(
@@ -414,9 +411,7 @@ class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
       opacity: _curvedAnimation,
       child: Text(
         context.l10n.busStopTileNow,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        style: TextStyle(color: Theme.of(context).colorScheme.primary),
       ),
     );
   }

@@ -30,9 +30,7 @@ class FavoriteStopsPage extends StatelessWidget {
             SliverAppBar.medium(
               title: Text(
                 context.l10n.appName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               actions: const [AboutButton()],
             ),
@@ -67,8 +65,10 @@ class FavoriteStopsPage extends StatelessWidget {
         tooltip: MaterialLocalizations.of(context).searchFieldLabel,
         onPressed: () => showBusStopSearch(
           context: context,
-          stops:
-              BusLineUtils.lines.expand((line) => line.stops).toSet().toList(),
+          stops: BusLineUtils.lines
+              .expand((line) => line.stops)
+              .toSet()
+              .toList(),
         ),
         child: const Icon(Symbols.search_rounded),
       ),
@@ -80,10 +80,7 @@ class _PageSection extends StatelessWidget {
   final Widget title;
   final Widget child;
 
-  const _PageSection({
-    required this.title,
-    required this.child,
-  });
+  const _PageSection({required this.title, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -94,15 +91,13 @@ class _PageSection extends StatelessWidget {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(16).copyWith(
-                top: 0,
-                bottom: 8,
-                right: 8,
-              ),
+              padding: const EdgeInsets.all(
+                16,
+              ).copyWith(top: 0, bottom: 8, right: 8),
               child: DefaultTextStyle(
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
                 child: title,
               ),
             ),

@@ -94,9 +94,9 @@ class _AucorsaMapState extends State<AucorsaMap> {
                               child: Icon(
                                 Symbols.directions_bus_rounded,
                                 fill: 1,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryFixed,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryFixed,
                               ),
                             )
                           : null,

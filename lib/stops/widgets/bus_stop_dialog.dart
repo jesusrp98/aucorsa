@@ -10,9 +10,6 @@ Future<void> showBusStopDialog(BuildContext context, int stopId) =>
         context: context,
         removeLeft: true,
         removeRight: true,
-        child: BusStopTile(
-          stopId: stopId,
-          alwaysExpanded: true,
-        ),
+        child: BusStopTile(stopId: stopId, alwaysExpanded: true),
       ),
     );

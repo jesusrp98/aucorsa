@@ -35,17 +35,14 @@ class _FeriaLinesDialog extends StatelessWidget {
         children: [
           const CircleAvatar(
             radius: 40,
-            child: Icon(
-              Symbols.festival_rounded,
-              size: 40,
-            ),
+            child: Icon(Symbols.festival_rounded, size: 40),
           ),
           const SizedBox(height: 8),
           Text(
             'Feria de Córdoba',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
@@ -68,10 +65,7 @@ class _FeriaLinesDialog extends StatelessWidget {
               ),
               onTap: () => context
                 ..pop()
-                ..push(
-                  BusLinePage.path,
-                  extra: line.id,
-                ),
+                ..push(BusLinePage.path, extra: line.id),
             ),
         ],
       ),

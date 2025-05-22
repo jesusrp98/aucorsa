@@ -40,10 +40,7 @@ class MapPathBearingUtils {
               backgroundColor: color,
               foregroundColor: Colors.white,
               radius: size / 2,
-              child: Icon(
-                Symbols.keyboard_arrow_up_rounded,
-                size: size,
-              ),
+              child: Icon(Symbols.keyboard_arrow_up_rounded, size: size),
             ),
           ),
         ),

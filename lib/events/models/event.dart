@@ -13,9 +13,5 @@ class Event extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        startDate,
-        endDate,
-      ];
+  List<Object?> get props => [id, startDate, endDate];
 }

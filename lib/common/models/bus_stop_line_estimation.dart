@@ -52,8 +52,7 @@ class BusStopLineEstimation implements Comparable<BusStopLineEstimation> {
   }
 
   @override
-  int compareTo(BusStopLineEstimation other) =>
-      BusLineUtils.getLineIndex(lineId).compareTo(
-        BusLineUtils.getLineIndex(other.lineId),
-      );
+  int compareTo(BusStopLineEstimation other) => BusLineUtils.getLineIndex(
+    lineId,
+  ).compareTo(BusLineUtils.getLineIndex(other.lineId));
 }

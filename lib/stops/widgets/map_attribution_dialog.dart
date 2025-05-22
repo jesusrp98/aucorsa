@@ -30,8 +30,9 @@ class _MapAttributionDialogView extends StatelessWidget {
             for (final attribution in attributions.entries)
               TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor:
-                      Theme.of(context).colorScheme.onSurfaceVariant,
+                  foregroundColor: Theme.of(
+                    context,
+                  ).colorScheme.onSurfaceVariant,
                 ),
                 onPressed: () => launchUrlString(attribution.value),
                 child: Text('© ${attribution.key}'),

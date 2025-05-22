@@ -9,10 +9,7 @@ class BusLineMapPage extends StatefulWidget {
 
   final String lineId;
 
-  const BusLineMapPage({
-    required this.lineId,
-    super.key,
-  });
+  const BusLineMapPage({required this.lineId, super.key});
 
   @override
   State<BusLineMapPage> createState() => _BusLineMapPageState();

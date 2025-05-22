@@ -109,8 +109,8 @@ class _AboutPageState extends State<AboutPage> {
                     _packageInfo?.buildNumber ?? '',
                   ),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
@@ -135,8 +135,8 @@ class _AboutSectionTitle extends StatelessWidget {
       child: Text(
         data,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
@@ -168,8 +168,8 @@ class _AboutSectionTile extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       subtitle: subtitle,
       subtitleTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
       trailing: const Icon(Symbols.chevron_right_rounded),
       onTap: onTap,
     );
@@ -191,8 +191,8 @@ class _DataOriginBottomSheet extends StatelessWidget {
           Text(
             context.l10n.dataOriginSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             textAlign: TextAlign.justify,
           ),
           TextButton(

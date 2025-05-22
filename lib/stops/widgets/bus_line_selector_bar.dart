@@ -9,11 +9,7 @@ class BusLineSelectorBar extends StatelessWidget {
   final String? selectedLine;
   final VoidCallback? onTap;
 
-  const BusLineSelectorBar({
-    required this.selectedLine,
-    this.onTap,
-    super.key,
-  });
+  const BusLineSelectorBar({required this.selectedLine, this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +30,12 @@ class BusLineSelectorBar extends StatelessWidget {
               ? ListTile(
                   contentPadding: listTilePadding,
                   leading: CircleAvatar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
-                    foregroundColor:
-                        Theme.of(context).colorScheme.onSecondaryContainer,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.secondaryContainer,
+                    foregroundColor: Theme.of(
+                      context,
+                    ).colorScheme.onSecondaryContainer,
                     child: const Icon(Symbols.signpost_rounded, fill: 0.5),
                   ),
                   title: Text(

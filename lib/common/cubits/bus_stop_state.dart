@@ -16,17 +16,12 @@ class BusStopState extends Equatable {
   BusStopState copyWith({
     List<BusStopLineEstimation>? estimations,
     AucorsaStateStatus? status,
-  }) =>
-      BusStopState(
-        estimations: estimations ?? this.estimations,
-        status: status ?? this.status,
-        stopId: stopId,
-      );
+  }) => BusStopState(
+    estimations: estimations ?? this.estimations,
+    status: status ?? this.status,
+    stopId: stopId,
+  );
 
   @override
-  List<Object?> get props => [
-        estimations,
-        status,
-        stopId,
-      ];
+  List<Object?> get props => [estimations, status, stopId];
 }

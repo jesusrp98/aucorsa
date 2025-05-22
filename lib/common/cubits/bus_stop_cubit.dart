@@ -7,10 +7,8 @@ class BusStopCubit extends Cubit<BusStopState> {
   final BusServiceCubit busServiceCubit;
   final int stopId;
 
-  BusStopCubit({
-    required this.busServiceCubit,
-    required this.stopId,
-  }) : super(BusStopState(stopId: stopId));
+  BusStopCubit({required this.busServiceCubit, required this.stopId})
+    : super(BusStopState(stopId: stopId));
 
   Future<void> fetchEstimations() async {
     emit(state.copyWith(status: AucorsaStateStatus.loading));
@@ -26,11 +24,9 @@ class BusStopCubit extends Cubit<BusStopState> {
           ),
         )
         .catchError((_) {
-      if (isClosed) return;
+          if (isClosed) return;
 
-      return emit(
-        state.copyWith(status: AucorsaStateStatus.error),
-      );
-    });
+          return emit(state.copyWith(status: AucorsaStateStatus.error));
+        });
   }
 }

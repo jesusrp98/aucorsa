@@ -12,10 +12,9 @@ class Urls {
   static String resolveMapStyleUrl({
     required Brightness brightness,
     required String apiKey,
-  }) =>
-      brightness == Brightness.light
-          ? _lightMapStyleUrl + apiKey
-          : _darkMapStyleUrl + apiKey;
+  }) => brightness == Brightness.light
+      ? _lightMapStyleUrl + apiKey
+      : _darkMapStyleUrl + apiKey;
 
   static const _lightMapStyleUrl =
       'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}@2x.png?api_key=';

@@ -13,10 +13,7 @@ class HomePage extends StatefulWidget {
 
   final Widget child;
 
-  const HomePage({
-    required this.child,
-    super.key,
-  });
+  const HomePage({required this.child, super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

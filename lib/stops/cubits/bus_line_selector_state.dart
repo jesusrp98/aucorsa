@@ -17,10 +17,10 @@ class BusLineSelectorState extends Equatable {
 
   @override
   List<Object?> get props => [
-        stopCoordinates,
-        arrowMarkers,
-        linePath,
-        lineId,
-        lineColor,
-      ];
+    stopCoordinates,
+    arrowMarkers,
+    linePath,
+    lineId,
+    lineColor,
+  ];
 }

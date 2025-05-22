@@ -41,11 +41,11 @@ class BusLineTile extends StatelessWidget {
         style: titleStyle,
         overflow: TextOverflow.ellipsis,
       ),
-      leadingAndTrailingTextStyle:
-          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.w500,
-              ),
+      leadingAndTrailingTextStyle: Theme.of(context).textTheme.bodyMedium
+          ?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.w500,
+          ),
       trailing: trailing,
       onTap: onTap,
     );
