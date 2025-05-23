@@ -2,13 +2,13 @@ import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
-import 'package:aucorsa/common/widgets/big_tip.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
 import 'package:aucorsa/events/models/event.dart';
 import 'package:aucorsa/events/models/event_id.dart';
 import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:aucorsa/events/widgets/feria_event_tile.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
+import 'package:aucorsa/stops/widgets/no_favorites_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -26,37 +26,37 @@ class FavoriteStopsPage extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          if (favoriteStops.isNotEmpty) ...[
-            SliverAppBar.medium(
-              title: Text(
-                context.l10n.appName,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              actions: const [AboutButton()],
+          SliverAppBar.medium(
+            title: Text(
+              context.l10n.appName,
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            _PageSection(
-              title: Text(context.l10n.favoritesPageTitle),
-              child: BusStopListView(
-                stopIds: favoriteStops,
-                padding: const EdgeInsets.only(bottom: 16),
-              ),
-            ),
-            if (currentEvents.isNotEmpty)
-              _PageSection(
-                title: Text(context.l10n.events),
-                child: SliverPadding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  sliver: SliverToBoxAdapter(
-                    child: _EventsSection(currentEvents),
+            actions: const [AboutButton()],
+          ),
+          _PageSection(
+            title: Text(context.l10n.favoritesPageTitle),
+            child: favoriteStops.isNotEmpty
+                ? BusStopListView(
+                    stopIds: favoriteStops,
+                    padding: currentEvents.isNotEmpty
+                        ? const EdgeInsets.only(bottom: 16)
+                        : null,
+                  )
+                : const SliverPadding(
+                    padding: EdgeInsets.only(bottom: 16),
+                    sliver: SliverToBoxAdapter(child: NoFavoritesTile()),
                   ),
+          ),
+          if (currentEvents.isNotEmpty)
+            _PageSection(
+              title: Text(context.l10n.events),
+              child: SliverPadding(
+                padding: EdgeInsets.only(
+                  bottom: 88 + MediaQuery.paddingOf(context).bottom,
                 ),
-              ),
-          ] else
-            SliverFillRemaining(
-              child: BigTip(
-                title: Text(context.l10n.noFavoritesTitle),
-                subtitle: Text(context.l10n.noFavoritesSubtitle),
-                child: const Icon(Symbols.favorite_rounded),
+                sliver: SliverToBoxAdapter(
+                  child: _EventsSection(currentEvents),
+                ),
               ),
             ),
         ],

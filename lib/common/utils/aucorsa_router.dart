@@ -24,22 +24,32 @@ class AucorsaRouter {
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
-        builder: (context, state, child) => HomePage(child: child),
+        builder: (context, state, child) =>
+            HomePage(state: state, child: child),
         routes: [
           GoRoute(
             path: FavoriteStopsPage.path,
-            pageBuilder: (context, state) =>
-                const MaterialPage(child: FavoriteStopsPage()),
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const FavoriteStopsPage(),
+            ),
           ),
           GoRoute(
             path: StopsMapPage.path,
-            pageBuilder: (context, state) =>
-                const MaterialPage(child: StopsMapPage()),
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const StopsMapPage(),
+            ),
           ),
           GoRoute(
             path: BusLinesPages.path,
-            pageBuilder: (context, state) =>
-                const MaterialPage(child: BusLinesPages()),
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const BusLinesPages(),
+            ),
           ),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
@@ -12,8 +13,9 @@ class HomePage extends StatefulWidget {
   static const path = '/';
 
   final Widget child;
+  final GoRouterState state;
 
-  const HomePage({required this.child, super.key});
+  const HomePage({required this.child, required this.state, super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -38,15 +40,31 @@ class _HomePageState extends State<HomePage> {
     ),
   };
 
+  int navigationBarIndex = 0;
+
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Dont redirect if there are events scheduled
+      if (EventsCalendar.currentEvents.isNotEmpty) return;
+
       if (context.read<FavoriteStopsCubit>().state.isEmpty) {
         context.go(destinations.keys.elementAt(1));
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.state.uri == oldWidget.state.uri) return;
+
+    setState(
+      () => navigationBarIndex = _calculateSelectedIndex(context, widget.state),
+    );
   }
 
   @override
@@ -57,15 +75,15 @@ class _HomePageState extends State<HomePage> {
         height: 72 + MediaQuery.of(context).padding.bottom,
         child: NavigationBar(
           destinations: destinations.values.toList(),
-          selectedIndex: _calculateSelectedIndex(context),
+          selectedIndex: navigationBarIndex,
           onDestinationSelected: (index) => _onItemTapped(context, index),
         ),
       ),
     );
   }
 
-  int _calculateSelectedIndex(BuildContext context) =>
-      destinations.keys.toList().indexOf(GoRouterState.of(context).uri.path);
+  int _calculateSelectedIndex(BuildContext context, GoRouterState state) =>
+      destinations.keys.toList().indexOf(state.uri.path);
 
   void _onItemTapped(BuildContext context, int index) =>
       context.go(destinations.keys.elementAt(index));
