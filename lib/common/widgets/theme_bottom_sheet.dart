@@ -47,9 +47,9 @@ class _ThemeListTile extends StatelessWidget {
       onTap: () => context.read<ThemeCubit>().setThemeMode(themeMode),
       iconColor: foregroundColor,
       tileColor: selected ? Theme.of(context).colorScheme.primaryFixed : null,
-      titleTextStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: foregroundColor,
-          ),
+      titleTextStyle: Theme.of(
+        context,
+      ).textTheme.bodyLarge?.copyWith(color: foregroundColor),
       trailing: selected
           ? const Icon(Symbols.check_circle_rounded, fill: 1)
           : Icon(
@@ -60,14 +60,14 @@ class _ThemeListTile extends StatelessWidget {
   }
 
   IconData get _iconData => switch (themeMode) {
-        ThemeMode.system => Symbols.palette_rounded,
-        ThemeMode.light => Symbols.light_mode_rounded,
-        ThemeMode.dark => Symbols.dark_mode_rounded,
-      };
+    ThemeMode.system => Symbols.palette_rounded,
+    ThemeMode.light => Symbols.light_mode_rounded,
+    ThemeMode.dark => Symbols.dark_mode_rounded,
+  };
 
   String _title(BuildContext context) => switch (themeMode) {
-        ThemeMode.system => context.l10n.systemTheme,
-        ThemeMode.light => context.l10n.lightTheme,
-        ThemeMode.dark => context.l10n.darkTheme,
-      };
+    ThemeMode.system => context.l10n.systemTheme,
+    ThemeMode.light => context.l10n.lightTheme,
+    ThemeMode.dark => context.l10n.darkTheme,
+  };
 }

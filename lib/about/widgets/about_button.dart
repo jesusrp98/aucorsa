@@ -11,9 +11,7 @@ class AboutButton extends StatelessWidget {
     return IconButton(
       tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
       onPressed: () => context.push(AboutPage.path),
-      icon: Icon(
-        _isCupertino(context) ? Symbols.pending : Symbols.more_vert,
-      ),
+      icon: Icon(_isCupertino(context) ? Symbols.pending : Symbols.more_vert),
     );
   }
 

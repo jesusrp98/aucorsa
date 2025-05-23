@@ -1,9 +1,11 @@
 import 'package:aucorsa/about/widgets/about_button.dart';
+import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class BusLinesPages extends StatelessWidget {
@@ -13,7 +15,7 @@ class BusLinesPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const lines = BusLineUtils.lines;
+    final lines = BusLineUtils.lines;
 
     return Scaffold(
       body: CustomScrollView(
@@ -33,6 +35,9 @@ class BusLinesPages extends StatelessWidget {
               itemCount: lines.length,
               itemBuilder: (context, index) => BusLineTile(
                 lineId: lines[index].id,
+                trailing: const Icon(Symbols.chevron_forward_rounded),
+                onTap: () =>
+                    context.push(BusLinePage.path, extra: lines[index].id),
               ),
             ),
           ),

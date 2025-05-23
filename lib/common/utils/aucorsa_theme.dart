@@ -15,18 +15,20 @@ class AucorsaTheme {
   );
 
   static ThemeData from({required ColorScheme colorScheme}) => ThemeData(
-        colorScheme: colorScheme,
-        fontFamily: 'Rubik',
-        iconTheme: const IconThemeData(opticalSize: 24),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          },
-        ),
-        appBarTheme: AppBarTheme(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: colorScheme.surface,
-          shadowColor: colorScheme.shadow,
-        ),
-      );
+    colorScheme: colorScheme,
+    fontFamily: 'Rubik',
+    iconTheme: const IconThemeData(opticalSize: 24),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+    appBarTheme: AppBarTheme(
+      surfaceTintColor: Colors.transparent,
+      backgroundColor: colorScheme.surface,
+      shadowColor: colorScheme.shadow,
+    ),
+  );
 }

@@ -4,10 +4,7 @@ import 'package:shimmer/shimmer.dart';
 class AucorsaShimmer extends StatelessWidget {
   final Widget child;
 
-  const AucorsaShimmer({
-    required this.child,
-    super.key,
-  });
+  const AucorsaShimmer({required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {

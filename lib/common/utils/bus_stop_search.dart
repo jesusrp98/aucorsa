@@ -6,23 +6,16 @@ import 'package:search_page/search_page.dart';
 Future<void> showBusStopSearch({
   required BuildContext context,
   required List<int> stops,
-}) =>
-    showSearch<int?>(
-      context: context,
-      useRootNavigator: true,
-      delegate: SearchPage(
-        items: stops,
-        showItemsOnEmpty: true,
-        filter: (stopId) => [
-          BusStopUtils.resolveName(stopId),
-          stopId.toString(),
-        ],
-        builder: (stopId) => Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: BusStopTile(
-            key: ValueKey(stopId),
-            stopId: stopId,
-          ),
-        ),
-      ),
-    );
+}) => showSearch<int?>(
+  context: context,
+  useRootNavigator: true,
+  delegate: SearchPage(
+    items: stops,
+    showItemsOnEmpty: true,
+    filter: (stopId) => [BusStopUtils.resolveName(stopId), stopId.toString()],
+    builder: (stopId) => Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: BusStopTile(key: ValueKey(stopId), stopId: stopId),
+    ),
+  ),
+);

@@ -9,7 +9,7 @@ import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
-import 'package:aucorsa/favorite_stops/cubits/favorite_stops_cubit.dart';
+import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +19,12 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class BusStopTile extends StatelessWidget {
   final int stopId;
+  final bool alwaysExpanded;
 
   const BusStopTile({
     required this.stopId,
     super.key,
+    this.alwaysExpanded = false,
   });
 
   @override
@@ -32,15 +34,16 @@ class BusStopTile extends StatelessWidget {
         busServiceCubit: context.read<BusServiceCubit>(),
         stopId: stopId,
       ),
-      child: _BusStopTileView(stopId),
+      child: _BusStopTileView(stopId: stopId, alwaysExpanded: alwaysExpanded),
     );
   }
 }
 
 class _BusStopTileView extends StatefulWidget {
   final int stopId;
+  final bool alwaysExpanded;
 
-  const _BusStopTileView(this.stopId);
+  const _BusStopTileView({required this.stopId, this.alwaysExpanded = false});
 
   @override
   State<_BusStopTileView> createState() => _BusStopTileViewState();
@@ -55,7 +58,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   late final Animation<double> _iconTurns;
   late final AnimationController _controller;
 
-  var _expanded = false;
+  late var _expanded = widget.alwaysExpanded;
 
   @override
   void initState() {
@@ -63,11 +66,16 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 
     _controller = AnimationController(
       duration: Durations.medium2,
+      value: widget.alwaysExpanded ? 1 : 0,
       vsync: this,
     );
 
     _heightFactor = _controller.drive(_easeInCurve);
     _iconTurns = _controller.drive(_halfTurn.chain(_easeInCurve));
+
+    if (widget.alwaysExpanded) {
+      _requestData();
+    }
   }
 
   @override
@@ -91,7 +99,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 
     return SafeArea(
       top: false,
-      bottom: false,
+      bottom: widget.alwaysExpanded,
       child: Card(
         elevation: 1,
         shadowColor: Colors.transparent,
@@ -102,6 +110,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
         child: GestureDetector(
           onTap: _onTap,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Material(
                 type: MaterialType.card,
@@ -112,10 +121,12 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: CircleAvatar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
-                    foregroundColor:
-                        Theme.of(context).colorScheme.onSecondaryContainer,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.secondaryContainer,
+                    foregroundColor: Theme.of(
+                      context,
+                    ).colorScheme.onSecondaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: AutoSizeText(
@@ -128,56 +139,75 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                     BusStopUtils.resolveName(widget.stopId),
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  subtitle: Text(subtitle),
-                  trailing: RotationTransition(
-                    turns: _iconTurns,
-                    child: Transform.rotate(
-                      angle: pi / 2,
-                      child: const Icon(Symbols.chevron_forward_rounded),
-                    ),
+                  subtitle: AutoSizeText(
+                    subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    minFontSize: 14,
                   ),
+                  trailing: widget.alwaysExpanded
+                      ? const Icon(Symbols.close_rounded)
+                      : RotationTransition(
+                          turns: _iconTurns,
+                          child: Transform.rotate(
+                            angle: pi / 2,
+                            child: const Icon(Symbols.chevron_forward_rounded),
+                          ),
+                        ),
                 ),
               ),
-              SizeTransition(
-                sizeFactor: _heightFactor,
-                child: FadeTransition(
-                  opacity: _heightFactor,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: Column(
-                      children: [
-                        const _BusStopTileBody(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            if (isFavorite)
-                              TextButton.icon(
-                                onPressed: _toggleFavorite,
-                                icon: const Icon(Symbols.delete_rounded),
-                                label: Text(
-                                  MaterialLocalizations.of(context)
-                                      .deleteButtonTooltip,
-                                ),
-                              )
-                            else
-                              TextButton.icon(
-                                onPressed: _toggleFavorite,
-                                icon: const Icon(Symbols.favorite_rounded),
-                                label: Text(context.l10n.busStopTileFavorite),
-                              ),
-                            TextButton.icon(
-                              onPressed: () => _requestData(
-                                hapticFeedback: true,
-                              ),
-                              icon: const Icon(Symbols.refresh_rounded),
-                              label: Text(context.l10n.busStopTileReload),
+              Flexible(
+                child: SizeTransition(
+                  sizeFactor: _heightFactor,
+                  child: FadeTransition(
+                    opacity: _heightFactor,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Flexible(
+                            child: SingleChildScrollView(
+                              child: _BusStopTileBody(),
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              if (isFavorite)
+                                TextButton.icon(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.error,
+                                  ),
+                                  onPressed: _toggleFavorite,
+                                  icon: const Icon(Symbols.delete_rounded),
+                                  label: Text(
+                                    MaterialLocalizations.of(
+                                      context,
+                                    ).deleteButtonTooltip,
+                                  ),
+                                )
+                              else
+                                TextButton.icon(
+                                  onPressed: _toggleFavorite,
+                                  icon: const Icon(Symbols.favorite_rounded),
+                                  label: Text(context.l10n.busStopTileFavorite),
+                                ),
+                              TextButton.icon(
+                                onPressed: () =>
+                                    _requestData(hapticFeedback: true),
+                                icon: const Icon(Symbols.refresh_rounded),
+                                label: Text(context.l10n.busStopTileReload),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -190,6 +220,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   }
 
   Future<void> _onTap() async {
+    if (widget.alwaysExpanded) return Navigator.of(context).pop();
+
     setState(() => _expanded = !_expanded);
 
     if (_expanded) {
@@ -214,6 +246,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 }
 
 class _BusStopTileLoading extends StatelessWidget {
+  static const _maxRows = 5;
+
   final int rows;
 
   const _BusStopTileLoading(this.rows);
@@ -222,7 +256,7 @@ class _BusStopTileLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (var i = 0; i < rows; i++)
+        for (var i = 0; i < (rows > _maxRows ? _maxRows : rows); i++)
           AucorsaShimmer(
             child: ListTile(
               contentPadding: EdgeInsets.zero,
@@ -289,9 +323,7 @@ class _BusStopTileBody extends StatelessWidget {
     }
 
     final filteredLineEstimations = busStopState.estimations.where(
-      (lineEstimation) => BusLineUtils.isLineAvailable(
-        lineEstimation.lineId,
-      ),
+      (lineEstimation) => BusLineUtils.isLineAvailable(lineEstimation.lineId),
     );
 
     return Column(
@@ -303,7 +335,7 @@ class _BusStopTileBody extends StatelessWidget {
                 flex: 3,
                 child: BusLineTile(
                   lineId: lineEstimation.lineId,
-                  embedded: true,
+                  padding: EdgeInsets.zero,
                 ),
               ),
               Expanded(
@@ -313,8 +345,8 @@ class _BusStopTileBody extends StatelessWidget {
                     for (final estimation in lineEstimation.estimations)
                       DefaultTextStyle(
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                          fontWeight: FontWeight.w500,
+                        ),
                         child: estimation == Duration.zero
                             ? const _BusStopCloseEstimation()
                             : AutoSizeText(
@@ -379,9 +411,7 @@ class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
       opacity: _curvedAnimation,
       child: Text(
         context.l10n.busStopTileNow,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        style: TextStyle(color: Theme.of(context).colorScheme.primary),
       ),
     );
   }

@@ -3,24 +3,20 @@ import 'package:flutter/material.dart';
 
 class BusStopListView extends StatelessWidget {
   final List<int> stopIds;
+  final EdgeInsets? padding;
 
-  const BusStopListView({
-    required this.stopIds,
-    super.key,
-  });
+  const BusStopListView({required this.stopIds, this.padding, super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: EdgeInsets.only(
-        bottom: 88 + MediaQuery.paddingOf(context).bottom,
-      ),
+      padding:
+          padding ??
+          EdgeInsets.only(bottom: 160 + MediaQuery.paddingOf(context).bottom),
       sliver: SliverList.separated(
         itemCount: stopIds.length,
         separatorBuilder: (context, index) => const SizedBox(height: 8),
-        itemBuilder: (context, index) => BusStopTile(
-          stopId: stopIds[index],
-        ),
+        itemBuilder: (context, index) => BusStopTile(stopId: stopIds[index]),
       ),
     );
   }

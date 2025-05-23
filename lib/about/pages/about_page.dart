@@ -41,7 +41,7 @@ class _AboutPageState extends State<AboutPage> {
         slivers: [
           SliverAppBar.medium(
             title: Text(
-              _packageInfo?.appName ?? '',
+              context.l10n.appName,
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
@@ -54,6 +54,7 @@ class _AboutPageState extends State<AboutPage> {
                 subtitle: Text(context.l10n.appearanceSubtitle),
                 onTap: () => showThemeBottomSheet(context),
               ),
+              const SizedBox(height: 8),
               _AboutSectionTitle(context.l10n.info),
               _AboutSectionTile(
                 leading: const Icon(Symbols.star_rounded),
@@ -108,8 +109,8 @@ class _AboutPageState extends State<AboutPage> {
                     _packageInfo?.buildNumber ?? '',
                   ),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
@@ -130,13 +131,12 @@ class _AboutSectionTitle extends StatelessWidget {
     return SafeArea(
       top: false,
       bottom: false,
-      minimum: const EdgeInsets.symmetric(vertical: 8).copyWith(left: 16),
+      minimum: const EdgeInsets.only(left: 16, bottom: 4),
       child: Text(
         data,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
@@ -168,8 +168,8 @@ class _AboutSectionTile extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       subtitle: subtitle,
       subtitleTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
       trailing: const Icon(Symbols.chevron_right_rounded),
       onTap: onTap,
     );
@@ -191,8 +191,8 @@ class _DataOriginBottomSheet extends StatelessWidget {
           Text(
             context.l10n.dataOriginSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             textAlign: TextAlign.justify,
           ),
           TextButton(
