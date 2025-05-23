@@ -1467,7 +1467,6 @@ class BusStopUtils {
     920: 'Doña Manuela DC',
     921: 'Torreblanca DC',
     463: 'Terminal Feria',
-    // TODO(me): Add lat lng values for these bus stops
     464: 'Bulevar G. Capitán',
     465: 'Gen. Lázaro Cárdenas (L.J.R. Mora)',
     580: 'Carlos III (C. Lasso)',
