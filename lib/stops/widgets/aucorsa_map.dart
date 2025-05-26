@@ -9,8 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cache/flutter_map_cache.dart';
+import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AucorsaMap extends StatefulWidget {
   const AucorsaMap({super.key});
@@ -33,6 +36,21 @@ class _AucorsaMapState extends State<AucorsaMap> {
 
   late MapMarkerSize markerSize = MapMarkerSize.dot;
   late final mapController = MapController();
+  
+  String? tileCachePath;
+
+  Future<void> getTileCachePath() async {
+    final cacheDirectory = await getTemporaryDirectory();
+
+    setState(() => tileCachePath = cacheDirectory.path);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getTileCachePath();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +75,16 @@ class _AucorsaMapState extends State<AucorsaMap> {
             minZoom: 11,
           ),
           children: [
-            TileLayer(
-              urlTemplate: Urls.resolveMapStyleUrl(
-                brightness: Theme.of(context).brightness,
-                apiKey: dotenv.env['CHART_STYLE_API_KEY']!,
+            if (tileCachePath != null)
+              TileLayer(
+                urlTemplate: Urls.resolveMapStyleUrl(
+                  brightness: Theme.of(context).brightness,
+                  apiKey: dotenv.env['CHART_STYLE_API_KEY']!,
+                ),
+                tileProvider: CachedTileProvider(
+                  store: HiveCacheStore(tileCachePath),
+                ),
               ),
-            ),
             if (busLineSelectorState.linePath.isNotEmpty)
               PolylineLayer(
                 polylines: [
@@ -88,18 +110,21 @@ class _AucorsaMapState extends State<AucorsaMap> {
                       clipBehavior: Clip.antiAlias,
                       shape: const CircleBorder(),
                       elevation: markerSize == MapMarkerSize.normal ? 4 : 0,
-                      child: markerSize == MapMarkerSize.normal
-                          ? InkWell(
-                              onTap: () => showBusStopDialog(context, stop.key),
-                              child: Icon(
-                                Symbols.directions_bus_rounded,
-                                fill: 1,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onPrimaryFixed,
-                              ),
-                            )
-                          : null,
+                      child:
+                          markerSize == MapMarkerSize.normal
+                              ? InkWell(
+                                onTap:
+                                    () => showBusStopDialog(context, stop.key),
+                                child: Icon(
+                                  Symbols.directions_bus_rounded,
+                                  fill: 1,
+                                  color:
+                                      Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimaryFixed,
+                                ),
+                              )
+                              : null,
                     ),
                   ),
               ],
@@ -115,13 +140,15 @@ class _AucorsaMapState extends State<AucorsaMap> {
             children: [
               FloatingActionButton(
                 tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-                onPressed: () => showBusStopSearch(
-                  context: context,
-                  stops: BusLineUtils.lines
-                      .expand((line) => line.stops)
-                      .toSet()
-                      .toList(),
-                ),
+                onPressed:
+                    () => showBusStopSearch(
+                      context: context,
+                      stops:
+                          BusLineUtils.lines
+                              .expand((line) => line.stops)
+                              .toSet()
+                              .toList(),
+                    ),
                 child: const Icon(Symbols.search_rounded),
               ),
             ],
