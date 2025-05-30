@@ -26,30 +26,21 @@ class BusLinePage extends StatelessWidget {
               context.l10n.busLine(line.id),
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(Symbols.map_rounded),
+                onPressed: () =>
+                    context.push(BusLineMapPage.path, extra: lineId),
+              ),
+            ],
           ),
           BusStopListView(stopIds: line.stops),
         ],
       ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 16,
-        children: [
-          FloatingActionButton(
-            heroTag: null,
-            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-            shape: const CircleBorder(),
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
-            onPressed: () => context.push(BusLineMapPage.path, extra: lineId),
-            child: const Icon(Symbols.map_rounded),
-          ),
-          FloatingActionButton(
-            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-            onPressed: () =>
-                showBusStopSearch(context: context, stops: line.stops),
-            child: const Icon(Symbols.search_rounded),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+        onPressed: () => showBusStopSearch(context: context, stops: line.stops),
+        child: const Icon(Symbols.search_rounded),
       ),
     );
   }

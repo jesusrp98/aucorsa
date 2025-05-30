@@ -49,5 +49,7 @@
     "allStops": "All stops",
     "feriaEventDescription": "Special services by AUCORSA",
     "events": "Events",
-    "feriaDialogBody": "Take advantage of the special bus lines that will take you to the Feria de Córdoba"
+    "feriaDialogBody": "Take advantage of the special bus lines that will take you to the Feria de Córdoba",
+    "deleteStopTitle": "Delete stop",
+    "deleteStopSubtitle": "Are you sure you want to delete this bus stop?"
 }

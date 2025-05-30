@@ -9,6 +9,7 @@ import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
+import 'package:aucorsa/common/widgets/bus_stop_delete_dialog.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
@@ -50,8 +51,11 @@ class _BusStopTileView extends StatefulWidget {
 }
 
 class _BusStopTileViewState extends State<_BusStopTileView>
-    with SingleTickerProviderStateMixin {
-  static final _easeInCurve = CurveTween(curve: Curves.easeInOutCubic);
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  static const _curve = Curves.easeInOutCubic;
+  static const _duration = Durations.medium2;
+
+  static final _easeInCurve = CurveTween(curve: _curve);
   static final _halfTurn = Tween<double>(begin: 0, end: 0.5);
 
   late final Animation<double> _heightFactor;
@@ -64,8 +68,10 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   void initState() {
     super.initState();
 
+    WidgetsBinding.instance.addObserver(this);
+
     _controller = AnimationController(
-      duration: Durations.medium2,
+      duration: _duration,
       value: widget.alwaysExpanded ? 1 : 0,
       vsync: this,
     );
@@ -81,7 +87,15 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   @override
   void dispose() {
     _controller.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Refresh data when the app is resumed and it's expanded
+    if (_expanded && state == AppLifecycleState.resumed) _requestData();
   }
 
   @override
@@ -170,8 +184,13 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const Flexible(
-                            child: SingleChildScrollView(
-                              child: _BusStopTileBody(),
+                            child: AnimatedSize(
+                              alignment: Alignment.topCenter,
+                              duration: _duration,
+                              curve: _curve,
+                              child: SingleChildScrollView(
+                                child: _BusStopTileBody(),
+                              ),
                             ),
                           ),
                           Row(
@@ -183,8 +202,16 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                                     foregroundColor: Theme.of(
                                       context,
                                     ).colorScheme.error,
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
                                   ),
-                                  onPressed: _toggleFavorite,
+                                  onPressed: () => showBusStopDeleteDialog(
+                                    context: context,
+                                    stopName: BusStopUtils.resolveName(
+                                      widget.stopId,
+                                    ),
+                                    onDelete: _toggleFavorite,
+                                  ),
                                   icon: const Icon(Symbols.delete_rounded),
                                   label: Text(
                                     MaterialLocalizations.of(
@@ -194,11 +221,19 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                                 )
                               else
                                 TextButton.icon(
+                                  style: TextButton.styleFrom(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                  ),
                                   onPressed: _toggleFavorite,
                                   icon: const Icon(Symbols.favorite_rounded),
                                   label: Text(context.l10n.busStopTileFavorite),
                                 ),
                               TextButton.icon(
+                                style: TextButton.styleFrom(
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
                                 onPressed: () =>
                                     _requestData(hapticFeedback: true),
                                 icon: const Icon(Symbols.refresh_rounded),
@@ -232,10 +267,12 @@ class _BusStopTileViewState extends State<_BusStopTileView>
     return _controller.reverse();
   }
 
-  Future<void> _requestData({bool hapticFeedback = false}) {
-    if (hapticFeedback) HapticFeedback.selectionClick();
+  Future<void> _requestData({bool hapticFeedback = false}) async {
+    if (hapticFeedback) unawaited(HapticFeedback.selectionClick());
 
-    return context.read<BusStopCubit>().fetchEstimations();
+    await context.read<BusStopCubit>().fetchEstimations();
+
+    if (hapticFeedback) unawaited(HapticFeedback.selectionClick());
   }
 
   void _toggleFavorite() {
@@ -302,8 +339,8 @@ class _BusStopTileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final busStopState = context.watch<BusStopCubit>().state;
 
-    if (busStopState.status == AucorsaStateStatus.loading ||
-        busStopState.status == AucorsaStateStatus.initial) {
+    if (busStopState.status == AucorsaStateStatus.loading &&
+        busStopState.estimations.isEmpty) {
       return _BusStopTileLoading(
         BusLineUtils.getStopsLength(busStopState.stopId),
       );
@@ -311,14 +348,26 @@ class _BusStopTileBody extends StatelessWidget {
 
     if (busStopState.status == AucorsaStateStatus.error ||
         busStopState.estimations.isEmpty) {
-      return ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.errorContainer,
-          foregroundColor: Theme.of(context).colorScheme.onErrorContainer,
-          child: const Icon(Symbols.schedule_rounded),
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 8,
+            children: [
+              Icon(
+                Symbols.history_toggle_off_rounded,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              Text(
+                context.l10n.busStopTileNoEstimations,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
         ),
-        title: Text(context.l10n.busStopTileNoEstimations),
       );
     }
 
@@ -330,37 +379,51 @@ class _BusStopTileBody extends StatelessWidget {
       children: [
         for (final lineEstimation in filteredLineEstimations)
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 8,
             children: [
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: BusLineTile(
                   lineId: lineEstimation.lineId,
                   padding: EdgeInsets.zero,
                 ),
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    for (final estimation in lineEstimation.estimations)
-                      DefaultTextStyle(
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
+              Flexible(
+                child: busStopState.status == AucorsaStateStatus.loading
+                    ? AucorsaShimmer(
+                        child: Container(
+                          height: 16,
+                          width: 48,
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            color: Colors.white,
+                          ),
                         ),
-                        child: estimation == Duration.zero
-                            ? const _BusStopCloseEstimation()
-                            : AutoSizeText(
-                                estimation.pretty(
-                                  abbreviated: true,
-                                  delimiter: ' ',
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.end,
-                              ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          for (final estimation in lineEstimation.estimations)
+                            DefaultTextStyle(
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.w500),
+                              child: estimation == Duration.zero
+                                  ? const _BusStopCloseEstimation()
+                                  : AutoSizeText(
+                                      estimation.pretty(
+                                        abbreviated: true,
+                                        delimiter: ' ',
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.end,
+                                    ),
+                            ),
+                        ],
                       ),
-                  ],
-                ),
               ),
             ],
           ),

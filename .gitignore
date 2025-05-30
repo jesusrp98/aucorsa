@@ -45,3 +45,7 @@ app.*.map.json
 /android/app/release
 
 *.env
+
+# Map style related
+/assets/vector-map-tiles/
+/assets/vector-map-styles/

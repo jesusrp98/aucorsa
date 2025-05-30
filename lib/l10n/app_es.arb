@@ -49,5 +49,7 @@
     "allStops": "Todas las paradas",
     "feriaEventDescription": "Servicios especiales de AUCORSA",
     "events": "Eventos",
-    "feriaDialogBody": "Aprovecha las líneas de autobuses especiales que te llevarán a la Feria de Córdoba"
+    "feriaDialogBody": "Aprovecha las líneas de autobuses especiales que te llevarán a la Feria de Córdoba",
+    "deleteStopTitle": "Eliminar parada",
+    "deleteStopSubtitle": "¿Estás seguro de que quieres eliminar esta parada de tus favoritos?"
 }

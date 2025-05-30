@@ -64,8 +64,10 @@ class AucorsaRouter {
       ),
       GoRoute(
         path: BusLineMapPage.path,
-        builder: (context, state) =>
-            BusLineMapPage(lineId: state.extra! as String),
+        pageBuilder: (context, state) => MaterialPage(
+          fullscreenDialog: true,
+          child: BusLineMapPage(lineId: state.extra! as String),
+        ),
       ),
     ],
   );

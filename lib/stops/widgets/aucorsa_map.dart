@@ -1,19 +1,22 @@
+import 'dart:convert';
+
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
-import 'package:aucorsa/common/utils/urls.dart';
+import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
+import 'package:aucorsa/stops/utils/asset_vector_tile_provider.dart';
 import 'package:aucorsa/stops/utils/map_marker_size.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
 import 'package:aucorsa/stops/widgets/map_attribution_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_cache/flutter_map_cache.dart';
-import 'package:http_cache_hive_store/http_cache_hive_store.dart';
+import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:vector_map_tiles/vector_map_tiles.dart';
+import 'package:vector_tile_renderer/vector_tile_renderer.dart' as map;
 
 class AucorsaMap extends StatefulWidget {
   const AucorsaMap({super.key});
@@ -22,34 +25,48 @@ class AucorsaMap extends StatefulWidget {
   State<AucorsaMap> createState() => _AucorsaMapState();
 }
 
-class _AucorsaMapState extends State<AucorsaMap> {
+class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
   static const hotelCordobaCenterLocation = LatLng(37.8916417, -4.7871324);
   static const cameraConstraints = [
-    LatLng(38.01969806372978, -4.60963757540793),
-    LatLng(37.800721380628374, -4.915884463739758),
+    LatLng(38.0287198393342, -4.647998576490011),
+    LatLng(37.828534654889125, -4.942937979624105),
   ];
   static const thresholdZoom = 15.5;
   static const markerSizeValues = {
     MapMarkerSize.dot: 8.0,
     MapMarkerSize.normal: 32.0,
   };
+  static final baseMapColor = {
+    Brightness.light: const Color(0xFFEEEEEE),
+    Brightness.dark: const Color(0xFF333333),
+  };
 
   late MapMarkerSize markerSize = MapMarkerSize.dot;
-  late final mapController = MapController();
-  
-  String? tileCachePath;
-
-  Future<void> getTileCachePath() async {
-    final cacheDirectory = await getTemporaryDirectory();
-
-    setState(() => tileCachePath = cacheDirectory.path);
-  }
+  late final animatedMapController = AnimatedMapController(vsync: this);
+  map.Theme? mapTileTheme;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    getTileCachePath();
+    // No need to update if the theme hasn't changed
+    if (mapTileTheme?.id == Theme.of(context).brightness.name) return;
+
+    _updateVectorTileTheme();
+  }
+
+  Future<void> _updateVectorTileTheme() async {
+    final jsonString = await rootBundle.loadString(
+      'assets/vector-map-styles/${Theme.of(context).brightness.name}.json',
+    );
+
+    final theme = map.ThemeReader().read(
+      json.decode(jsonString) as Map<String, dynamic>,
+    );
+
+    if (!mounted) return;
+
+    return setState(() => mapTileTheme = theme);
   }
 
   @override
@@ -60,9 +77,9 @@ class _AucorsaMapState extends State<AucorsaMap> {
     return Stack(
       children: [
         FlutterMap(
-          mapController: mapController,
+          mapController: animatedMapController.mapController,
           options: MapOptions(
-            backgroundColor: Theme.of(context).colorScheme.surface,
+            backgroundColor: baseMapColor[Theme.of(context).brightness]!,
             cameraConstraint: CameraConstraint.containCenter(
               bounds: LatLngBounds.fromPoints(cameraConstraints),
             ),
@@ -71,19 +88,17 @@ class _AucorsaMapState extends State<AucorsaMap> {
             ),
             initialCenter: hotelCordobaCenterLocation,
             onPositionChanged: onPositionChanged,
-            maxZoom: 19,
+            maxZoom: 20,
             minZoom: 11,
           ),
           children: [
-            if (tileCachePath != null)
-              TileLayer(
-                urlTemplate: Urls.resolveMapStyleUrl(
-                  brightness: Theme.of(context).brightness,
-                  apiKey: dotenv.env['CHART_STYLE_API_KEY']!,
-                ),
-                tileProvider: CachedTileProvider(
-                  store: HiveCacheStore(tileCachePath),
-                ),
+            if (mapTileTheme != null)
+              VectorTileLayer(
+                theme: mapTileTheme!,
+                layerMode: VectorTileLayerMode.vector,
+                tileProviders: TileProviders({
+                  'openmaptiles': AssetVectorTileProvider(),
+                }),
               ),
             if (busLineSelectorState.linePath.isNotEmpty)
               PolylineLayer(
@@ -110,21 +125,18 @@ class _AucorsaMapState extends State<AucorsaMap> {
                       clipBehavior: Clip.antiAlias,
                       shape: const CircleBorder(),
                       elevation: markerSize == MapMarkerSize.normal ? 4 : 0,
-                      child:
-                          markerSize == MapMarkerSize.normal
-                              ? InkWell(
-                                onTap:
-                                    () => showBusStopDialog(context, stop.key),
-                                child: Icon(
-                                  Symbols.directions_bus_rounded,
-                                  fill: 1,
-                                  color:
-                                      Theme.of(
-                                        context,
-                                      ).colorScheme.onPrimaryFixed,
-                                ),
-                              )
-                              : null,
+                      child: markerSize == MapMarkerSize.normal
+                          ? InkWell(
+                              onTap: () => onMarkerTap(stop),
+                              child: Icon(
+                                Symbols.directions_bus_rounded,
+                                fill: 1,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryFixed,
+                              ),
+                            )
+                          : null,
                     ),
                   ),
               ],
@@ -140,15 +152,13 @@ class _AucorsaMapState extends State<AucorsaMap> {
             children: [
               FloatingActionButton(
                 tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-                onPressed:
-                    () => showBusStopSearch(
-                      context: context,
-                      stops:
-                          BusLineUtils.lines
-                              .expand((line) => line.stops)
-                              .toSet()
-                              .toList(),
-                    ),
+                onPressed: () => showBusStopSearch(
+                  context: context,
+                  stops: BusLineUtils.lines
+                      .expand((line) => line.stops)
+                      .toSet()
+                      .toList(),
+                ),
                 child: const Icon(Symbols.search_rounded),
               ),
             ],
@@ -167,6 +177,16 @@ class _AucorsaMapState extends State<AucorsaMap> {
         ),
       ],
     );
+  }
+
+  void onMarkerTap(BusStopCoordinates stop) {
+    animatedMapController.animateTo(
+      duration: Durations.medium2,
+      curve: Curves.easeInOutCubic,
+      dest: stop.value,
+    );
+
+    showBusStopDialog(context, stop.key);
   }
 
   void onPositionChanged(MapCamera camera, bool _) {
