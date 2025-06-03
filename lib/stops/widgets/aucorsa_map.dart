@@ -95,7 +95,7 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
             if (mapTileTheme != null)
               VectorTileLayer(
                 theme: mapTileTheme!,
-                layerMode: VectorTileLayerMode.vector,
+                maximumZoom: 20,
                 tileProviders: TileProviders({
                   'openmaptiles': AssetVectorTileProvider(),
                 }),
