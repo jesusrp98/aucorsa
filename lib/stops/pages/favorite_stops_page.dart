@@ -8,7 +8,7 @@ import 'package:aucorsa/events/models/event_id.dart';
 import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:aucorsa/events/widgets/feria_event_tile.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
-import 'package:aucorsa/stops/widgets/no_favorites_tile.dart';
+import 'package:aucorsa/stops/widgets/no_favorite_stops_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -16,12 +16,13 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 class FavoriteStopsPage extends StatelessWidget {
   static const path = '/favorite-stops';
 
+  static final currentEvents = EventsCalendar.currentEvents;
+
   const FavoriteStopsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final favoriteStops = context.watch<FavoriteStopsCubit>().state;
-    final currentEvents = EventsCalendar.currentEvents;
 
     return Scaffold(
       body: CustomScrollView(
@@ -44,20 +45,16 @@ class FavoriteStopsPage extends StatelessWidget {
                   )
                 : const SliverPadding(
                     padding: EdgeInsets.only(bottom: 16),
-                    sliver: SliverToBoxAdapter(child: NoFavoritesTile()),
+                    sliver: SliverToBoxAdapter(child: NoFavoriteStopsTile()),
                   ),
           ),
           if (currentEvents.isNotEmpty)
             _PageSection(
               title: Text(context.l10n.events),
-              child: SliverPadding(
-                padding: EdgeInsets.only(
-                  bottom: 88 + MediaQuery.paddingOf(context).bottom,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: _EventsSection(currentEvents),
-                ),
+              padding: EdgeInsets.only(
+                bottom: 88 + MediaQuery.paddingOf(context).bottom,
               ),
+              child: SliverToBoxAdapter(child: _EventsSection(currentEvents)),
             ),
         ],
       ),
@@ -79,14 +76,20 @@ class FavoriteStopsPage extends StatelessWidget {
 class _PageSection extends StatelessWidget {
   final Widget title;
   final Widget child;
+  final EdgeInsets padding;
 
-  const _PageSection({required this.title, required this.child});
+  const _PageSection({
+    required this.title,
+    required this.child,
+    this.padding = EdgeInsets.zero,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SliverSafeArea(
       top: false,
       bottom: false,
+      minimum: padding,
       sliver: SliverMainAxisGroup(
         slivers: [
           SliverToBoxAdapter(

@@ -48,7 +48,7 @@ class _BusLineMapPageState extends State<BusLineMapPage> {
         ),
         elevation: 4,
       ),
-      body: const AucorsaMap(),
+      body: const AucorsaMap(zoomToLocationOnStart: false),
     );
   }
 }

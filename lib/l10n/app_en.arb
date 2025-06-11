@@ -51,5 +51,8 @@
     "events": "Events",
     "feriaDialogBody": "Take advantage of the special bus lines that will take you to the Feria de Córdoba",
     "deleteStopTitle": "Delete stop",
-    "deleteStopSubtitle": "Are you sure you want to delete this bus stop?"
+    "deleteStopSubtitle": "Are you sure you want to delete this bus stop?",
+    "locationPermissionTitle": "Location Permission",
+    "locationPermissionDescription": "Location access is permanently denied. Please open settings and enable it manually.",
+    "openSettings": "Open Settings"
 }

@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       if (EventsCalendar.currentEvents.isNotEmpty) return;
 
       if (context.read<FavoriteStopsCubit>().state.isEmpty) {
-        context.go(destinations.keys.elementAt(1));
+        context.go(destinations.keys.elementAt(2));
       }
     });
   }

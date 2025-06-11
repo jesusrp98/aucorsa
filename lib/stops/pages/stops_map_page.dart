@@ -24,7 +24,11 @@ class _StopsMapPageState extends State<StopsMapPage> {
     return Scaffold(
       body: Stack(
         children: [
-          const AucorsaMap(),
+          AucorsaMap(
+            margin: EdgeInsets.only(
+              top: MediaQuery.paddingOf(context).top + kToolbarHeight + 32,
+            ),
+          ),
           Positioned(
             top: MediaQuery.paddingOf(context).top + 16,
             left: MediaQuery.paddingOf(context).left + 16,

@@ -1,8 +1,17 @@
 PODS:
+  - compassx (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_native_splash (2.4.3):
     - Flutter
+  - flutter_rotation_sensor (0.0.1):
+    - Flutter
+  - geolocator_apple (1.2.0):
+    - Flutter
+    - FlutterMacOS
   - in_app_review (2.0.0):
+    - Flutter
+  - native_device_orientation (0.0.1):
     - Flutter
   - package_info_plus (0.4.5):
     - Flutter
@@ -13,20 +22,32 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - compassx (from `.symlinks/plugins/compassx/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - flutter_rotation_sensor (from `.symlinks/plugins/flutter_rotation_sensor/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
+  - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 EXTERNAL SOURCES:
+  compassx:
+    :path: ".symlinks/plugins/compassx/ios"
   Flutter:
     :path: Flutter
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
+  flutter_rotation_sensor:
+    :path: ".symlinks/plugins/flutter_rotation_sensor/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/darwin"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
+  native_device_orientation:
+    :path: ".symlinks/plugins/native_device_orientation/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -35,13 +56,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  compassx: 2d291f8c8e5672f35c62277f2318ef48359dc1d0
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
+  flutter_rotation_sensor: bf55ead3f64f27207dacc5972fe8ebe932f3de0b
+  geolocator_apple: ab36aa0e8b7d7a2d7639b3b4e48308394e8cef5e
   in_app_review: 5596fe56fab799e8edb3561c03d053363ab13457
+  native_device_orientation: e3580675687d5034770da198f6839ebf2122ef94
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
-PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+PODFILE CHECKSUM: e5493faad3fc3f6c4525cb64f2dced6c8b8742ad
 
 COCOAPODS: 1.16.2

@@ -51,5 +51,8 @@
     "events": "Eventos",
     "feriaDialogBody": "Aprovecha las líneas de autobuses especiales que te llevarán a la Feria de Córdoba",
     "deleteStopTitle": "Eliminar parada",
-    "deleteStopSubtitle": "¿Estás seguro de que quieres eliminar esta parada de tus favoritos?"
+    "deleteStopSubtitle": "¿Estás seguro de que quieres eliminar esta parada de tus favoritos?",
+    "locationPermissionTitle": "Permiso de ubicación",
+    "locationPermissionDescription": "El acceso a la ubicación está permanentemente denegado. Por favor, abre los ajustes y habilítalo manualmente.",
+    "openSettings": "Abrir ajustes"
 }
