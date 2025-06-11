@@ -1,3 +1,4 @@
+import 'package:aucorsa/bonobus/pages/bonobus_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/events/models/events_calendar.dart';
@@ -27,6 +28,11 @@ class _HomePageState extends State<HomePage> {
       icon: const Icon(Symbols.favorite_rounded),
       selectedIcon: const Icon(Symbols.favorite_rounded, fill: 1),
       label: context.l10n.favoritesPageTitle,
+    ),
+    BonobusPage.path: const NavigationDestination(
+      icon: Icon(Symbols.credit_card_rounded),
+      selectedIcon: Icon(Symbols.credit_card_rounded, fill: 1),
+      label: 'Bonobús',
     ),
     StopsMapPage.path: NavigationDestination(
       icon: const Icon(Symbols.map_rounded),

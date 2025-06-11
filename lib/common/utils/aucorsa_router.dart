@@ -1,4 +1,5 @@
 import 'package:aucorsa/about/pages/about_page.dart';
+import 'package:aucorsa/bonobus/pages/bonobus_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_map_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
@@ -33,6 +34,14 @@ class AucorsaRouter {
               key: state.pageKey,
               name: state.name,
               child: const FavoriteStopsPage(),
+            ),
+          ),
+          GoRoute(
+            path: BonobusPage.path,
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              name: state.name,
+              child: const BonobusPage(),
             ),
           ),
           GoRoute(
