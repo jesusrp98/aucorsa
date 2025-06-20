@@ -3,13 +3,15 @@ import 'dart:math';
 
 import 'package:aucorsa/common/cubits/bus_service_cubit.dart';
 import 'package:aucorsa/common/cubits/bus_stop_cubit.dart';
+import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
+import 'package:aucorsa/common/models/bus_stop_custom_data.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/aucorsa_state_status.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
-import 'package:aucorsa/common/widgets/bus_stop_delete_dialog.dart';
+import 'package:aucorsa/common/widgets/bus_stop_options_dialog.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
@@ -104,57 +106,59 @@ class _BusStopTileViewState extends State<_BusStopTileView>
       (FavoriteStopsCubit cubit) => cubit.isFavorite(widget.stopId),
     );
 
-    final linesIds = BusLineUtils.getLinesByStop(widget.stopId);
-    final joinedLineIds = linesIds.join(', ');
-
-    final subtitle = linesIds.length == 1
-        ? context.l10n.busLine(joinedLineIds)
-        : '${context.l10n.busLines} $joinedLineIds';
+    final busStopCustomData = context.watch<BusStopCustomDataCubit>().get(
+      widget.stopId,
+    );
 
     return SafeArea(
       top: false,
       bottom: widget.alwaysExpanded,
       child: Card(
-        elevation: 1,
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
         shadowColor: Colors.transparent,
-        color: Theme.of(context).colorScheme.surface,
-        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
         margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
         clipBehavior: Clip.antiAlias,
         child: GestureDetector(
           onTap: _onTap,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Material(
-                type: MaterialType.card,
-                elevation: _expanded ? 4 : 1,
-                shadowColor: Colors.transparent,
-                color: Theme.of(context).colorScheme.surface,
-                surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+              AnimatedContainer(
+                duration: _duration,
+                curve: _curve,
+                color: _expanded
+                    ? Theme.of(context).colorScheme.surfaceContainer
+                    : Theme.of(context).colorScheme.surfaceContainerLow,
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.secondaryContainer,
-                    foregroundColor: Theme.of(
-                      context,
-                    ).colorScheme.onSecondaryContainer,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: AutoSizeText(
-                        widget.stopId.toString(),
-                        maxLines: 1,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ).copyWith(right: 20),
+                  leading: SizedBox.square(
+                    dimension: 40,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                      child: Icon(
+                        _resolveIcon(busStopCustomData, isFavorite),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondaryContainer,
+                        fill: 1,
                       ),
                     ),
                   ),
-                  title: Text(
-                    BusStopUtils.resolveName(widget.stopId),
+                  title: AutoSizeText(
+                    _resolveTitle(busStopCustomData),
                     style: const TextStyle(fontWeight: FontWeight.w500),
+                    maxLines: 1,
                   ),
                   subtitle: AutoSizeText(
-                    subtitle,
+                    _resolveSubtitle(busStopCustomData),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     minFontSize: 14,
@@ -193,53 +197,67 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              if (isFavorite)
-                                TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    foregroundColor: Theme.of(
-                                      context,
-                                    ).colorScheme.error,
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                  ),
-                                  onPressed: () => showBusStopDeleteDialog(
-                                    context: context,
-                                    stopName: BusStopUtils.resolveName(
-                                      widget.stopId,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton.icon(
+                                    style: TextButton.styleFrom(
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
                                     ),
-                                    onDelete: _toggleFavorite,
+                                    onPressed: () =>
+                                        _requestData(hapticFeedback: true),
+                                    icon: const Icon(Symbols.refresh_rounded),
+                                    label: Text(
+                                      MaterialLocalizations.of(
+                                        context,
+                                      ).refreshIndicatorSemanticLabel,
+                                    ),
                                   ),
-                                  icon: const Icon(Symbols.delete_rounded),
-                                  label: Text(
-                                    MaterialLocalizations.of(
-                                      context,
-                                    ).deleteButtonTooltip,
-                                  ),
-                                )
-                              else
-                                TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                  ),
-                                  onPressed: _toggleFavorite,
-                                  icon: const Icon(Symbols.favorite_rounded),
-                                  label: Text(context.l10n.busStopTileFavorite),
                                 ),
-                              TextButton.icon(
-                                style: TextButton.styleFrom(
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                ),
-                                onPressed: () =>
-                                    _requestData(hapticFeedback: true),
-                                icon: const Icon(Symbols.refresh_rounded),
-                                label: Text(context.l10n.busStopTileReload),
-                              ),
-                            ],
+                                if (isFavorite)
+                                  Expanded(
+                                    child: TextButton.icon(
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                      ),
+                                      onPressed: () => showBusStopOptionsDialog(
+                                        context: context,
+                                        stopId: widget.stopId,
+                                        onDelete: _toggleFavorite,
+                                      ),
+                                      icon: const Icon(Symbols.pending_rounded),
+                                      label: Text(
+                                        MaterialLocalizations.of(
+                                          context,
+                                        ).moreButtonTooltip,
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  Expanded(
+                                    child: TextButton.icon(
+                                      style: TextButton.styleFrom(
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                      ),
+                                      onPressed: _toggleFavorite,
+                                      icon: const Icon(
+                                        Symbols.favorite_rounded,
+                                      ),
+                                      label: Text(
+                                        context.l10n.busStopTileFavorite,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -252,6 +270,37 @@ class _BusStopTileViewState extends State<_BusStopTileView>
         ),
       ),
     );
+  }
+
+  IconData _resolveIcon(BusStopCustomData? data, bool isFavorite) {
+    if (data?.icon != null) {
+      return IconDataRounded(data!.icon!);
+    }
+
+    return Symbols.directions_bus_rounded;
+  }
+
+  String _resolveTitle(BusStopCustomData? data) {
+    if (data?.name?.isNotEmpty ?? false) {
+      return data!.name!;
+    }
+
+    return BusStopUtils.resolveName(widget.stopId);
+  }
+
+  String _resolveSubtitle(BusStopCustomData? data) {
+    if (data?.name?.isNotEmpty ?? false) {
+      return BusStopUtils.resolveName(widget.stopId);
+    }
+
+    final linesIds = BusLineUtils.getLinesByStop(widget.stopId);
+    final joinedLineIds = linesIds.join(', ');
+
+    if (linesIds.length == 1) {
+      return context.l10n.busLine(joinedLineIds);
+    }
+
+    return '${context.l10n.busLines} $joinedLineIds';
   }
 
   Future<void> _onTap() async {
@@ -268,15 +317,15 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   }
 
   Future<void> _requestData({bool hapticFeedback = false}) async {
-    if (hapticFeedback) unawaited(HapticFeedback.selectionClick());
+    if (hapticFeedback) unawaited(HapticFeedback.lightImpact());
 
     await context.read<BusStopCubit>().fetchEstimations();
 
-    if (hapticFeedback) unawaited(HapticFeedback.selectionClick());
+    if (hapticFeedback) unawaited(HapticFeedback.lightImpact());
   }
 
   void _toggleFavorite() {
-    HapticFeedback.selectionClick();
+    HapticFeedback.lightImpact();
 
     context.read<FavoriteStopsCubit>().toggle(widget.stopId);
   }

@@ -4,16 +4,13 @@ import 'package:material_symbols_icons/symbols.dart';
 
 Future<void> showBusStopDeleteDialog({
   required BuildContext context,
-  required String stopName,
   required VoidCallback onDelete,
-}) {
-  return showModalBottomSheet<void>(
-    context: context,
-    useRootNavigator: true,
-    useSafeArea: true,
-    builder: (_) => _BusStopDeleteDialogView(onDelete),
-  );
-}
+}) => showModalBottomSheet<void>(
+  context: context,
+  useRootNavigator: true,
+  useSafeArea: true,
+  builder: (_) => _BusStopDeleteDialogView(onDelete),
+);
 
 class _BusStopDeleteDialogView extends StatelessWidget {
   final VoidCallback onDelete;
@@ -31,7 +28,7 @@ class _BusStopDeleteDialogView extends StatelessWidget {
           children: [
             Icon(
               Symbols.delete_rounded,
-              color: Theme.of(context).colorScheme.error,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             const SizedBox(height: 16),
             Text(
@@ -60,15 +57,15 @@ class _BusStopDeleteDialogView extends StatelessWidget {
                   ),
                   minimumSize: const Size.fromHeight(56),
                   textStyle: Theme.of(context).textTheme.titleMedium,
-                  foregroundColor: Theme.of(context).colorScheme.onError,
-                  backgroundColor: Theme.of(context).colorScheme.error,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
                   return onDelete();
                 },
                 child: Text(
-                  MaterialLocalizations.of(context).deleteButtonTooltip,
+                  context.l10n.deleteStopCta,
                 ),
               ),
             ),

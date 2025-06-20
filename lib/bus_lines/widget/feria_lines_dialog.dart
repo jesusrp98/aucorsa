@@ -8,16 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
-Future<void> showFeriaLinesDialog(BuildContext context) async {
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    useRootNavigator: true,
-    clipBehavior: Clip.antiAlias,
-    useSafeArea: true,
-    builder: (_) => const _FeriaLinesDialog(),
-  );
-}
+Future<void> showFeriaLinesDialog(BuildContext context) => showModalBottomSheet(
+  context: context,
+  isScrollControlled: true,
+  useRootNavigator: true,
+  clipBehavior: Clip.antiAlias,
+  useSafeArea: true,
+  builder: (_) => const _FeriaLinesDialog(),
+);
 
 class _FeriaLinesDialog extends StatelessWidget {
   const _FeriaLinesDialog();

@@ -36,7 +36,6 @@
     },
     "busLines": "Líneas",
     "busStopTileFavorite": "Favorito",
-    "busStopTileReload": "Recargar",
     "busStopTileNoEstimations": "No hay estimaciones disponibles",
     "busStopTileNow": "Ahora",
     "systemTheme": "Tema del sistema",
@@ -50,9 +49,11 @@
     "feriaEventDescription": "Servicios especiales de AUCORSA",
     "events": "Eventos",
     "feriaDialogBody": "Aprovecha las líneas de autobuses especiales que te llevarán a la Feria de Córdoba",
-    "deleteStopTitle": "Eliminar parada",
-    "deleteStopSubtitle": "¿Estás seguro de que quieres eliminar esta parada de tus favoritos?",
+    "deleteStopTitle": "Quitar parada",
+    "deleteStopSubtitle": "¿Estás seguro de que quieres quitar esta parada de tus favoritos?",
+    "deleteStopCta": "Quitar",
     "locationPermissionTitle": "Permiso de ubicación",
     "locationPermissionDescription": "El acceso a la ubicación está permanentemente denegado. Por favor, abre los ajustes y habilítalo manualmente.",
-    "openSettings": "Abrir ajustes"
+    "openSettings": "Abrir ajustes",
+    "editStopTitle": "Editar nombre"
 }

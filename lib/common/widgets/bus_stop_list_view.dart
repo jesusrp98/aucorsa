@@ -15,7 +15,7 @@ class BusStopListView extends StatelessWidget {
           EdgeInsets.only(bottom: 88 + MediaQuery.paddingOf(context).bottom),
       sliver: SliverList.separated(
         itemCount: stopIds.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        separatorBuilder: (context, index) => const SizedBox(height: 12),
         itemBuilder: (context, index) =>
             BusStopTile(key: ValueKey(stopIds[index]), stopId: stopIds[index]),
       ),

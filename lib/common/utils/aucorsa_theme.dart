@@ -25,10 +25,25 @@ class AucorsaTheme {
         TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
       },
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: colorScheme.surfaceContainerHighest,
+      focusedBorder: _generateInputBorder(colorScheme.primary),
+      enabledBorder: _generateInputBorder(),
+      filled: true,
+    ),
     appBarTheme: AppBarTheme(
       surfaceTintColor: Colors.transparent,
       backgroundColor: colorScheme.surface,
       shadowColor: colorScheme.shadow,
     ),
   );
+
+  static InputBorder _generateInputBorder([Color color = Colors.transparent]) =>
+      OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(
+          color: color,
+          width: 2,
+        ),
+      );
 }

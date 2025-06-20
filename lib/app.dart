@@ -1,4 +1,5 @@
 import 'package:aucorsa/common/cubits/bus_service_cubit.dart';
+import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
 import 'package:aucorsa/common/cubits/theme_cubit.dart';
 import 'package:aucorsa/common/utils/aucorsa_router.dart';
 import 'package:aucorsa/common/utils/aucorsa_theme.dart';
@@ -21,6 +22,7 @@ class AucorsaApp extends StatelessWidget {
         BlocProvider(create: (_) => BusServiceCubit()),
         BlocProvider(create: (_) => FavoriteStopsCubit()),
         const BlocProvider(create: BusLineSelectorCubit.new),
+        BlocProvider(create: (_) => BusStopCustomDataCubit()),
       ],
       child: Builder(
         builder: (context) => MaterialApp.router(
