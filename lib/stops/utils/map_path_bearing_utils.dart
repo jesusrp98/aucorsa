@@ -51,7 +51,7 @@ class MapPathBearingUtils {
   }
 
   static double _bearingBetween(LatLng a, LatLng b) =>
-      FlutterMapMath().bearingBetween(
+      FlutterMapMath.bearingBetween(
         a.latitude,
         a.longitude,
         b.latitude,

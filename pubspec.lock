@@ -263,10 +263,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_map_math
-      sha256: "52a3f34c9b8e7dd61ebd2cf9e8c472c22aef04e4b5a4bfa9760d0c90f87e0d48"
+      sha256: c8e7c33a17f792d81edfe89052a142a1285b9ddc24cdb9cd1d2145427c0d6d87
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.3"
   flutter_native_splash:
     dependency: "direct dev"
     description:
@@ -353,10 +353,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: b453934c36e289cef06525734d1e676c1f91da9e22e2017d9dcab6ce0f999175
+      sha256: "02ff498f6279470ff7f60c998a69b872f26696ceec237c8402e63a2133868ddf"
       url: "https://pub.dev"
     source: hosted
-    version: "15.1.3"
+    version: "15.2.3"
   hive_ce:
     dependency: transitive
     description:
@@ -958,10 +958,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "329edf97fdd893e0f1e3b9e88d6a0e627128cc17cc316a8d67fda8f1451178ba"
+      sha256: "66814138c3562338d05613a6e368ed8cfb237ad6d64a9e9334be3f309acfca03"
       url: "https://pub.dev"
     source: hosted
-    version: "5.13.0"
+    version: "5.14.0"
   wkt_parser:
     dependency: transitive
     description:
