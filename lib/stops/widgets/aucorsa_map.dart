@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
@@ -35,10 +36,11 @@ class AucorsaMap extends StatefulWidget {
 
 class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
   static const hotelCordobaCenterLocation = LatLng(37.8916417, -4.7871324);
-  static const cameraConstraints = [
-    LatLng(38.0287198393342, -4.647998576490011),
-    LatLng(37.828534654889125, -4.942937979624105),
-  ];
+  // Reintroduced camera constraints at a later date
+  // static const cameraConstraints = [
+  //   LatLng(38.0287198393342, -4.647998576490011),
+  //   LatLng(37.828534654889125, -4.942937979624105),
+  // ];
   static const thresholdZoom = 15.5;
   static const markerSizeValues = {
     MapMarkerSize.dot: 8.0,
@@ -65,6 +67,7 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
     ),
   );
 
+  late final busStopCustomData = context.read<BusStopCustomDataCubit>();
   late AlignOnUpdate alignPositionOnUpdate = AlignOnUpdate.never;
   late MapMarkerSize markerSize;
   double rotation = 0;
@@ -140,9 +143,6 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
             mapController: animatedMapController.mapController,
             options: MapOptions(
               backgroundColor: baseMapColor[Theme.of(context).brightness]!,
-              cameraConstraint: CameraConstraint.containCenter(
-                bounds: LatLngBounds.fromPoints(cameraConstraints),
-              ),
               onMapEvent: (event) => onRotationChanged(event.camera),
               onPositionChanged: onPositionChanged,
               initialCenter: initialCenter!,
@@ -191,7 +191,7 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
                             ? InkWell(
                                 onTap: () => onMarkerTap(stop),
                                 child: Icon(
-                                  Symbols.directions_bus_rounded,
+                                  resolveIcon(stop.key),
                                   fill: 1,
                                   color: Theme.of(
                                     context,
@@ -285,6 +285,16 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
         ),
       ],
     );
+  }
+
+  IconData resolveIcon(int stopId) {
+    final data = busStopCustomData.get(stopId)?.icon;
+
+    if (data != null) {
+      return IconDataRounded(data);
+    }
+
+    return Symbols.directions_bus_rounded;
   }
 
   Future<void> onLocationButtonPressed() async {

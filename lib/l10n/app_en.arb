@@ -36,7 +36,6 @@
     },
     "busLines": "Lines",
     "busStopTileFavorite": "Favorite",
-    "busStopTileReload": "Reload",
     "busStopTileNoEstimations": "No estimations available",
     "busStopTileNow": "Now",
     "systemTheme": "System theme",
@@ -50,9 +49,11 @@
     "feriaEventDescription": "Special services by AUCORSA",
     "events": "Events",
     "feriaDialogBody": "Take advantage of the special bus lines that will take you to the Feria de Córdoba",
-    "deleteStopTitle": "Delete stop",
-    "deleteStopSubtitle": "Are you sure you want to delete this bus stop?",
+    "deleteStopTitle": "Remove stop",
+    "deleteStopSubtitle": "Are you sure you want to remove this stop from your favorites?",
+    "deleteStopCta": "Remove",
     "locationPermissionTitle": "Location Permission",
     "locationPermissionDescription": "Location access is permanently denied. Please open settings and enable it manually.",
-    "openSettings": "Open Settings"
+    "openSettings": "Open Settings",
+    "editStopTitle": "Edit name"
 }
