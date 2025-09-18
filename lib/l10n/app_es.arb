@@ -55,5 +55,21 @@
     "locationPermissionTitle": "Permiso de ubicación",
     "locationPermissionDescription": "El acceso a la ubicación está permanentemente denegado. Por favor, abre los ajustes y habilítalo manualmente.",
     "openSettings": "Abrir ajustes",
-    "editStopTitle": "Editar nombre"
+    "editStopTitle": "Editar nombre",
+    "deleteBonobusDialogTitle": "Eliminar bonobús",
+    "deleteBonobusDialogSubtitle": "¿Estás seguro de que quieres eliminar los detalles del bonobús?",
+    "bonobus": "Bonobús",
+    "aucorsa": "Aucorsa",
+    "consorcio": "Consorcio de Transporte Metropolitano",
+    "lastUpdated": "Última actualización {time}",
+    "scanBonobusTitle": "Escanea tu bonobús",
+    "scanBonobusSubtitle": "Usa tu dispositivo para leer tu saldo",
+    "topUpBonobusTitle": "Recargar bonobús",
+    "topUpBonobusSubtitle": "Descubre más sobre cómo hacerlo aquí",
+    "deleteBonobusTitle": "Eliminar detalles",
+    "deleteBonobusSubtitle": "Esto lo eliminará de la aplicación",
+    "addBonobusTitle": "Añadir tu bonobús",
+    "addBonobusSubtitle": "Selecciona tu proveedor de bonobús antes de añadir los datos de tu tarjeta",
+    "scanBonobusPageTitle": "Escanea tu bonobús",
+    "scanBonobusPageSubtitle": "Acerca tu tarjeta bonobús a la parte trasera de tu dispositivo para escanearla"
 }

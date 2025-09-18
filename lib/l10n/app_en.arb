@@ -55,5 +55,28 @@
     "locationPermissionTitle": "Location Permission",
     "locationPermissionDescription": "Location access is permanently denied. Please open settings and enable it manually.",
     "openSettings": "Open Settings",
-    "editStopTitle": "Edit name"
+    "editStopTitle": "Edit name",
+    "deleteBonobusDialogTitle": "Remove bonobus",
+    "deleteBonobusDialogSubtitle": "Are you sure you want to remove bonobus details?",
+    "bonobus": "Bonobus",
+    "aucorsa": "Aucorsa",
+    "consorcio": "Consorcio de Transporte Metropolitano",
+    "lastUpdated": "Last updated {time}",
+    "@lastUpdated": {
+        "placeholders": {
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "scanBonobusTitle": "Scan your bonobus",
+    "scanBonobusSubtitle": "Use your device to read your balance",
+    "topUpBonobusTitle": "Top up bonobus",
+    "topUpBonobusSubtitle": "Learn more about it here",
+    "deleteBonobusTitle": "Remove details",
+    "deleteBonobusSubtitle": "This will remove it from the app",
+    "addBonobusTitle": "Add your bonobus",
+    "addBonobusSubtitle": "Select your bonobus provider before adding your card details",
+    "scanBonobusPageTitle": "Scan your bonobus",
+    "scanBonobusPageSubtitle": "Hold your bonobus card near the back of your device to scan it"
 }
