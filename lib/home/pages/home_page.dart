@@ -29,11 +29,6 @@ class _HomePageState extends State<HomePage> {
       selectedIcon: const Icon(Symbols.favorite_rounded, fill: 1),
       label: context.l10n.favoritesPageTitle,
     ),
-    BonobusPage.path: const NavigationDestination(
-      icon: Icon(Symbols.credit_card_rounded),
-      selectedIcon: Icon(Symbols.credit_card_rounded, fill: 1),
-      label: 'Bonobús',
-    ),
     StopsMapPage.path: NavigationDestination(
       icon: const Icon(Symbols.map_rounded),
       selectedIcon: const Icon(Symbols.map_rounded, fill: 1),
@@ -43,6 +38,11 @@ class _HomePageState extends State<HomePage> {
       icon: const Icon(Symbols.format_list_bulleted_rounded),
       selectedIcon: const Icon(Symbols.format_list_bulleted_rounded, fill: 1),
       label: context.l10n.busLines,
+    ),
+    BonobusPage.path: NavigationDestination(
+      icon: const Icon(Symbols.credit_card_rounded),
+      selectedIcon: const Icon(Symbols.credit_card_rounded, fill: 1),
+      label: context.l10n.bonobus,
     ),
   };
 
