@@ -113,27 +113,8 @@ class BonobusDetailsView extends StatelessWidget {
                     if (bonobusState.provider == BonobusProvider.consorcio)
                       ListViewSection(
                         children: [
-                          ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                            ),
-                            leading: SizedBox.square(
-                              dimension: 40,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondaryContainer,
-                                ),
-                                child: Icon(
-                                  Symbols.contactless_rounded,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSecondaryContainer,
-                                ),
-                              ),
-                            ),
+                          ListViewSectionTile(
+                            leading: const Icon(Symbols.contactless_rounded),
                             title: Text(context.l10n.scanBonobusTitle),
                             subtitle: Text(
                               context.l10n.scanBonobusSubtitle,
@@ -143,27 +124,8 @@ class BonobusDetailsView extends StatelessWidget {
                       ),
                     ListViewSection(
                       children: [
-                        ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                          ),
-                          leading: SizedBox.square(
-                            dimension: 40,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryContainer,
-                              ),
-                              child: Icon(
-                                Symbols.credit_card_rounded,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondaryContainer,
-                              ),
-                            ),
-                          ),
+                        ListViewSectionTile(
+                          leading: const Icon(Symbols.credit_card_rounded),
                           title: Text(
                             bonobusState.name ?? getDefaultProviderName(),
                           ),
@@ -180,27 +142,8 @@ class BonobusDetailsView extends StatelessWidget {
                                 : null,
                           ),
                         ),
-                        ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                          ),
-                          leading: SizedBox.square(
-                            dimension: 40,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryContainer,
-                              ),
-                              child: Icon(
-                                Symbols.add_circle,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondaryContainer,
-                              ),
-                            ),
-                          ),
+                        ListViewSectionTile(
+                          leading: const Icon(Symbols.add_circle_rounded),
                           title: Text(context.l10n.topUpBonobusTitle),
                           subtitle: Text(
                             context.l10n.topUpBonobusSubtitle,
@@ -215,27 +158,8 @@ class BonobusDetailsView extends StatelessWidget {
                             ).colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                          ),
-                          leading: SizedBox.square(
-                            dimension: 40,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryContainer,
-                              ),
-                              child: Icon(
-                                Symbols.delete_rounded,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondaryContainer,
-                              ),
-                            ),
-                          ),
+                        ListViewSectionTile(
+                          leading: const Icon(Symbols.delete_rounded),
                           title: Text(context.l10n.deleteBonobusTitle),
                           subtitle: Text(
                             context.l10n.deleteBonobusSubtitle,

@@ -14,7 +14,7 @@ Future<void> showBusStopSearch({
     showItemsOnEmpty: true,
     filter: (stopId) => [BusStopUtils.resolveName(stopId), stopId.toString()],
     builder: (stopId) => Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 4),
       child: BusStopTile(key: ValueKey(stopId), stopId: stopId),
     ),
   ),

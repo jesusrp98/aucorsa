@@ -118,7 +118,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
         shadowColor: Colors.transparent,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(4),
         ),
         clipBehavior: Clip.antiAlias,
         child: GestureDetector(

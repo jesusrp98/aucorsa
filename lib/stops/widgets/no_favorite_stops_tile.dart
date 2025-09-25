@@ -1,4 +1,5 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,27 +11,22 @@ class NoFavoriteStopsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1,
       shadowColor: Colors.transparent,
-      color: Theme.of(context).colorScheme.surface,
-      surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
       child: GestureDetector(
-        onTap: () => context.go(StopsMapPage.path),
-        child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          leading: CircleAvatar(
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
-            child: const Icon(Symbols.favorite_rounded, fill: 1),
-          ),
+        child: ListViewSectionTile(
+          leading: const Icon(Symbols.favorite_rounded, fill: 1),
           title: Text(
             context.l10n.noFavoritesTitle,
             style: const TextStyle(fontWeight: FontWeight.w500),
           ),
           subtitle: Text(context.l10n.noFavoritesSubtitle),
-          trailing: const Icon(Symbols.chevron_right_rounded),
+          onTap: () => context.go(StopsMapPage.path),
         ),
       ),
     );

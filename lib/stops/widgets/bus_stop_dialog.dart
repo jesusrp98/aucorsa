@@ -6,6 +6,10 @@ Future<void> showBusStopDialog(BuildContext context, int stopId) =>
       context: context,
       useRootNavigator: true,
       isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      clipBehavior: Clip.antiAlias,
       builder: (context) => MediaQuery.removePadding(
         context: context,
         removeLeft: true,
