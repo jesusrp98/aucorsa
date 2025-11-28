@@ -65,18 +65,15 @@ class _EmptyProviderView extends StatelessWidget {
           AboutButton(),
         ],
       ),
-      body: Center(
-        child: BigTip(
-          title: Text(context.l10n.addBonobusTitle),
-          subtitle: Text(
-            context.l10n.addBonobusSubtitle,
-          ),
-          action: Column(
-            spacing: 16,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: TextButton(
+      body: SafeArea(
+        child: Center(
+          child: BigTip(
+            title: Text(context.l10n.addBonobusTitle),
+            subtitle: Text(context.l10n.addBonobusSubtitle),
+            action: Column(
+              spacing: 16,
+              children: [
+                TextButton(
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -91,12 +88,9 @@ class _EmptyProviderView extends StatelessWidget {
                   onPressed: () => onSelect(BonobusProvider.aucorsa),
                   child: AutoSizeText(context.l10n.aucorsa),
                 ),
-              ),
-              // Consorcio card red ops. are not compatible with NFC on iOS
-              if (Theme.of(context).platform == TargetPlatform.android)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: TextButton(
+                // Consorcio card red ops. are not compatible with NFC on iOS
+                if (Theme.of(context).platform == TargetPlatform.android)
+                  TextButton(
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -116,10 +110,10 @@ class _EmptyProviderView extends StatelessWidget {
                       maxLines: 1,
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
+            child: const Icon(Symbols.credit_card_rounded),
           ),
-          child: const Icon(Symbols.credit_card_rounded),
         ),
       ),
     );
@@ -145,49 +139,51 @@ class _ScanBonobusView extends StatelessWidget {
           AboutButton(),
         ],
       ),
-      body: Stack(
-        children: [
-          BonobusScanController(
-            onStateChanged: (state) {
-              context.read<BonobusCubit>().set(
-                provider: provider,
-                id: state.id,
-              );
-              context.read<BonobusCubit>().loaded(
-                balance: state.balance,
-              );
-            },
-          ),
-          Center(
-            child: BigTip(
-              title: Text(context.l10n.scanBonobusTitle),
-              subtitle: Text(context.l10n.scanBonobusSubtitle),
-              action: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                ).copyWith(top: 72),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            BonobusScanController(
+              onStateChanged: (state) {
+                context.read<BonobusCubit>().set(
+                  provider: provider,
+                  id: state.id,
+                );
+                context.read<BonobusCubit>().loaded(
+                  balance: state.balance,
+                );
+              },
+            ),
+            Center(
+              child: BigTip(
+                title: Text(context.l10n.scanBonobusTitle),
+                subtitle: Text(context.l10n.scanBonobusSubtitle),
+                action: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                  ).copyWith(top: 72),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      minimumSize: const Size.fromHeight(56),
+                      textStyle: Theme.of(context).textTheme.titleMedium,
+                      foregroundColor: Theme.of(context).colorScheme.onSurface,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerHighest,
                     ),
-                    minimumSize: const Size.fromHeight(56),
-                    textStyle: Theme.of(context).textTheme.titleMedium,
-                    foregroundColor: Theme.of(context).colorScheme.onSurface,
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.surfaceContainerHighest,
-                  ),
-                  onPressed: onCancel,
-                  child: Text(
-                    MaterialLocalizations.of(context).cancelButtonLabel,
+                    onPressed: onCancel,
+                    child: Text(
+                      MaterialLocalizations.of(context).cancelButtonLabel,
+                    ),
                   ),
                 ),
+                child: const Icon(Symbols.contactless_rounded),
               ),
-              child: const Icon(Symbols.contactless_rounded),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

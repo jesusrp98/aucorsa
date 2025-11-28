@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
@@ -22,12 +23,12 @@ class _BonobusScanControllerState extends State<BonobusScanController> {
   void initState() {
     super.initState();
 
-    _startNfcScan();
+    unawaited(_startNfcScan());
   }
 
   @override
   void dispose() {
-    NfcManager.instance.stopSession();
+    unawaited(NfcManager.instance.stopSession());
 
     super.dispose();
   }
@@ -37,50 +38,48 @@ class _BonobusScanControllerState extends State<BonobusScanController> {
     return const SizedBox.shrink();
   }
 
-  void _startNfcScan() {
-    NfcManager.instance.startSession(
-      pollingOptions: NfcPollingOption.values.toSet(),
-      onDiscovered: (tag) async {
-        String? id;
-        String? balance;
+  Future<void> _startNfcScan() => NfcManager.instance.startSession(
+    pollingOptions: NfcPollingOption.values.toSet(),
+    onDiscovered: (tag) async {
+      String? id;
+      String? balance;
 
-        final mifareData = MifareClassicAndroid.from(tag);
+      final mifareData = MifareClassicAndroid.from(tag);
 
-        id = _resolveId(mifareData?.tag.id);
+      id = _resolveId(mifareData?.tag.id);
 
-        if (mifareData != null) {
-          final success = await mifareData.authenticateSectorWithKeyA(
-            sectorIndex: int.parse(dotenv.env['CONSORCIO_AUTH_SECTOR_INDEX']!),
-            key: _decodeAuthKeyA(dotenv.env['CONSORCIO_AUTH_KEY_A']!),
-          );
-
-          if (success) {
-            final blockData = await mifareData.readBlock(
-              blockIndex: int.parse(dotenv.env['CONSORCIO_READ_BLOCK_INDEX']!),
-            );
-            if (!mounted) return;
-
-            balance = _resolveBalance(blockData);
-          }
-        }
-
-        if (widget.onStateChanged != null) {
-          return widget.onStateChanged?.call(
-            BonobusState(
-              id: id,
-              balance: balance,
-            ),
-          );
-        }
-
-        if (!mounted) return;
-
-        return context.read<BonobusCubit>().loaded(
-          balance: balance,
+      if (mifareData != null) {
+        final success = await mifareData.authenticateSectorWithKeyA(
+          sectorIndex: int.parse(dotenv.env['CONSORCIO_AUTH_SECTOR_INDEX']!),
+          key: _decodeAuthKeyA(dotenv.env['CONSORCIO_AUTH_KEY_A']!),
         );
-      },
-    );
-  }
+
+        if (success) {
+          final blockData = await mifareData.readBlock(
+            blockIndex: int.parse(dotenv.env['CONSORCIO_READ_BLOCK_INDEX']!),
+          );
+          if (!mounted) return;
+
+          balance = _resolveBalance(blockData);
+        }
+      }
+
+      if (widget.onStateChanged != null) {
+        return widget.onStateChanged?.call(
+          BonobusState(
+            id: id,
+            balance: balance,
+          ),
+        );
+      }
+
+      if (!mounted) return;
+
+      return context.read<BonobusCubit>().loaded(
+        balance: balance,
+      );
+    },
+  );
 
   String? _resolveId(Uint8List? uidBytes) {
     if (uidBytes == null || uidBytes.isEmpty) return null;

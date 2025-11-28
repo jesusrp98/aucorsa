@@ -19,7 +19,7 @@ class BusLineSelectorBar extends StatelessWidget {
       color: Theme.of(context).colorScheme.surfaceContainerHigh,
       shape: const StadiumBorder(),
       clipBehavior: Clip.antiAlias,
-      elevation: 6,
+      elevation: 1,
       child: MediaQuery.removePadding(
         context: context,
         removeLeft: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
 
 class AucorsaTheme {
   const AucorsaTheme._();
@@ -18,12 +19,14 @@ class AucorsaTheme {
     colorScheme: colorScheme,
     fontFamily: 'Rubik',
     iconTheme: const IconThemeData(opticalSize: 24),
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-        TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
-      },
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      sizeConstraints: BoxConstraints.tightFor(
+        width: LuckyNavigationBar.height,
+        height: LuckyNavigationBar.height,
+      ),
+      shape: CircleBorder(),
+      iconSize: 28,
+      elevation: 1,
     ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: colorScheme.surfaceContainerHighest,

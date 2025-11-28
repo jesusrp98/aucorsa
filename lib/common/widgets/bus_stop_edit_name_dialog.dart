@@ -11,7 +11,6 @@ Future<void> showBusStopEditNameDialog(
   context: context,
   useRootNavigator: true,
   useSafeArea: true,
-  showDragHandle: true,
   isScrollControlled: true,
   builder: (_) => _BusStopEditNameDialog(stopId),
 );
@@ -82,23 +81,26 @@ class _BusStopEditNameDialogState extends State<_BusStopEditNameDialog> {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
-          ).copyWith(bottom: 24),
+          ).copyWith(bottom: 24, top: 40),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  hintText: baseStopName,
-                  suffixIcon: _nameController.value.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Symbols.clear_rounded),
-                          onPressed: _nameController.clear,
-                        )
-                      : null,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    hintText: baseStopName,
+                    suffixIcon: _nameController.value.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Symbols.clear_rounded),
+                            onPressed: _nameController.clear,
+                          )
+                        : null,
+                  ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 4),
               Wrap(
                 spacing: 8,
                 children: [

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -62,7 +64,7 @@ class _LocationPermissionDialogView extends StatelessWidget {
                   ).colorScheme.tertiaryContainer,
                 ),
                 onPressed: () {
-                  Geolocator.openAppSettings();
+                  unawaited(Geolocator.openAppSettings());
                   Navigator.of(context).pop();
                 },
                 child: Text(context.l10n.openSettings),

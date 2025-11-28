@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_details_view.dart';
 import 'package:flutter/material.dart';
@@ -26,34 +28,37 @@ class _AucorsaBonobusViewState extends State<AucorsaBonobusView> {
 
     return Stack(
       children: [
-        InAppWebView(
-          initialUrlRequest: URLRequest(url: bonobusUri),
-          onWebViewCreated: (controller) => webViewController = controller,
-          onConsoleMessage: (controller, consoleMessage) {
-            if (consoleMessage.message.contains(saldoMessageId)) {
-              return context.read<BonobusCubit>().loaded(
-                balance: consoleMessage.message
-                    .replaceAll(saldoMessageId, '')
-                    .trim(),
-              );
-            }
+        Opacity(
+          opacity: .01,
+          child: InAppWebView(
+            initialUrlRequest: URLRequest(url: bonobusUri),
+            onWebViewCreated: (controller) => webViewController = controller,
+            onConsoleMessage: (controller, consoleMessage) {
+              if (consoleMessage.message.contains(saldoMessageId)) {
+                return context.read<BonobusCubit>().loaded(
+                  balance: consoleMessage.message
+                      .replaceAll(saldoMessageId, '')
+                      .trim(),
+                );
+              }
 
-            if (consoleMessage.message.contains(saldoMessageName)) {
-              return context.read<BonobusCubit>().loaded(
-                name: consoleMessage.message
-                    .replaceAll(saldoMessageName, '')
-                    .trim()
-                    .toLowerCase()
-                    .split(' ')
-                    .map(toBeginningOfSentenceCase)
-                    .join(' '),
-              );
-            }
-          },
-          onLoadStop: (controller, url) {
-            if (bonobus == null) return;
-            return _operate(controller, bonobus);
-          },
+              if (consoleMessage.message.contains(saldoMessageName)) {
+                return context.read<BonobusCubit>().loaded(
+                  name: consoleMessage.message
+                      .replaceAll(saldoMessageName, '')
+                      .trim()
+                      .toLowerCase()
+                      .split(' ')
+                      .map(toBeginningOfSentenceCase)
+                      .join(' '),
+                );
+              }
+            },
+            onLoadStop: (controller, url) {
+              if (bonobus == null) return;
+              return _operate(controller, bonobus);
+            },
+          ),
         ),
         const BonobusDetailsView(),
       ],
@@ -62,9 +67,10 @@ class _AucorsaBonobusViewState extends State<AucorsaBonobusView> {
 
   void _operate(InAppWebViewController controller, String bonobus) {
     context.read<BonobusCubit>().loading();
-    controller.evaluateJavascript(
-      source:
-          """
+    unawaited(
+      controller.evaluateJavascript(
+        source:
+            """
 (async function () {
   document.body.style.visibility = 'visible';
   document.body.style.display = 'block';
@@ -109,6 +115,7 @@ class _AucorsaBonobusViewState extends State<AucorsaBonobusView> {
   return null;
 })();
 """,
+      ),
     );
   }
 }

@@ -7,3 +7,4 @@ linter:
     avoid_positional_boolean_parameters: false
     avoid_catches_without_on_clauses: false
     specify_nonobvious_property_types: false
+    document_ignores: false

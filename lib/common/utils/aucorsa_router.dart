@@ -8,6 +8,7 @@ import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_transitions/go_transitions.dart';
 
 class AucorsaRouter {
   const AucorsaRouter._();
@@ -19,65 +20,58 @@ class AucorsaRouter {
     debugLabel: 'shell',
   );
 
-  static GoRouter initialize() => GoRouter(
-    initialLocation: FavoriteStopsPage.path,
-    navigatorKey: _rootNavigatorKey,
-    routes: [
-      ShellRoute(
-        navigatorKey: _shellNavigatorKey,
-        builder: (context, state, child) =>
-            HomePage(state: state, child: child),
-        routes: [
-          GoRoute(
-            path: FavoriteStopsPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              name: state.name,
-              child: const FavoriteStopsPage(),
+  static GoRouter initialize() {
+    GoTransition.defaultCurve = Curves.easeInOutCubic;
+    GoTransition.defaultDuration = const Duration(milliseconds: 100);
+
+    return GoRouter(
+      initialLocation: FavoriteStopsPage.path,
+      navigatorKey: _rootNavigatorKey,
+      routes: [
+        ShellRoute(
+          navigatorKey: _shellNavigatorKey,
+          builder: (context, state, child) =>
+              HomePage(state: state, child: child),
+          routes: [
+            GoRoute(
+              path: FavoriteStopsPage.path,
+              builder: (_, _) => const FavoriteStopsPage(),
+              pageBuilder: GoTransitions.fade.call,
             ),
-          ),
-          GoRoute(
-            path: BonobusPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              name: state.name,
-              child: const BonobusPage(),
+            GoRoute(
+              path: BonobusPage.path,
+              builder: (_, _) => const BonobusPage(),
+              pageBuilder: GoTransitions.fade.call,
             ),
-          ),
-          GoRoute(
-            path: StopsMapPage.path,
-            pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              name: state.name,
-              child: const StopsMapPage(),
+            GoRoute(
+              path: StopsMapPage.path,
+              builder: (_, _) => const StopsMapPage(),
+              pageBuilder: GoTransitions.fade.call,
             ),
-          ),
-          GoRoute(
-            path: BusLinesPages.path,
-            pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              name: state.name,
-              child: const BusLinesPages(),
+            GoRoute(
+              path: BusLinesPages.path,
+              builder: (_, _) => const BusLinesPages(),
+              pageBuilder: GoTransitions.fade.call,
             ),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: BusLinePage.path,
-        builder: (context, state) =>
-            BusLinePage(lineId: state.extra! as String),
-      ),
-      GoRoute(
-        path: AboutPage.path,
-        builder: (context, state) => const AboutPage(),
-      ),
-      GoRoute(
-        path: BusLineMapPage.path,
-        pageBuilder: (context, state) => MaterialPage(
-          fullscreenDialog: true,
-          child: BusLineMapPage(lineId: state.extra! as String),
+          ],
         ),
-      ),
-    ],
-  );
+        GoRoute(
+          path: BusLinePage.path,
+          builder: (context, state) =>
+              BusLinePage(lineId: state.extra! as String),
+        ),
+        GoRoute(
+          path: AboutPage.path,
+          builder: (context, state) => const AboutPage(),
+        ),
+        GoRoute(
+          path: BusLineMapPage.path,
+          pageBuilder: (context, state) => MaterialPage(
+            fullscreenDialog: true,
+            child: BusLineMapPage(lineId: state.extra! as String),
+          ),
+        ),
+      ],
+    );
+  }
 }
