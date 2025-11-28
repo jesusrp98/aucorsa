@@ -82,7 +82,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
     _iconTurns = _controller.drive(_halfTurn.chain(_easeInCurve));
 
     if (widget.alwaysExpanded) {
-      _requestData();
+      unawaited(_requestData());
     }
   }
 
@@ -97,7 +97,9 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // Refresh data when the app is resumed and it's expanded
-    if (_expanded && state == AppLifecycleState.resumed) _requestData();
+    if (_expanded && state == AppLifecycleState.resumed) {
+      unawaited(_requestData());
+    }
   }
 
   @override
@@ -325,7 +327,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   }
 
   void _toggleFavorite() {
-    HapticFeedback.lightImpact();
+    unawaited(HapticFeedback.lightImpact());
 
     context.read<FavoriteStopsCubit>().toggle(widget.stopId);
   }
@@ -503,6 +505,7 @@ class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
     _animationController = AnimationController(
       duration: Durations.extralong1,
       vsync: this,
+      // ignore: discarded_futures
     )..repeat(reverse: true);
 
     _curvedAnimation = _animationController.drive(

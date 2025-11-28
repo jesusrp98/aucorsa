@@ -26,7 +26,7 @@ class _AboutPageState extends State<AboutPage> {
   void initState() {
     super.initState();
 
-    _initPackageInfo();
+    unawaited(_initPackageInfo());
   }
 
   Future<void> _initPackageInfo() async {
@@ -51,7 +51,6 @@ class _AboutPageState extends State<AboutPage> {
             sliver: SliverList.list(
               children: [
                 ListViewSection(
-                  title: ListViewSectionTitle(context.l10n.settings),
                   children: [
                     ListViewSectionTile(
                       leading: const Icon(Symbols.palette_rounded),
@@ -63,7 +62,6 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 const SizedBox(height: 16),
                 ListViewSection(
-                  title: ListViewSectionTitle(context.l10n.info),
                   children: [
                     ListViewSectionTile(
                       leading: const Icon(Symbols.star_rounded),
@@ -103,7 +101,6 @@ class _AboutPageState extends State<AboutPage> {
                       title: Text(context.l10n.dataOriginTitle),
                       onTap: () => showModalBottomSheet<void>(
                         context: context,
-                        showDragHandle: true,
                         isScrollControlled: true,
                         useSafeArea: true,
                         builder: (_) => const _DataOriginBottomSheet(),
@@ -143,7 +140,7 @@ class _DataOriginBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.all(16).copyWith(top: 0),
+      minimum: const EdgeInsets.all(16).copyWith(top: 40),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -63,6 +63,7 @@ class _FeriaLinesDialog extends StatelessWidget {
               ),
               onTap: () => context
                 ..pop()
+                // ignore: discarded_futures
                 ..push(BusLinePage.path, extra: line.id),
             ),
         ],

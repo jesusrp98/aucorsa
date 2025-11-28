@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ListViewSection extends StatelessWidget {
-  final Widget? title;
   final List<Widget> children;
 
-  const ListViewSection({
-    required this.children,
-    this.title,
-    super.key,
-  });
+  const ListViewSection({required this.children, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +13,9 @@ class ListViewSection extends StatelessWidget {
       bottom: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         spacing: 4,
         children: [
-          if (title != null) title!,
           for (final child in children.indexed)
             Material(
               color: Theme.of(context).colorScheme.surfaceContainerLow,
@@ -36,25 +31,6 @@ class ListViewSection extends StatelessWidget {
               child: child.$2,
             ),
         ],
-      ),
-    );
-  }
-}
-
-class ListViewSectionTitle extends StatelessWidget {
-  final String data;
-
-  const ListViewSectionTitle(this.data, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Text(
-        data,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
       ),
     );
   }

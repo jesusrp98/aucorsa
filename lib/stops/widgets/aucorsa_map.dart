@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
-import 'package:aucorsa/common/utils/bus_line_utils.dart';
-import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
 import 'package:aucorsa/stops/utils/asset_vector_tile_provider.dart';
 import 'package:aucorsa/stops/utils/location_permission_utils.dart';
 import 'package:aucorsa/stops/utils/map_marker_size.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
-import 'package:aucorsa/stops/widgets/map_attribution_dialog.dart';
 import 'package:compassx/compassx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +18,7 @@ import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as map;
@@ -79,7 +78,7 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _initializeLocation();
+    unawaited(_initializeLocation());
   }
 
   Future<void> _initializeLocation() async {
@@ -107,12 +106,12 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
     // No need to update if the theme hasn't changed
     if (mapTileTheme?.id == Theme.of(context).brightness.name) return;
 
-    _updateVectorTileTheme();
+    unawaited(_updateVectorTileTheme());
   }
 
   @override
   void dispose() {
-    alignPositionStreamController.close();
+    unawaited(alignPositionStreamController.close());
 
     super.dispose();
   }
@@ -213,7 +212,10 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
           ),
         Positioned(
           top: widget.margin?.top ?? padding.top + 16,
-          right: 16,
+          right: max(
+            MediaQuery.paddingOf(context).right,
+            16,
+          ),
           child: AnimatedOpacity(
             opacity: rotation != 0 ? 1.0 : 0.0,
             duration: Durations.medium2,
@@ -236,51 +238,30 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          bottom: 16 + padding.bottom,
-          right: 16,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 16,
-            children: [
-              FloatingActionButton(
-                tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.tertiaryContainer,
-                foregroundColor: Theme.of(
-                  context,
-                ).colorScheme.onTertiaryContainer,
-                heroTag: null,
-                shape: const CircleBorder(),
-                onPressed: onLocationButtonPressed,
-                child: Icon(
-                  Symbols.near_me_rounded,
-                  fill: alignPositionOnUpdate == AlignOnUpdate.always ? 1 : 0,
-                ),
-              ),
-              FloatingActionButton(
-                tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-                onPressed: () => showBusStopSearch(
-                  context: context,
-                  stops: BusLineUtils.lines
-                      .expand((line) => line.stops)
-                      .toSet()
-                      .toList(),
-                ),
-                child: const Icon(Symbols.search_rounded),
-              ),
-            ],
+          bottom: MediaQuery.paddingOf(context).bottom + 12,
+          right: max(
+            MediaQuery.paddingOf(context).right,
+            LuckyNavigationBar.paddingValue,
           ),
-        ),
-        Positioned(
-          bottom: 2 + padding.bottom,
-          left: 2,
-          child: IconButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+          child: FloatingActionButton(
+            backgroundColor: Theme.of(
+              context,
+            ).colorScheme.tertiaryContainer,
+            foregroundColor: Theme.of(
+              context,
+            ).colorScheme.onTertiaryContainer,
+            heroTag: null,
+            onPressed: onLocationButtonPressed,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(
+                begin: 0,
+                end: alignPositionOnUpdate == AlignOnUpdate.always ? 1 : 0,
+              ),
+              duration: kThemeAnimationDuration,
+              curve: Curves.easeInOutCubic,
+              builder: (_, value, _) =>
+                  Icon(Symbols.near_me_rounded, fill: value),
             ),
-            onPressed: () => showMapAttributionDialog(context),
-            icon: const Icon(Symbols.info_rounded),
           ),
         ),
       ],
@@ -311,13 +292,15 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
   }
 
   void onMarkerTap(BusStopCoordinates stop) {
-    animatedMapController.animateTo(
-      duration: Durations.medium2,
-      curve: Curves.easeInOutCubic,
-      dest: stop.value,
+    unawaited(
+      animatedMapController.animateTo(
+        duration: Durations.medium2,
+        curve: Curves.easeInOutCubic,
+        dest: stop.value,
+      ),
     );
 
-    showBusStopDialog(context, stop.key);
+    unawaited(showBusStopDialog(context, stop.key));
   }
 
   void onPositionChanged(MapCamera camera, bool hasGesture) {

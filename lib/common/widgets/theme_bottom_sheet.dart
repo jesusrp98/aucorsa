@@ -1,5 +1,6 @@
 import 'package:aucorsa/common/cubits/theme_cubit.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -9,6 +10,8 @@ Future<void> showThemeBottomSheet(BuildContext context) =>
       context: context,
       builder: (_) => const _ThemeBottomSheet(),
       useSafeArea: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
     );
 
 class _ThemeBottomSheet extends StatelessWidget {
@@ -17,10 +20,8 @@ class _ThemeBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.symmetric(vertical: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      minimum: const EdgeInsets.all(16),
+      child: ListViewSection(
         children: [
           for (final themeMode in ThemeMode.values) _ThemeListTile(themeMode),
         ],
@@ -42,6 +43,7 @@ class _ThemeListTile extends StatelessWidget {
         : Theme.of(context).colorScheme.onSurface;
 
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       leading: Icon(_iconData, fill: 1),
       title: Text(_title(context)),
       onTap: () => context.read<ThemeCubit>().setThemeMode(themeMode),

@@ -1,7 +1,5 @@
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
-import 'package:aucorsa/common/utils/bus_line_utils.dart';
-import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:aucorsa/events/models/event.dart';
@@ -12,7 +10,6 @@ import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:aucorsa/stops/widgets/no_favorite_stops_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class FavoriteStopsPage extends StatelessWidget {
   static const path = '/favorite-stops';
@@ -64,17 +61,6 @@ class FavoriteStopsPage extends StatelessWidget {
               ),
             ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-        onPressed: () => showBusStopSearch(
-          context: context,
-          stops: BusLineUtils.lines
-              .expand((line) => line.stops)
-              .toSet()
-              .toList(),
-        ),
-        child: const Icon(Symbols.search_rounded),
       ),
     );
   }

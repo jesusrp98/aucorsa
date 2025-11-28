@@ -1,7 +1,7 @@
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
+import 'package:aucorsa/common/utils/search_page.dart';
 import 'package:aucorsa/common/widgets/bus_stop_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:search_page/search_page.dart';
 
 Future<void> showBusStopSearch({
   required BuildContext context,
@@ -13,9 +13,7 @@ Future<void> showBusStopSearch({
     items: stops,
     showItemsOnEmpty: true,
     filter: (stopId) => [BusStopUtils.resolveName(stopId), stopId.toString()],
-    builder: (stopId) => Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: BusStopTile(key: ValueKey(stopId), stopId: stopId),
-    ),
+    separatorBuilder: (context, index) => const SizedBox(height: 4),
+    builder: (stopId) => BusStopTile(key: ValueKey(stopId), stopId: stopId),
   ),
 );

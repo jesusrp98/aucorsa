@@ -2,7 +2,6 @@ import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
-import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,7 +28,7 @@ class BusLinesPages extends StatelessWidget {
           ),
           SliverPadding(
             padding: EdgeInsets.only(
-              bottom: 88 + MediaQuery.paddingOf(context).bottom,
+              bottom: 16 + MediaQuery.paddingOf(context).bottom,
             ),
             sliver: SliverList.builder(
               itemCount: lines.length,
@@ -42,14 +41,6 @@ class BusLinesPages extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-        onPressed: () => showBusStopSearch(
-          context: context,
-          stops: lines.expand((line) => line.stops).toSet().toList(),
-        ),
-        child: const Icon(Symbols.search_rounded),
       ),
     );
   }

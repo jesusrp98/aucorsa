@@ -1,6 +1,8 @@
 import 'package:aucorsa/bonobus/pages/bonobus_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/common/utils/bus_line_utils.dart';
+import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
@@ -8,6 +10,7 @@ import 'package:aucorsa/stops/pages/stops_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,12 +29,10 @@ class _HomePageState extends State<HomePage> {
   late final destinations = {
     FavoriteStopsPage.path: NavigationDestination(
       icon: const Icon(Symbols.favorite_rounded),
-      selectedIcon: const Icon(Symbols.favorite_rounded, fill: 1),
       label: context.l10n.favoritesPageTitle,
     ),
     StopsMapPage.path: NavigationDestination(
       icon: const Icon(Symbols.map_rounded),
-      selectedIcon: const Icon(Symbols.map_rounded, fill: 1),
       label: context.l10n.stops,
     ),
     BusLinesPages.path: NavigationDestination(
@@ -41,12 +42,11 @@ class _HomePageState extends State<HomePage> {
     ),
     BonobusPage.path: NavigationDestination(
       icon: const Icon(Symbols.credit_card_rounded),
-      selectedIcon: const Icon(Symbols.credit_card_rounded, fill: 1),
       label: context.l10n.bonobus,
     ),
   };
 
-  int navigationBarIndex = 0;
+  int selectedIndex = 0;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       if (EventsCalendar.currentEvents.isNotEmpty) return;
 
       if (context.read<FavoriteStopsCubit>().state.isEmpty) {
-        context.go(destinations.keys.elementAt(2));
+        context.go(destinations.keys.elementAt(1));
       }
     });
   }
@@ -69,20 +69,29 @@ class _HomePageState extends State<HomePage> {
     if (widget.state.uri == oldWidget.state.uri) return;
 
     setState(
-      () => navigationBarIndex = _calculateSelectedIndex(context, widget.state),
+      () => selectedIndex = _calculateSelectedIndex(context, widget.state),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: widget.child,
-      bottomNavigationBar: SizedBox(
-        height: 72 + MediaQuery.of(context).padding.bottom,
-        child: NavigationBar(
-          destinations: destinations.values.toList(),
-          selectedIndex: navigationBarIndex,
-          onDestinationSelected: (index) => _onItemTapped(context, index),
+      bottomNavigationBar: LuckyNavigationBar(
+        destinations: destinations.values.toList(),
+        onDestinationSelected: (index) => _onItemTapped(context, index),
+        selectedIndex: selectedIndex,
+        trailing: FloatingActionButton(
+          tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+          onPressed: () => showBusStopSearch(
+            context: context,
+            stops: BusLineUtils.lines
+                .expand((line) => line.stops)
+                .toSet()
+                .toList(),
+          ),
+          child: const Icon(Symbols.search_rounded),
         ),
       ),
     );
