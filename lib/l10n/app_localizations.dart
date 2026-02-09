@@ -155,7 +155,7 @@ abstract class AppLocalizations {
   /// No description provided for @authorTitle.
   ///
   /// In en, this message translates to:
-  /// **'Created by Jesus Rodriguez'**
+  /// **'Created by Chechu R.'**
   String get authorTitle;
 
   /// No description provided for @authorSubtitle.
@@ -179,7 +179,7 @@ abstract class AppLocalizations {
   /// No description provided for @dataOriginTitle.
   ///
   /// In en, this message translates to:
-  /// **'Data provided by AUCORSA'**
+  /// **'Not affiliated with AUCORSA'**
   String get dataOriginTitle;
 
   /// No description provided for @dataOriginSubtitle.
@@ -433,6 +433,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hold your bonobus card near the back of your device to scan it'**
   String get scanBonobusPageSubtitle;
+
+  /// No description provided for @stopsList.
+  ///
+  /// In en, this message translates to:
+  /// **'Stops list'**
+  String get stopsList;
 }
 
 class _AppLocalizationsDelegate

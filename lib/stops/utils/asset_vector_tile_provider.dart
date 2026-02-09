@@ -4,6 +4,8 @@ import 'package:vector_map_tiles/vector_map_tiles.dart';
 class AssetVectorTileProvider extends VectorTileProvider {
   AssetVectorTileProvider();
 
+  static const offset = TileOffset.DEFAULT;
+
   @override
   int get maximumZoom => 14;
 
@@ -25,5 +27,8 @@ class AssetVectorTileProvider extends VectorTileProvider {
   }
 
   @override
-  TileOffset get tileOffset => TileOffset.DEFAULT;
+  TileOffset get tileOffset => offset;
+
+  @override
+  TileProviderType get type => TileProviderType.vector;
 }

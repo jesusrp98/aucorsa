@@ -17,16 +17,17 @@ class StopsMapPage extends StatefulWidget {
 class _StopsMapPageState extends State<StopsMapPage> {
   @override
   Widget build(BuildContext context) {
-    final selectedLine = context.select(
-      (BusLineSelectorCubit cubit) => cubit.state.lineId,
+    final selectedLine = context.select<BusLineSelectorCubit, String?>(
+      (cubit) => cubit.state.lineId,
     );
 
     return Scaffold(
       body: Stack(
+        alignment: .topCenter,
         children: [
           AucorsaMap(
             margin: EdgeInsets.only(
-              top: MediaQuery.paddingOf(context).top + kToolbarHeight + 32,
+              top: MediaQuery.paddingOf(context).top + kToolbarHeight + 24 + 52,
             ),
           ),
           Positioned(

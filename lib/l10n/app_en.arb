@@ -8,11 +8,11 @@
     "ratingSubtitle": "Leave your review in the store",
     "freeSoftwareTitle": "This is free software",
     "freeSoftwareSubtitle": "Source code available for everyone",
-    "authorTitle": "Created by Jesus Rodriguez",
+    "authorTitle": "Created by Chechu R.",
     "authorSubtitle": "Well-designed free applications",
     "emailTitle": "Send me an email",
     "emailSubtitle": "Report bugs or request features",
-    "dataOriginTitle": "Data provided by AUCORSA",
+    "dataOriginTitle": "Not affiliated with AUCORSA",
     "dataOriginSubtitle": "This application is not affiliated with nor the official app developed by AUCORSA. All information related to bus lines, routes, stops, and arrival times is provided by AUCORSA, the company responsible for urban public transport.\n\nThe main goal of this app is to facilitate intuitive and accessible access to public information, enhancing the experience of public transport users. We aim to promote sustainable and efficient mobility by offering tools that encourage the use of public transport as a convenient and responsible alternative for urban mobility.\n\nThis independent initiative is committed to providing accurate and up-to-date data, though it is important to note that AUCORSA is the original source of all information. We recommend always verifying the data with official channels to ensure maximum accuracy.",
     "licenseTitle": "Free software licenses",
     "versionTitle": "Version {version} ({buildNumber})",
@@ -78,5 +78,6 @@
     "addBonobusTitle": "Add your bonobus",
     "addBonobusSubtitle": "Select your bonobus provider before adding your card details",
     "scanBonobusPageTitle": "Scan your bonobus",
-    "scanBonobusPageSubtitle": "Hold your bonobus card near the back of your device to scan it"
+    "scanBonobusPageSubtitle": "Hold your bonobus card near the back of your device to scan it",
+    "stopsList": "Stops list"
 }

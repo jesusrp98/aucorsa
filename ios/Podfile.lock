@@ -5,10 +5,10 @@ PODS:
   - flutter_inappwebview_ios (0.0.1):
     - Flutter
     - flutter_inappwebview_ios/Core (= 0.0.1)
-    - OrderedSet (~> 6.0.3)
+    - swift-collections (~> 1.1.1)
   - flutter_inappwebview_ios/Core (0.0.1):
     - Flutter
-    - OrderedSet (~> 6.0.3)
+    - swift-collections (~> 1.1.1)
   - flutter_native_splash (2.4.3):
     - Flutter
   - flutter_rotation_sensor (0.0.1):
@@ -18,16 +18,29 @@ PODS:
     - FlutterMacOS
   - in_app_review (2.0.0):
     - Flutter
+  - InternalCollectionsUtilities (1.1.1)
   - native_device_orientation (0.0.1):
     - Flutter
   - nfc_manager (0.0.1):
     - Flutter
-  - OrderedSet (6.0.3)
   - package_info_plus (0.4.5):
     - Flutter
-  - path_provider_foundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
+  - swift-collections (1.1.1):
+    - swift-collections/BitCollections (= 1.1.1)
+    - swift-collections/DequeModule (= 1.1.1)
+    - swift-collections/HashTreeCollections (= 1.1.1)
+    - swift-collections/HeapModule (= 1.1.1)
+    - swift-collections/OrderedCollections (= 1.1.1)
+  - swift-collections/BitCollections (1.1.1):
+    - InternalCollectionsUtilities (= 1.1.1)
+  - swift-collections/DequeModule (1.1.1):
+    - InternalCollectionsUtilities (= 1.1.1)
+  - swift-collections/HashTreeCollections (1.1.1):
+    - InternalCollectionsUtilities (= 1.1.1)
+  - swift-collections/HeapModule (1.1.1):
+    - InternalCollectionsUtilities (= 1.1.1)
+  - swift-collections/OrderedCollections (1.1.1):
+    - InternalCollectionsUtilities (= 1.1.1)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -42,12 +55,12 @@ DEPENDENCIES:
   - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
   - nfc_manager (from `.symlinks/plugins/nfc_manager/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
-    - OrderedSet
+    - InternalCollectionsUtilities
+    - swift-collections
 
 EXTERNAL SOURCES:
   compassx:
@@ -70,26 +83,24 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/nfc_manager/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
-  path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   compassx: 2d291f8c8e5672f35c62277f2318ef48359dc1d0
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
+  flutter_inappwebview_ios: 9cde7869829d54b4110df350f3eedd192c5a4aea
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   flutter_rotation_sensor: bf55ead3f64f27207dacc5972fe8ebe932f3de0b
   geolocator_apple: ab36aa0e8b7d7a2d7639b3b4e48308394e8cef5e
   in_app_review: 7dd1ea365263f834b8464673f9df72c80c17c937
-  native_device_orientation: e3580675687d5034770da198f6839ebf2122ef94
+  InternalCollectionsUtilities: af3f471602c4a67cbcb0bee0a80f6f55a33ae453
+  native_device_orientation: f3ba5f2ddbab3deee23a5f6693b4f97b02dafea2
   nfc_manager: f6d5609c09b4640b914a3dc67479a2e392965fd0
-  OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
-  path_provider_foundation: bb55f6dbba17d0dccd6737fe6f7f34fbd0376880
+  swift-collections: ba248ecaf44ef500b27d5cf94d304218c89892ff
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
 
-PODFILE CHECKSUM: 9f3a2ee83e482342f5f6aa094ba87d5d35a58518
+PODFILE CHECKSUM: 9f77171d88624e20c4669aa75f7ad7ba13ed66f9
 
 COCOAPODS: 1.16.2

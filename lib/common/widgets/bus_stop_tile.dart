@@ -104,8 +104,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 
   @override
   Widget build(BuildContext context) {
-    final isFavorite = context.select(
-      (FavoriteStopsCubit cubit) => cubit.isFavorite(widget.stopId),
+    final isFavorite = context.select<FavoriteStopsCubit, bool>(
+      (cubit) => cubit.isFavorite(widget.stopId),
     );
 
     final busStopCustomData = context.watch<BusStopCustomDataCubit>().get(

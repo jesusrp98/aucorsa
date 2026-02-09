@@ -1,10 +1,9 @@
-import 'package:aucorsa/bus_lines/pages/bus_line_map_page.dart';
+import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class BusLinePage extends StatelessWidget {
@@ -26,13 +25,7 @@ class BusLinePage extends StatelessWidget {
               context.l10n.busLine(line.id),
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Symbols.map_rounded),
-                onPressed: () =>
-                    context.push(BusLineMapPage.path, extra: lineId),
-              ),
-            ],
+            actions: const [AboutButton()],
           ),
           BusStopListView(stopIds: line.stops),
         ],

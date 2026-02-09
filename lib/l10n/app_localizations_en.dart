@@ -36,7 +36,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freeSoftwareSubtitle => 'Source code available for everyone';
 
   @override
-  String get authorTitle => 'Created by Jesus Rodriguez';
+  String get authorTitle => 'Created by Chechu R.';
 
   @override
   String get authorSubtitle => 'Well-designed free applications';
@@ -48,7 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailSubtitle => 'Report bugs or request features';
 
   @override
-  String get dataOriginTitle => 'Data provided by AUCORSA';
+  String get dataOriginTitle => 'Not affiliated with AUCORSA';
 
   @override
   String get dataOriginSubtitle =>
@@ -188,4 +188,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get scanBonobusPageSubtitle =>
       'Hold your bonobus card near the back of your device to scan it';
+
+  @override
+  String get stopsList => 'Stops list';
 }

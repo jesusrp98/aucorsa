@@ -8,11 +8,11 @@
     "ratingSubtitle": "Deja tu reseña en la tienda",
     "freeSoftwareTitle": "Esto es software libre",
     "freeSoftwareSubtitle": "Código fuente disponible para todos",
-    "authorTitle": "Creado por Jesus Rodriguez",
+    "authorTitle": "Creado por Chechu R.",
     "authorSubtitle": "Aplicaciones libres bien diseñadas",
     "emailTitle": "Envíame un correo",
     "emailSubtitle": "Reporta fallos o solicita funciones",
-    "dataOriginTitle": "Datos proporcionados por AUCORSA",
+    "dataOriginTitle": "No afiliado con AUCORSA",
     "dataOriginSubtitle": "Esta aplicación no está afiliada ni es la aplicación oficial desarrollada por AUCORSA. Toda la información relacionada con las líneas de autobuses, los recorridos, las paradas y los tiempos de paso es proporcionada por AUCORSA, la empresa responsable del transporte público urbano.\n\nEl objetivo principal de esta aplicación es facilitar el acceso a la información pública de manera más intuitiva y accesible para los usuarios, mejorando así la experiencia de quienes utilizan los servicios de transporte público. Buscamos contribuir al fomento de una movilidad sostenible y eficiente al brindar herramientas que promuevan el uso del transporte colectivo como una alternativa cómoda y responsable para la movilidad urbana.\n\nEsta iniciativa independiente se compromete a ofrecer datos precisos y actualizados, aunque es importante tener en cuenta que la fuente original de toda la información es AUCORSA. Recomendamos siempre contrastar los datos con los canales oficiales para garantizar la máxima precisión.",
     "licenseTitle": "Licencias de software libre",
     "versionTitle": "Versión {version} ({buildNumber})",
@@ -71,5 +71,6 @@
     "addBonobusTitle": "Añadir tu bonobús",
     "addBonobusSubtitle": "Selecciona tu proveedor de bonobús antes de añadir los datos de tu tarjeta",
     "scanBonobusPageTitle": "Escanea tu bonobús",
-    "scanBonobusPageSubtitle": "Acerca tu tarjeta bonobús a la parte trasera de tu dispositivo para escanearla"
+    "scanBonobusPageSubtitle": "Acerca tu tarjeta bonobús a la parte trasera de tu dispositivo para escanearla",
+    "stopsList": "Lista de paradas"
 }

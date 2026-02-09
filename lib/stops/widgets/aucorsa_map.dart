@@ -18,7 +18,6 @@ import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' as map;
@@ -155,7 +154,7 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
               if (mapTileTheme != null)
                 VectorTileLayer(
                   theme: mapTileTheme!,
-                  maximumZoom: 20,
+                  tileOffset: AssetVectorTileProvider.offset,
                   tileProviders: TileProviders({
                     'openmaptiles': AssetVectorTileProvider(),
                   }),
@@ -232,35 +231,30 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
               ),
               child: Transform.rotate(
                 angle: rotation - pi / 4,
-                child: const Icon(Symbols.explore_rounded),
+                child: const Icon(Symbols.explore_rounded, size: 24),
               ),
             ),
           ),
         ),
         Positioned(
-          bottom: MediaQuery.paddingOf(context).bottom + 12,
+          top: MediaQuery.paddingOf(context).top + 24 + kToolbarHeight,
           right: max(
             MediaQuery.paddingOf(context).right,
-            LuckyNavigationBar.paddingValue,
+            16,
           ),
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(
-              context,
-            ).colorScheme.tertiaryContainer,
-            foregroundColor: Theme.of(
-              context,
-            ).colorScheme.onTertiaryContainer,
-            heroTag: null,
-            onPressed: onLocationButtonPressed,
-            child: TweenAnimationBuilder<double>(
-              tween: Tween(
-                begin: 0,
-                end: alignPositionOnUpdate == AlignOnUpdate.always ? 1 : 0,
-              ),
-              duration: kThemeAnimationDuration,
-              curve: Curves.easeInOutCubic,
-              builder: (_, value, _) =>
-                  Icon(Symbols.near_me_rounded, fill: value),
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(
+              begin: 0,
+              end: alignPositionOnUpdate == .always ? 1 : 0,
+            ),
+            duration: kThemeAnimationDuration,
+            curve: Curves.easeInOutCubic,
+            builder: (_, value, _) => FloatingActionButton.small(
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+              foregroundColor: Theme.of(context).colorScheme.onSurface,
+              heroTag: null,
+              onPressed: onLocationButtonPressed,
+              child: Icon(Symbols.near_me_rounded, fill: value, size: 24),
             ),
           ),
         ),
