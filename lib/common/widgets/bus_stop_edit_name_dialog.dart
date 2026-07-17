@@ -1,4 +1,5 @@
 import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
+import 'package:aucorsa/common/utils/bus_stop_custom_icons.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,27 +30,6 @@ class _BusStopEditNameDialogState extends State<_BusStopEditNameDialog> {
   late final baseStopName = BusStopUtils.resolveName(widget.stopId);
 
   late int? _selectedIcon;
-
-  final List<IconData> _iconOptions = [
-    Symbols.home,
-    Symbols.school,
-    Symbols.work,
-    Symbols.flag,
-    Symbols.sports_soccer,
-    Symbols.music_note,
-    Symbols.location_on,
-    Symbols.local_hospital,
-    Symbols.balance,
-    Symbols.favorite,
-    Symbols.bolt,
-    Symbols.group,
-    Symbols.construction,
-    Symbols.park,
-    Symbols.train,
-    Symbols.travel,
-    Symbols.directions_car,
-    Symbols.directions_boat,
-  ];
 
   @override
   void initState() {
@@ -104,7 +84,7 @@ class _BusStopEditNameDialogState extends State<_BusStopEditNameDialog> {
               Wrap(
                 spacing: 8,
                 children: [
-                  for (final icon in _iconOptions)
+                  for (final icon in BusStopCustomIcons.values)
                     ChoiceChip(
                       showCheckmark: false,
                       selectedColor: Theme.of(context).colorScheme.primaryFixed,
@@ -113,7 +93,7 @@ class _BusStopEditNameDialogState extends State<_BusStopEditNameDialog> {
                       ).colorScheme.surfaceContainerHighest,
                       side: BorderSide.none,
                       label: Icon(
-                        IconDataRounded(icon.codePoint),
+                        icon,
                         fill: 1,
                         color: _selectedIcon == icon.codePoint
                             ? Theme.of(context).colorScheme.onPrimaryFixed

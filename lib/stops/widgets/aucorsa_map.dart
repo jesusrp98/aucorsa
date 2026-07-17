@@ -3,16 +3,17 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
+import 'package:aucorsa/common/utils/bus_stop_custom_icons.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
 import 'package:aucorsa/stops/utils/asset_vector_tile_provider.dart';
 import 'package:aucorsa/stops/utils/location_permission_utils.dart';
 import 'package:aucorsa/stops/utils/map_marker_size.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
-import 'package:compassx/compassx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_device_compass/flutter_device_compass.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -58,12 +59,16 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
           locationSettings: const LocationSettings(distanceFilter: 5),
         ),
       );
-  late final headingStream = CompassX.events.map(
-    (event) => LocationMarkerHeading(
-      heading: degToRadian(event.heading),
-      accuracy: 0.4,
-    ),
-  );
+  late final headingStream =
+      FlutterCompass.events
+          ?.where((event) => event.heading != null)
+          .map(
+            (event) => LocationMarkerHeading(
+              heading: degToRadian(event.heading!),
+              accuracy: 0.4,
+            ),
+          ) ??
+      const Stream<LocationMarkerHeading>.empty();
 
   late final busStopCustomData = context.read<BusStopCustomDataCubit>();
   late AlignOnUpdate alignPositionOnUpdate = AlignOnUpdate.never;
@@ -263,11 +268,10 @@ class _AucorsaMapState extends State<AucorsaMap> with TickerProviderStateMixin {
   }
 
   IconData resolveIcon(int stopId) {
-    final data = busStopCustomData.get(stopId)?.icon;
-
-    if (data != null) {
-      return IconDataRounded(data);
-    }
+    final customIcon = BusStopCustomIcons.resolve(
+      busStopCustomData.get(stopId)?.icon,
+    );
+    if (customIcon != null) return customIcon;
 
     return Symbols.directions_bus_rounded;
   }

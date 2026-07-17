@@ -8,6 +8,7 @@ import 'package:aucorsa/common/models/bus_stop_custom_data.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/aucorsa_state_status.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
+import 'package:aucorsa/common/utils/bus_stop_custom_icons.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
@@ -275,9 +276,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   }
 
   IconData _resolveIcon(BusStopCustomData? data, bool isFavorite) {
-    if (data?.icon != null) {
-      return IconDataRounded(data!.icon!);
-    }
+    final customIcon = BusStopCustomIcons.resolve(data?.icon);
+    if (customIcon != null) return customIcon;
 
     return Symbols.directions_bus_rounded;
   }
