@@ -1,0 +1,33 @@
+{
+  "preferred_discovered_line_order": [
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+    "13", "14", "C2", "46", "O1", "O2", "E", "N", "T", "RB", "76",
+    "N1", "TR", "QM"
+  ],
+  "discovered_line_name_overrides": {
+    "10": "Renfe - H. Los Morales",
+    "TR": "Servicio Especial Torrecilla",
+    "QM": "Paseo de la Victoria - Quemadas"
+  },
+  "extra_lines": [
+    {"id": "71", "name": "Ciudad Jardín - Noreña - Estadio"},
+    {"id": "72", "name": "Levante - Fuensanta - Estadio"},
+    {"id": "73", "name": "Hipercor - Figueroa - Estadio"},
+    {"id": "74", "name": "Naranjo - Ollerías - Estadio"},
+    {"id": "75", "name": "Miralbaida - Parque Cruz Conde - Estadio"},
+    {"id": "78", "name": "Plaza de Colón - Aeropuerto"},
+    {"id": "21", "name": "Feria - Tejares - Tendillas", "event_id": "feria"},
+    {"id": "22", "name": "Feria - B. Guadalquivir", "event_id": "feria"},
+    {"id": "23", "name": "Feria - Levante - Fátima", "event_id": "feria"},
+    {"id": "24", "name": "Feria - Brillante - Patriarca", "event_id": "feria"},
+    {"id": "25", "name": "Feria - Naranjo - Mirabueno", "event_id": "feria"},
+    {"id": "26", "name": "Feria - Cañero - Fidiana", "event_id": "feria"},
+    {"id": "27", "name": "Feria - Hta. Sta. Isabel - Figueroa", "event_id": "feria"},
+    {"id": "28", "name": "Feria - Miralbaida - Palmeras", "event_id": "feria"},
+    {"id": "29", "name": "Feria - C. Jardín - Poniente", "event_id": "feria"},
+    {"id": "30", "name": "Feria - Santa Rosa", "event_id": "feria"},
+    {"id": "31", "name": "Feria - Turruñuelos - Arroyo del Moro", "event_id": "feria"},
+    {"id": "32", "name": "Feria - Realejo - Tendillas", "event_id": "feria"},
+    {"id": "33", "name": "Feria - Parque Cruz Conde", "event_id": "feria"}
+  ]
+}
