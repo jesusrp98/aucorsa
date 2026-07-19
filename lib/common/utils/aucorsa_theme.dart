@@ -19,14 +19,21 @@ class AucorsaTheme {
     colorScheme: colorScheme,
     fontFamily: 'Rubik',
     iconTheme: const IconThemeData(opticalSize: 24),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      sizeConstraints: BoxConstraints.tightFor(
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      sizeConstraints: const BoxConstraints.tightFor(
         width: LuckyNavigationBar.height,
         height: LuckyNavigationBar.height,
       ),
-      shape: CircleBorder(),
+      shape: CircleBorder(
+        side: BorderSide(
+          color: colorScheme.outlineVariant.withValues(alpha: .4),
+          width: 0.5,
+        ),
+      ),
       iconSize: 28,
       elevation: 1,
+      backgroundColor: colorScheme.surfaceContainer,
+      foregroundColor: colorScheme.onSurfaceVariant,
     ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: colorScheme.surfaceContainerHighest,

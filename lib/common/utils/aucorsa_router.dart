@@ -1,6 +1,5 @@
 import 'package:aucorsa/about/pages/about_page.dart';
 import 'package:aucorsa/bonobus/pages/bonobus_page.dart';
-import 'package:aucorsa/bus_lines/pages/bus_line_map_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/home/pages/home_page.dart';
@@ -63,13 +62,6 @@ class AucorsaRouter {
         GoRoute(
           path: AboutPage.path,
           builder: (context, state) => const AboutPage(),
-        ),
-        GoRoute(
-          path: BusLineMapPage.path,
-          pageBuilder: (context, state) => MaterialPage(
-            fullscreenDialog: true,
-            child: BusLineMapPage(lineId: state.extra! as String),
-          ),
         ),
       ],
     );

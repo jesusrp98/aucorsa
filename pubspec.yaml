@@ -1,7 +1,7 @@
 name: aucorsa
 description: "Simple yet beautiful, public transport app for Cordoba, Spain."
 publish_to: 'none'
-version: 1.6.0+13
+version: 1.6.0+14
 
 environment:
   sdk: ">=3.10.0 <4.0.0"

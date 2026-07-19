@@ -34,7 +34,10 @@ class BusLinesPages extends StatelessWidget {
               itemCount: lines.length,
               itemBuilder: (context, index) => BusLineTile(
                 lineId: lines[index].id,
-                trailing: const Icon(Symbols.chevron_forward_rounded),
+                trailing: Icon(
+                  Symbols.chevron_forward_rounded,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
                 onTap: () =>
                     context.push(BusLinePage.path, extra: lines[index].id),
               ),
