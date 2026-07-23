@@ -79,5 +79,43 @@
     "addBonobusSubtitle": "Select your bonobus provider before adding your card details",
     "scanBonobusPageTitle": "Scan your bonobus",
     "scanBonobusPageSubtitle": "Hold your bonobus card near the back of your device to scan it",
-    "stopsList": "Stops list"
+    "stopsList": "Stops list",
+    "aucorsaAccountAccess": "AUCORSA account",
+    "aucorsaAccountTitle": "Connect your AUCORSA account",
+    "aucorsaAccountSubtitle": "Sign in on AUCORSA's secure page to see all your linked cards, balances, and movements. Your password is never read or stored by this app.",
+    "aucorsaSignIn": "Sign in",
+    "aucorsaCreateAccount": "Create an account",
+    "chooseAnotherProvider": "Choose another provider",
+    "aucorsaManageCards": "Manage cards",
+    "aucorsaAddCard": "Add card",
+    "aucorsaAddCardSubtitle": "Link another card to your AUCORSA account",
+    "aucorsaCardNumber": "Card number",
+    "aucorsaCardAdded": "Card added",
+    "aucorsaNoCardsTitle": "No linked cards",
+    "aucorsaNoCardsSubtitle": "Add a card to your AUCORSA account, then return here to refresh it.",
+    "aucorsaCardMovements": "Movement history",
+    "aucorsaCardMovementsSubtitle": "View recent movements",
+    "aucorsaMovementOnlineTopUp": "Online top-up",
+    "aucorsaMovementBusJourney": "Bus journey",
+    "aucorsaMovementTransfer": "Transfer",
+    "aucorsaDisconnect": "Sign out",
+    "aucorsaDisconnectTitle": "Sign out of AUCORSA?",
+    "aucorsaDisconnectSubtitle": "This removes the AUCORSA website session from this device. Your account and linked cards will not be changed.",
+    "aucorsaDataError": "AUCORSA data could not be loaded",
+    "retry": "Retry",
+    "aucorsaSessionExpiredTitle": "Session expired",
+    "aucorsaSessionExpiredSubtitle": "Return to your cards and sign in to AUCORSA again.",
+    "aucorsaNoMovementsTitle": "No movements",
+    "aucorsaNoMovementsSubtitle": "AUCORSA did not return any movements for this page.",
+    "aucorsaMovementsPage": "Page {page}",
+    "@aucorsaMovementsPage": {
+        "placeholders": {
+            "page": {
+                "type": "int"
+            }
+        }
+    },
+    "aucorsaRechargeActivated": "Online top-up activated",
+    "aucorsaRechargePending": "Online top-up pending activation. It will activate when the card is used on a bus validator.",
+    "aucorsaAvailableBalance": "Available balance"
 }

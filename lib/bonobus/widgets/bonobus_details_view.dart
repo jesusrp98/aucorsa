@@ -1,14 +1,13 @@
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
+import 'package:aucorsa/bonobus/widgets/bonobus_balance_view.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_delete_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
-import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -49,61 +48,10 @@ class BonobusDetailsView extends StatelessWidget {
           child: Column(
             spacing: 40,
             children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(24).copyWith(bottom: 16),
-                    child: ClipPath(
-                      clipper: const ShapeBorderClipper(shape: StadiumBorder()),
-                      child: Stack(
-                        children: [
-                          Container(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primaryContainer,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 24,
-                            ),
-                            width: 256,
-                            height: 112,
-                            alignment: Alignment.center,
-                            child: Text(
-                              bonobusState.balance != null
-                                  ? bonobusState.balance.toString()
-                                  : '',
-                              style: Theme.of(context).textTheme.displayLarge
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimaryContainer,
-                                  ),
-                            ),
-                          ),
-                          if (bonobusState.status == BonobusStatus.loading)
-                            Positioned.fill(
-                              child: AucorsaShimmer(
-                                child: ColoredBox(
-                                  color: Colors.white.withValues(alpha: .6),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (bonobusState.lastUpdated != null)
-                    Text(
-                      context.l10n.lastUpdated(
-                        DateFormat.MMMd()
-                            .addPattern('jm', ', ')
-                            .format(bonobusState.lastUpdated!),
-                      ),
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                ],
+              BonobusBalanceView(
+                balance: bonobusState.balance,
+                loading: bonobusState.status == BonobusStatus.loading,
+                lastUpdated: bonobusState.lastUpdated,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -41,6 +41,7 @@ dependencies:
   url_launcher: ^6.3.1
   vector_map_tiles: 10.0.0-beta.2
   vector_tile_renderer: ^7.0.0-beta.1
+  very_good_infinite_list: ^0.9.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.2

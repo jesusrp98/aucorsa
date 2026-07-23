@@ -4,13 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class AboutButton extends StatelessWidget {
-  const AboutButton({super.key});
+  final VoidCallback? onReturn;
+
+  const AboutButton({this.onReturn, super.key});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
-      onPressed: () => context.push(AboutPage.path),
+      onPressed: () async {
+        await context.push<void>(AboutPage.path);
+        if (context.mounted) onReturn?.call();
+      },
       icon: Icon(_isCupertino(context) ? Symbols.pending : Symbols.more_vert),
     );
   }

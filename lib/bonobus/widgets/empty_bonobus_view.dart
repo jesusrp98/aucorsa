@@ -1,6 +1,5 @@
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
-import 'package:aucorsa/bonobus/widgets/bonobus_id_dialog.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_scan_controller.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
@@ -24,18 +23,11 @@ class _EmptyBonobusViewState extends State<EmptyBonobusView> {
     if (provider == null) {
       return _EmptyProviderView(
         onSelect: (provider) async {
-          if (provider == BonobusProvider.consorcio) {
-            return setState(() => this.provider = provider);
+          if (provider == BonobusProvider.aucorsa) {
+            context.read<BonobusCubit>().set(provider: provider);
+            return;
           }
-
-          final id = await showBonobusIdDialog(context);
-
-          if (!context.mounted || id == null) return;
-
-          return context.read<BonobusCubit>().set(
-            provider: provider,
-            id: id,
-          );
+          setState(() => this.provider = provider);
         },
       );
     }

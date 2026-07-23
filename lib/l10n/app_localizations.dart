@@ -439,6 +439,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stops list'**
   String get stopsList;
+
+  /// No description provided for @aucorsaAccountAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'AUCORSA account'**
+  String get aucorsaAccountAccess;
+
+  /// No description provided for @aucorsaAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your AUCORSA account'**
+  String get aucorsaAccountTitle;
+
+  /// No description provided for @aucorsaAccountSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in on AUCORSA\'s secure page to see all your linked cards, balances, and movements. Your password is never read or stored by this app.'**
+  String get aucorsaAccountSubtitle;
+
+  /// No description provided for @aucorsaSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get aucorsaSignIn;
+
+  /// No description provided for @aucorsaCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account'**
+  String get aucorsaCreateAccount;
+
+  /// No description provided for @chooseAnotherProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another provider'**
+  String get chooseAnotherProvider;
+
+  /// No description provided for @aucorsaManageCards.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage cards'**
+  String get aucorsaManageCards;
+
+  /// No description provided for @aucorsaAddCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add card'**
+  String get aucorsaAddCard;
+
+  /// No description provided for @aucorsaAddCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link another card to your AUCORSA account'**
+  String get aucorsaAddCardSubtitle;
+
+  /// No description provided for @aucorsaCardNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Card number'**
+  String get aucorsaCardNumber;
+
+  /// No description provided for @aucorsaCardAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Card added'**
+  String get aucorsaCardAdded;
+
+  /// No description provided for @aucorsaNoCardsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No linked cards'**
+  String get aucorsaNoCardsTitle;
+
+  /// No description provided for @aucorsaNoCardsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a card to your AUCORSA account, then return here to refresh it.'**
+  String get aucorsaNoCardsSubtitle;
+
+  /// No description provided for @aucorsaCardMovements.
+  ///
+  /// In en, this message translates to:
+  /// **'Movement history'**
+  String get aucorsaCardMovements;
+
+  /// No description provided for @aucorsaCardMovementsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View recent movements'**
+  String get aucorsaCardMovementsSubtitle;
+
+  /// No description provided for @aucorsaMovementOnlineTopUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Online top-up'**
+  String get aucorsaMovementOnlineTopUp;
+
+  /// No description provided for @aucorsaMovementBusJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus journey'**
+  String get aucorsaMovementBusJourney;
+
+  /// No description provided for @aucorsaMovementTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get aucorsaMovementTransfer;
+
+  /// No description provided for @aucorsaDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get aucorsaDisconnect;
+
+  /// No description provided for @aucorsaDisconnectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of AUCORSA?'**
+  String get aucorsaDisconnectTitle;
+
+  /// No description provided for @aucorsaDisconnectSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the AUCORSA website session from this device. Your account and linked cards will not be changed.'**
+  String get aucorsaDisconnectSubtitle;
+
+  /// No description provided for @aucorsaDataError.
+  ///
+  /// In en, this message translates to:
+  /// **'AUCORSA data could not be loaded'**
+  String get aucorsaDataError;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @aucorsaSessionExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired'**
+  String get aucorsaSessionExpiredTitle;
+
+  /// No description provided for @aucorsaSessionExpiredSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Return to your cards and sign in to AUCORSA again.'**
+  String get aucorsaSessionExpiredSubtitle;
+
+  /// No description provided for @aucorsaNoMovementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No movements'**
+  String get aucorsaNoMovementsTitle;
+
+  /// No description provided for @aucorsaNoMovementsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AUCORSA did not return any movements for this page.'**
+  String get aucorsaNoMovementsSubtitle;
+
+  /// No description provided for @aucorsaMovementsPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page}'**
+  String aucorsaMovementsPage(int page);
+
+  /// No description provided for @aucorsaRechargeActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Online top-up activated'**
+  String get aucorsaRechargeActivated;
+
+  /// No description provided for @aucorsaRechargePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Online top-up pending activation. It will activate when the card is used on a bus validator.'**
+  String get aucorsaRechargePending;
+
+  /// No description provided for @aucorsaAvailableBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Available balance'**
+  String get aucorsaAvailableBalance;
 }
 
 class _AppLocalizationsDelegate

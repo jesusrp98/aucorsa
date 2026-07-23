@@ -191,4 +191,106 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stopsList => 'Lista de paradas';
+
+  @override
+  String get aucorsaAccountAccess => 'Cuenta de AUCORSA';
+
+  @override
+  String get aucorsaAccountTitle => 'Conecta tu cuenta de AUCORSA';
+
+  @override
+  String get aucorsaAccountSubtitle =>
+      'Inicia sesión en la página segura de AUCORSA para ver todas tus tarjetas vinculadas, saldos y movimientos. Esta aplicación nunca lee ni guarda tu contraseña.';
+
+  @override
+  String get aucorsaSignIn => 'Iniciar sesión';
+
+  @override
+  String get aucorsaCreateAccount => 'Crear una cuenta';
+
+  @override
+  String get chooseAnotherProvider => 'Elegir otro proveedor';
+
+  @override
+  String get aucorsaManageCards => 'Gestionar tarjetas';
+
+  @override
+  String get aucorsaAddCard => 'Añadir tarjeta';
+
+  @override
+  String get aucorsaAddCardSubtitle =>
+      'Vincula otra tarjeta a tu cuenta de AUCORSA';
+
+  @override
+  String get aucorsaCardNumber => 'Número de tarjeta';
+
+  @override
+  String get aucorsaCardAdded => 'Tarjeta añadida';
+
+  @override
+  String get aucorsaNoCardsTitle => 'No hay tarjetas vinculadas';
+
+  @override
+  String get aucorsaNoCardsSubtitle =>
+      'Añade una tarjeta a tu cuenta de AUCORSA y vuelve aquí para actualizarla.';
+
+  @override
+  String get aucorsaCardMovements => 'Historial de movimientos';
+
+  @override
+  String get aucorsaCardMovementsSubtitle => 'Consulta los últimos movimientos';
+
+  @override
+  String get aucorsaMovementOnlineTopUp => 'Recarga online';
+
+  @override
+  String get aucorsaMovementBusJourney => 'Viaje';
+
+  @override
+  String get aucorsaMovementTransfer => 'Transbordo';
+
+  @override
+  String get aucorsaDisconnect => 'Cerrar sesión';
+
+  @override
+  String get aucorsaDisconnectTitle => '¿Cerrar sesión en AUCORSA?';
+
+  @override
+  String get aucorsaDisconnectSubtitle =>
+      'Esto elimina de este dispositivo la sesión de la web de AUCORSA. Tu cuenta y las tarjetas vinculadas no se modificarán.';
+
+  @override
+  String get aucorsaDataError => 'No se han podido cargar los datos de AUCORSA';
+
+  @override
+  String get retry => 'Reintentar';
+
+  @override
+  String get aucorsaSessionExpiredTitle => 'La sesión ha caducado';
+
+  @override
+  String get aucorsaSessionExpiredSubtitle =>
+      'Vuelve a tus tarjetas e inicia sesión de nuevo en AUCORSA.';
+
+  @override
+  String get aucorsaNoMovementsTitle => 'No hay movimientos';
+
+  @override
+  String get aucorsaNoMovementsSubtitle =>
+      'AUCORSA no ha devuelto movimientos para esta página.';
+
+  @override
+  String aucorsaMovementsPage(int page) {
+    return 'Página $page';
+  }
+
+  @override
+  String get aucorsaRechargeActivated => 'Recarga online activada';
+
+  @override
+  String get aucorsaRechargePending =>
+      'Recarga online pendiente de activación. Se activará al pasar la tarjeta por la validadora del autobús.';
+
+  @override
+  String get aucorsaAvailableBalance => 'Saldo disponible';
 }

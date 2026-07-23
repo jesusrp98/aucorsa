@@ -191,4 +191,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stopsList => 'Stops list';
+
+  @override
+  String get aucorsaAccountAccess => 'AUCORSA account';
+
+  @override
+  String get aucorsaAccountTitle => 'Connect your AUCORSA account';
+
+  @override
+  String get aucorsaAccountSubtitle =>
+      'Sign in on AUCORSA\'s secure page to see all your linked cards, balances, and movements. Your password is never read or stored by this app.';
+
+  @override
+  String get aucorsaSignIn => 'Sign in';
+
+  @override
+  String get aucorsaCreateAccount => 'Create an account';
+
+  @override
+  String get chooseAnotherProvider => 'Choose another provider';
+
+  @override
+  String get aucorsaManageCards => 'Manage cards';
+
+  @override
+  String get aucorsaAddCard => 'Add card';
+
+  @override
+  String get aucorsaAddCardSubtitle =>
+      'Link another card to your AUCORSA account';
+
+  @override
+  String get aucorsaCardNumber => 'Card number';
+
+  @override
+  String get aucorsaCardAdded => 'Card added';
+
+  @override
+  String get aucorsaNoCardsTitle => 'No linked cards';
+
+  @override
+  String get aucorsaNoCardsSubtitle =>
+      'Add a card to your AUCORSA account, then return here to refresh it.';
+
+  @override
+  String get aucorsaCardMovements => 'Movement history';
+
+  @override
+  String get aucorsaCardMovementsSubtitle => 'View recent movements';
+
+  @override
+  String get aucorsaMovementOnlineTopUp => 'Online top-up';
+
+  @override
+  String get aucorsaMovementBusJourney => 'Bus journey';
+
+  @override
+  String get aucorsaMovementTransfer => 'Transfer';
+
+  @override
+  String get aucorsaDisconnect => 'Sign out';
+
+  @override
+  String get aucorsaDisconnectTitle => 'Sign out of AUCORSA?';
+
+  @override
+  String get aucorsaDisconnectSubtitle =>
+      'This removes the AUCORSA website session from this device. Your account and linked cards will not be changed.';
+
+  @override
+  String get aucorsaDataError => 'AUCORSA data could not be loaded';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get aucorsaSessionExpiredTitle => 'Session expired';
+
+  @override
+  String get aucorsaSessionExpiredSubtitle =>
+      'Return to your cards and sign in to AUCORSA again.';
+
+  @override
+  String get aucorsaNoMovementsTitle => 'No movements';
+
+  @override
+  String get aucorsaNoMovementsSubtitle =>
+      'AUCORSA did not return any movements for this page.';
+
+  @override
+  String aucorsaMovementsPage(int page) {
+    return 'Page $page';
+  }
+
+  @override
+  String get aucorsaRechargeActivated => 'Online top-up activated';
+
+  @override
+  String get aucorsaRechargePending =>
+      'Online top-up pending activation. It will activate when the card is used on a bus validator.';
+
+  @override
+  String get aucorsaAvailableBalance => 'Available balance';
 }

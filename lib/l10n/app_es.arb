@@ -72,5 +72,43 @@
     "addBonobusSubtitle": "Selecciona tu proveedor de bonobús antes de añadir los datos de tu tarjeta",
     "scanBonobusPageTitle": "Escanea tu bonobús",
     "scanBonobusPageSubtitle": "Acerca tu tarjeta bonobús a la parte trasera de tu dispositivo para escanearla",
-    "stopsList": "Lista de paradas"
+    "stopsList": "Lista de paradas",
+    "aucorsaAccountAccess": "Cuenta de AUCORSA",
+    "aucorsaAccountTitle": "Conecta tu cuenta de AUCORSA",
+    "aucorsaAccountSubtitle": "Inicia sesión en la página segura de AUCORSA para ver todas tus tarjetas vinculadas, saldos y movimientos. Esta aplicación nunca lee ni guarda tu contraseña.",
+    "aucorsaSignIn": "Iniciar sesión",
+    "aucorsaCreateAccount": "Crear una cuenta",
+    "chooseAnotherProvider": "Elegir otro proveedor",
+    "aucorsaManageCards": "Gestionar tarjetas",
+    "aucorsaAddCard": "Añadir tarjeta",
+    "aucorsaAddCardSubtitle": "Vincula otra tarjeta a tu cuenta de AUCORSA",
+    "aucorsaCardNumber": "Número de tarjeta",
+    "aucorsaCardAdded": "Tarjeta añadida",
+    "aucorsaNoCardsTitle": "No hay tarjetas vinculadas",
+    "aucorsaNoCardsSubtitle": "Añade una tarjeta a tu cuenta de AUCORSA y vuelve aquí para actualizarla.",
+    "aucorsaCardMovements": "Historial de movimientos",
+    "aucorsaCardMovementsSubtitle": "Consulta los últimos movimientos",
+    "aucorsaMovementOnlineTopUp": "Recarga online",
+    "aucorsaMovementBusJourney": "Viaje",
+    "aucorsaMovementTransfer": "Transbordo",
+    "aucorsaDisconnect": "Cerrar sesión",
+    "aucorsaDisconnectTitle": "¿Cerrar sesión en AUCORSA?",
+    "aucorsaDisconnectSubtitle": "Esto elimina de este dispositivo la sesión de la web de AUCORSA. Tu cuenta y las tarjetas vinculadas no se modificarán.",
+    "aucorsaDataError": "No se han podido cargar los datos de AUCORSA",
+    "retry": "Reintentar",
+    "aucorsaSessionExpiredTitle": "La sesión ha caducado",
+    "aucorsaSessionExpiredSubtitle": "Vuelve a tus tarjetas e inicia sesión de nuevo en AUCORSA.",
+    "aucorsaNoMovementsTitle": "No hay movimientos",
+    "aucorsaNoMovementsSubtitle": "AUCORSA no ha devuelto movimientos para esta página.",
+    "aucorsaMovementsPage": "Página {page}",
+    "@aucorsaMovementsPage": {
+        "placeholders": {
+            "page": {
+                "type": "int"
+            }
+        }
+    },
+    "aucorsaRechargeActivated": "Recarga online activada",
+    "aucorsaRechargePending": "Recarga online pendiente de activación. Se activará al pasar la tarjeta por la validadora del autobús.",
+    "aucorsaAvailableBalance": "Saldo disponible"
 }

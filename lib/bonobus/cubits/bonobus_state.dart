@@ -22,11 +22,19 @@ class BonobusState extends Equatable {
   });
 
   factory BonobusState.fromJson(Map<String, dynamic> json) {
+    final provider = json['provider'] != null
+        ? BonobusProvider.values[json['provider'] as int]
+        : null;
+
+    // AUCORSA accounts now use the official authenticated session. Discard
+    // card numbers and balances stored by the legacy anonymous scraper.
+    if (provider == BonobusProvider.aucorsa) {
+      return const BonobusState(provider: BonobusProvider.aucorsa);
+    }
+
     return BonobusState(
       status: BonobusStatus.values[json['status'] as int],
-      provider: json['provider'] != null
-          ? BonobusProvider.values[json['provider'] as int]
-          : null,
+      provider: provider,
       id: json['id'] as String?,
       balance: json['balance'] as String?,
       name: json['name'] as String?,
