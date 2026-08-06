@@ -1,7 +1,7 @@
 name: aucorsa
 description: "Simple yet beautiful, public transport app for Cordoba, Spain."
 publish_to: 'none'
-version: 1.6.0+14
+version: 1.6.0+15
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -39,8 +39,8 @@ dependencies:
   path_provider: ^2.1.5
   shimmer: ^3.0.0
   url_launcher: ^6.3.1
-  vector_map_tiles: 10.0.0-beta.2
-  vector_tile_renderer: ^7.0.0-beta.1
+  vector_map_tiles: 9.0.0-beta.8
+  vector_tile_renderer: ^6.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.2
