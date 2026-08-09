@@ -43,6 +43,12 @@ TAG_PATTERN = re.compile(r"<[^>]+>")
 COLOR_PATTERN = re.compile(r"^#[0-9a-fA-F]{6}$")
 MINIMUM_LINE_COUNT = 20
 MINIMUM_STOP_COUNT = 500
+# Event slugs both `lib/events/models/event_id.dart` and AucorsaKit's
+# `TransitEventID` know how to interpret. A new slug must be added to all three.
+KNOWN_EVENT_IDS = frozenset({"feria"})
+# Schema version of the generated Swift catalog; must match
+# `TransitCatalog.currentVersion` in AucorsaKit.
+TRANSIT_CATALOG_VERSION = 1
 MAX_STOP_COORDINATE_DIFFERENCE_METERS = 50
 COORDINATE_QUANTUM = Decimal("0.0000000000001")
 
@@ -601,6 +607,74 @@ def render_bus_stop_utils(
     return "".join(chunks)
 
 
+def render_transit_json(
+    lines: Sequence[LineData],
+    stop_names: dict[int, str],
+    stop_coordinates: dict[int, tuple[Decimal, Decimal]],
+) -> str:
+    """Render the static catalog consumed by the AucorsaKit Swift package.
+
+    Deliberately omits route geometry: `linePaths` is ~750K of map-rendering
+    data, and nothing on the Swift side draws a route. Everything else the
+    App Intents layer needs -- stop names, coordinates, line metadata and
+    stop membership -- is here.
+
+    Emitted as JSON rather than Swift source because large Swift collection
+    literals are a type-checker pathology; a file this size can take minutes to
+    compile or fail outright. Decoding it lazily costs single-digit milliseconds.
+
+    One object per line keeps the generated file diff-readable.
+    """
+    unknown_events = sorted(
+        {line.event_id for line in lines if line.event_id is not None}
+        - KNOWN_EVENT_IDS
+    )
+    if unknown_events:
+        raise UpdateError(
+            "Unknown event ids: "
+            + ", ".join(unknown_events)
+            + ". Add them to KNOWN_EVENT_IDS, EventId in Dart, and "
+            "TransitEventID in AucorsaKit."
+        )
+
+    def dump(value: object) -> str:
+        return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+    chunks = ['{\n', f'"version":{TRANSIT_CATALOG_VERSION},\n', '"stops":[\n']
+
+    stop_ids = sorted(stop_coordinates)
+    for index, stop_id in enumerate(stop_ids):
+        latitude, longitude = stop_coordinates[stop_id]
+        # Decimal -> float is safe here: coordinates carry at most 13 decimal
+        # places and Swift decodes them into Double anyway. Python's float repr
+        # is shortest-roundtrip and deterministic, so --check stays stable.
+        entry = {
+            "id": stop_id,
+            "name": stop_names[stop_id],
+            "lat": float(latitude),
+            "lon": float(longitude),
+        }
+        suffix = "" if index == len(stop_ids) - 1 else ","
+        chunks.append(f"{dump(entry)}{suffix}\n")
+
+    chunks.extend(["],\n", '"lines":[\n'])
+
+    for index, line in enumerate(lines):
+        entry: dict[str, object] = {
+            "id": line.id,
+            "name": line.name,
+            "color": int(line.color, 16),
+            "stops": list(line.stops),
+        }
+        if line.event_id is not None:
+            entry["event"] = line.event_id
+        suffix = "" if index == len(lines) - 1 else ","
+        chunks.append(f"{dump(entry)}{suffix}\n")
+
+    chunks.extend(["]\n", "}\n"])
+    return "".join(chunks)
+
+
 def write_atomically(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
@@ -744,6 +818,12 @@ def run(argv: Sequence[str] | None = None) -> int:
             stop_names, stop_coordinates
         ),
     })
+
+    # Added after formatting: `dart format` must not touch the Swift catalog.
+    swift_catalog = (
+        repo_root / "ios/AucorsaKit/Sources/AucorsaKit/Resources/transit_data.json"
+    )
+    outputs[swift_catalog] = render_transit_json(lines, stop_names, stop_coordinates)
 
     stale = [
         path

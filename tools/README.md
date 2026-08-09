@@ -6,6 +6,17 @@ writes these app files directly:
 
 - `lib/common/utils/bus_line_utils.dart`
 - `lib/common/utils/bus_stop_utils.dart`
+- `ios/AucorsaKit/Sources/AucorsaKit/Resources/transit_data.json`
+
+The JSON file is the same dataset in the form the AucorsaKit Swift package reads
+(App Intents, Siri, Spotlight). It omits route geometry, which only the Flutter
+map draws, so it stays around 70K rather than 780K. Because every output comes
+from one validated dataset, `--check` proves the Dart and Swift sides agree.
+
+Adding a new event slug means updating three places in step: `KNOWN_EVENT_IDS`
+in this script, `EventId` in `lib/events/models/event_id.dart`, and
+`TransitEventID` in AucorsaKit. The script fails loudly if it sees a slug it
+does not recognise.
 
 Run it from any directory inside or outside the repository:
 

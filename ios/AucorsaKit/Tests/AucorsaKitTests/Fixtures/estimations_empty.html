@@ -1,0 +1,22 @@
+<div class="ppp-content"><div class="ppp-stop-label">Parada 244: Glorieta Albaida</div><div class="ppp-no-estimations">Sin estimaciones</div></div>
+        <script>
+
+        if (typeof nIntervId === 'undefined') { 
+            var nIntervId;
+        }
+
+        if(nIntervId) {
+            clearInterval(nIntervId);
+        }
+
+        nIntervId = window.setInterval(function(){
+            jQuery.get(ajax_vars.api_light + "/estimations/stop", {current_line: "0", stop_id: "244", _wpnonce: ajax_vars.ajax_nonce}, function(data){
+                jQuery("#estimation-content").empty();
+                jQuery("#estimation-content").html(data);
+                jQuery("#estimation-content").find(".ppp-favorited").removeClass("is-hidden").addClass("is-visible");
+            });
+        }, 60000);
+
+        
+        </script>
+        

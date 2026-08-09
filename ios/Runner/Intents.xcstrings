@@ -1,0 +1,391 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "Bus Stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parada"
+          }
+        }
+      }
+    },
+    "Bus Line": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Línea"
+          }
+        }
+      }
+    },
+    "%lld bus stops": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld paradas"
+          }
+        }
+      }
+    },
+    "%lld bus lines": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld líneas"
+          }
+        }
+      }
+    },
+    "Get Bus Arrivals": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consultar llegadas"
+          }
+        }
+      }
+    },
+    "Get Next Bus On Line": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo autobús de una línea"
+          }
+        }
+      }
+    },
+    "Get bus arrivals at ${stop}": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consultar llegadas en ${stop}"
+          }
+        }
+      }
+    },
+    "Get the next line ${line} bus at ${stop}": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consultar el próximo autobús de la línea ${line} en ${stop}"
+          }
+        }
+      }
+    },
+    "Check when the next buses arrive at a stop.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consulta cuándo llegan los próximos autobuses a una parada."
+          }
+        }
+      }
+    },
+    "Check when a specific line next arrives at a stop.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consulta cuándo llega una línea concreta a una parada."
+          }
+        }
+      }
+    },
+    "Arrivals": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llegadas"
+          }
+        }
+      }
+    },
+    "Stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parada"
+          }
+        }
+      }
+    },
+    "Line": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Línea"
+          }
+        }
+      }
+    },
+    "Which stop?": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué parada?"
+          }
+        }
+      }
+    },
+    "Which line?": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué línea?"
+          }
+        }
+      }
+    },
+    "At which stop?": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿En qué parada?"
+          }
+        }
+      }
+    },
+    "AUCORSA is not responding right now. Try again in a moment.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUCORSA no responde ahora mismo. Inténtalo de nuevo en un momento."
+          }
+        }
+      }
+    },
+    "No buses are expected at %@ right now.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se esperan autobuses en %@ ahora mismo."
+          }
+        }
+      }
+    },
+    "At %@: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En %@: %@."
+          }
+        }
+      }
+    },
+    "At %@: %@, and %lld more lines.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En %@: %@, y %lld líneas más."
+          }
+        }
+      }
+    },
+    "At %@: %@, and one more line.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En %@: %@, y una línea más."
+          }
+        }
+      }
+    },
+    "line %@ in %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "línea %@ en %lld min"
+          }
+        }
+      }
+    },
+    "Line %@ is not due at %@ right now.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ no está prevista en %@ ahora mismo."
+          }
+        }
+      }
+    },
+    "Line %@ arrives at %@ in %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ llega a %@ en %@."
+          }
+        }
+      }
+    },
+    "Line %@ arrives at %@ in %@, then in %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ llega a %@ en %@, y luego en %@."
+          }
+        }
+      }
+    },
+    "Line %@ does not serve %@. Choose another stop.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ no pasa por %@. Elige otra parada."
+          }
+        }
+      }
+    },
+    "Which of your stops on line %@?": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuál de tus paradas de la línea %@?"
+          }
+        }
+      }
+    },
+    "Which stop on line %@?": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué parada de la línea %@?"
+          }
+        }
+      }
+    },
+    "%lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        }
+      }
+    },
+    "Bus Arrivals": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llegadas"
+          }
+        }
+      }
+    },
+    "Next Bus On Line": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo de la línea"
+          }
+        }
+      }
+    },
+    "Now": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahora"
+          }
+        }
+      }
+    },
+    "%lld h": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld h"
+          }
+        }
+      }
+    },
+    "%lld h %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld h %lld min"
+          }
+        }
+      }
+    },
+    "No estimations available": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay estimaciones disponibles"
+          }
+        }
+      }
+    }
+  }
+}

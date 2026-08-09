@@ -7,14 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		017A64576E448375EEA2E5A9 /* BusStopEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77549057EB2E841E09D9F51A /* BusStopEntity.swift */; };
+		0DAC61F893A7B8B2948B0778 /* AppShortcuts.strings in Resources */ = {isa = PBXBuildFile; fileRef = A90F94564C748BA137FC7289 /* AppShortcuts.strings */; };
+		10A57AE76396BF47402494BC /* SystemAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E328896C7B893C56544A3958 /* SystemAppearance.swift */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
+		4B91546C36719E3F389CD997 /* ArrivalsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5401F4D370FB574334A516FB /* ArrivalsFormatter.swift */; };
+		5891FAD18164CB61EA30FEF3 /* BusStopQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2347EDA0B05D503915B4B86C /* BusStopQuery.swift */; };
+		5CECD8D4F555E35310340C5C /* Intents.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */; };
+		72FBAAA1A0E5FDED060182C4 /* ArrivalsSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF10AAB72518F3FF320549D /* ArrivalsSnippetView.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
+		9373CFD7739285E728E1E32F /* AucorsaShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953CCB3F8BAC7835ED379172 /* AucorsaShortcuts.swift */; };
+		96A5F9A9963D1E8387B0AEE7 /* BusStopEntity+Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5155EC672FA3B12D8BED989C /* BusStopEntity+Spotlight.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		9C632A6B74B7D054AB6BBB56 /* AppGroupChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07975689DEA4B3CEDD623B01 /* AppGroupChannel.swift */; };
+		C5CEDE6452D0696092CFD68D /* GetStopArrivalsIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F5CD8D0AADA7DF9BA00C4 /* GetStopArrivalsIntent.swift */; };
+		CF7D9187A9C33378375D4662 /* BusLineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5566B094123FD16BF52A39CC /* BusLineEntity.swift */; };
+		DB20DA12376C16373532A130 /* GetNextBusForLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */; };
+		D10000000000000000000002 /* IntentServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10000000000000000000001 /* IntentServices.swift */; };
+		D21000000000000000000001 /* AppIntentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20000000000000000000001 /* AppIntentsExtension.swift */; };
+		D21000000000000000000002 /* BusStopEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77549057EB2E841E09D9F51A /* BusStopEntity.swift */; };
+		D21000000000000000000003 /* BusStopQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2347EDA0B05D503915B4B86C /* BusStopQuery.swift */; };
+		D21000000000000000000004 /* BusLineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5566B094123FD16BF52A39CC /* BusLineEntity.swift */; };
+		D21000000000000000000005 /* BusStopEntity+Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5155EC672FA3B12D8BED989C /* BusStopEntity+Spotlight.swift */; };
+		D21000000000000000000006 /* IntentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C139C23AF8527FD76BA635B /* IntentError.swift */; };
+		D21000000000000000000007 /* ArrivalsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5401F4D370FB574334A516FB /* ArrivalsFormatter.swift */; };
+		D21000000000000000000008 /* SystemAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E328896C7B893C56544A3958 /* SystemAppearance.swift */; };
+		D21000000000000000000009 /* IntentServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10000000000000000000001 /* IntentServices.swift */; };
+		D2100000000000000000000A /* ArrivalsSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF10AAB72518F3FF320549D /* ArrivalsSnippetView.swift */; };
+		D2100000000000000000000B /* GetStopArrivalsIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F5CD8D0AADA7DF9BA00C4 /* GetStopArrivalsIntent.swift */; };
+		D2100000000000000000000C /* GetNextBusForLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */; };
+		D2100000000000000000000D /* Intents.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */; };
+		D2100000000000000000000E /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = D26000000000000000000001 /* AucorsaKit */; };
+		D2100000000000000000000F /* AucorsaIntentsExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000004 /* AucorsaIntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D21000000000000000000010 /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = D26000000000000000000002 /* AucorsaKit */; };
+		E8873D8A39C721875228AF95 /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 783F279C07D82B86433C2E3F /* AucorsaKit */; };
+		F6FF3444A07A3084AED26DFF /* IntentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C139C23AF8527FD76BA635B /* IntentError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +56,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 97C146ED1CF9000F007C117D;
 			remoteInfo = Runner;
+		};
+		D23000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D24000000000000000000001;
+			remoteInfo = AucorsaIntentsExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -38,18 +77,41 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D22000000000000000000004 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				D2100000000000000000000F /* AucorsaIntentsExtension.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07975689DEA4B3CEDD623B01 /* AppGroupChannel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppGroupChannel.swift; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		2347EDA0B05D503915B4B86C /* BusStopQuery.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusStopQuery.swift; sourceTree = "<group>"; };
+		24683AA7EDA43014F5BF61CA /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
+		2AF10AAB72518F3FF320549D /* ArrivalsSnippetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArrivalsSnippetView.swift; sourceTree = "<group>"; };
+		2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetNextBusForLineIntent.swift; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
+		5155EC672FA3B12D8BED989C /* BusStopEntity+Spotlight.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "BusStopEntity+Spotlight.swift"; sourceTree = "<group>"; };
+		5401F4D370FB574334A516FB /* ArrivalsFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArrivalsFormatter.swift; sourceTree = "<group>"; };
+		5566B094123FD16BF52A39CC /* BusLineEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusLineEntity.swift; sourceTree = "<group>"; };
+		6DC9E834567958FB183F0E58 /* Runner.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7578B7D31735A6B11953BA4B /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
+		77549057EB2E841E09D9F51A /* BusStopEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusStopEntity.swift; sourceTree = "<group>"; };
 		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
+		953CCB3F8BAC7835ED379172 /* AucorsaShortcuts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AucorsaShortcuts.swift; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +119,15 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C139C23AF8527FD76BA635B /* IntentError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IntentError.swift; sourceTree = "<group>"; };
+		A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; path = Intents.xcstrings; sourceTree = "<group>"; };
+		C71F5CD8D0AADA7DF9BA00C4 /* GetStopArrivalsIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetStopArrivalsIntent.swift; sourceTree = "<group>"; };
+		D10000000000000000000001 /* IntentServices.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IntentServices.swift; sourceTree = "<group>"; };
+		D20000000000000000000001 /* AppIntentsExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppIntentsExtension.swift; sourceTree = "<group>"; };
+		D20000000000000000000002 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D20000000000000000000003 /* AucorsaIntentsExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AucorsaIntentsExtension.entitlements; sourceTree = "<group>"; };
+		D20000000000000000000004 /* AucorsaIntentsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = AucorsaIntentsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E328896C7B893C56544A3958 /* SystemAppearance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SystemAppearance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D21000000000000000000010 /* AucorsaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,18 +144,60 @@
 			buildActionMask = 2147483647;
 			files = (
 				78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */,
+				E8873D8A39C721875228AF95 /* AucorsaKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D22000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2100000000000000000000E /* AucorsaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02922632D2CB31F0792A9D9A /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				9C139C23AF8527FD76BA635B /* IntentError.swift */,
+				5401F4D370FB574334A516FB /* ArrivalsFormatter.swift */,
+				E328896C7B893C56544A3958 /* SystemAppearance.swift */,
+				D10000000000000000000001 /* IntentServices.swift */,
+			);
+			name = Support;
+			path = Support;
+			sourceTree = "<group>";
+		};
+		030580DDB477AE652C8C59D5 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				77549057EB2E841E09D9F51A /* BusStopEntity.swift */,
+				2347EDA0B05D503915B4B86C /* BusStopQuery.swift */,
+				5566B094123FD16BF52A39CC /* BusLineEntity.swift */,
+				5155EC672FA3B12D8BED989C /* BusStopEntity+Spotlight.swift */,
+			);
+			name = Entities;
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		331C8082294A63A400263BE5 /* RunnerTests */ = {
 			isa = PBXGroup;
 			children = (
 				331C807B294A618700263BE5 /* RunnerTests.swift */,
 			);
 			path = RunnerTests;
+			sourceTree = "<group>";
+		};
+		8A094E36ABDA958541E944FD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2AF10AAB72518F3FF320549D /* ArrivalsSnippetView.swift */,
+			);
+			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
@@ -105,6 +219,7 @@
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
+				D27000000000000000000001 /* AucorsaIntentsExtension */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +228,7 @@
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
+				D20000000000000000000004 /* AucorsaIntentsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,8 +244,46 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				6DC9E834567958FB183F0E58 /* Runner.entitlements */,
+				07975689DEA4B3CEDD623B01 /* AppGroupChannel.swift */,
+				FDB0FFF627964300F5BE0777 /* Intents */,
+				A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */,
+				A90F94564C748BA137FC7289 /* AppShortcuts.strings */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		FDB0FFF627964300F5BE0777 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				953CCB3F8BAC7835ED379172 /* AucorsaShortcuts.swift */,
+				030580DDB477AE652C8C59D5 /* Entities */,
+				02922632D2CB31F0792A9D9A /* Support */,
+				8A094E36ABDA958541E944FD /* Views */,
+				FDB5350025816808C242E0DD /* Intents */,
+			);
+			name = Intents;
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		FDB5350025816808C242E0DD /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				C71F5CD8D0AADA7DF9BA00C4 /* GetStopArrivalsIntent.swift */,
+				2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */,
+			);
+			name = Intents;
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		D27000000000000000000001 /* AucorsaIntentsExtension */ = {
+			isa = PBXGroup;
+			children = (
+				D20000000000000000000001 /* AppIntentsExtension.swift */,
+				D20000000000000000000002 /* Info.plist */,
+				D20000000000000000000003 /* AucorsaIntentsExtension.entitlements */,
+			);
+			path = AucorsaIntentsExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +303,9 @@
 				331C8086294A63A400263BE5 /* PBXTargetDependency */,
 			);
 			name = RunnerTests;
+			packageProductDependencies = (
+				D26000000000000000000002 /* AucorsaKit */,
+			);
 			productName = RunnerTests;
 			productReference = 331C8081294A63A400263BE5 /* RunnerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -162,19 +319,42 @@
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
+				D22000000000000000000004 /* Embed ExtensionKit Extensions */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D23000000000000000000002 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			packageProductDependencies = (
 				78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */,
+				783F279C07D82B86433C2E3F /* AucorsaKit */,
 			);
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		D24000000000000000000001 /* AucorsaIntentsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D25000000000000000000001 /* Build configuration list for PBXNativeTarget "AucorsaIntentsExtension" */;
+			buildPhases = (
+				D22000000000000000000001 /* Sources */,
+				D22000000000000000000003 /* Frameworks */,
+				D22000000000000000000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AucorsaIntentsExtension;
+			packageProductDependencies = (
+				D26000000000000000000001 /* AucorsaKit */,
+			);
+			productName = AucorsaIntentsExtension;
+			productReference = D20000000000000000000004 /* AucorsaIntentsExtension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -194,6 +374,9 @@
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 1100;
 					};
+					D24000000000000000000001 = {
+						CreatedOnToolsVersion = 26.6;
+					};
 				};
 			};
 			buildConfigurationList = 97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */;
@@ -203,17 +386,20 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
 				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */,
+				A9670F3F282556A8A8CDB90B /* XCLocalSwiftPackageReference "AucorsaKit" */,
 			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			targets = (
-				97C146ED1CF9000F007C117D /* Runner */,
-				331C8080294A63A400263BE5 /* RunnerTests */,
+				targets = (
+					97C146ED1CF9000F007C117D /* Runner */,
+					331C8080294A63A400263BE5 /* RunnerTests */,
+					D24000000000000000000001 /* AucorsaIntentsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -234,6 +420,16 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				5CECD8D4F555E35310340C5C /* Intents.xcstrings in Resources */,
+				0DAC61F893A7B8B2948B0778 /* AppShortcuts.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D22000000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2100000000000000000000D /* Intents.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +484,38 @@
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				9C632A6B74B7D054AB6BBB56 /* AppGroupChannel.swift in Sources */,
+				9373CFD7739285E728E1E32F /* AucorsaShortcuts.swift in Sources */,
+				017A64576E448375EEA2E5A9 /* BusStopEntity.swift in Sources */,
+				5891FAD18164CB61EA30FEF3 /* BusStopQuery.swift in Sources */,
+				CF7D9187A9C33378375D4662 /* BusLineEntity.swift in Sources */,
+				F6FF3444A07A3084AED26DFF /* IntentError.swift in Sources */,
+				4B91546C36719E3F389CD997 /* ArrivalsFormatter.swift in Sources */,
+				72FBAAA1A0E5FDED060182C4 /* ArrivalsSnippetView.swift in Sources */,
+				C5CEDE6452D0696092CFD68D /* GetStopArrivalsIntent.swift in Sources */,
+				DB20DA12376C16373532A130 /* GetNextBusForLineIntent.swift in Sources */,
+				96A5F9A9963D1E8387B0AEE7 /* BusStopEntity+Spotlight.swift in Sources */,
+				10A57AE76396BF47402494BC /* SystemAppearance.swift in Sources */,
+				D10000000000000000000002 /* IntentServices.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D22000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D21000000000000000000001 /* AppIntentsExtension.swift in Sources */,
+				D21000000000000000000002 /* BusStopEntity.swift in Sources */,
+				D21000000000000000000003 /* BusStopQuery.swift in Sources */,
+				D21000000000000000000004 /* BusLineEntity.swift in Sources */,
+				D21000000000000000000005 /* BusStopEntity+Spotlight.swift in Sources */,
+				D21000000000000000000006 /* IntentError.swift in Sources */,
+				D21000000000000000000007 /* ArrivalsFormatter.swift in Sources */,
+				D21000000000000000000008 /* SystemAppearance.swift in Sources */,
+				D21000000000000000000009 /* IntentServices.swift in Sources */,
+				D2100000000000000000000A /* ArrivalsSnippetView.swift in Sources */,
+				D2100000000000000000000B /* GetStopArrivalsIntent.swift in Sources */,
+				D2100000000000000000000C /* GetNextBusForLineIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +526,11 @@
 			isa = PBXTargetDependency;
 			target = 97C146ED1CF9000F007C117D /* Runner */;
 			targetProxy = 331C8085294A63A400263BE5 /* PBXContainerItemProxy */;
+		};
+		D23000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D24000000000000000000001 /* AucorsaIntentsExtension */;
+			targetProxy = D23000000000000000000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -316,6 +549,15 @@
 				97C147001CF9000F007C117D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A90F94564C748BA137FC7289 /* AppShortcuts.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7578B7D31735A6B11953BA4B /* en */,
+				24683AA7EDA43014F5BF61CA /* es */,
+			);
+			name = AppShortcuts.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -364,7 +606,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -379,16 +621,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = N426GUMBFG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -402,6 +647,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -419,6 +665,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -434,6 +681,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.RunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -491,7 +739,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -542,7 +790,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -559,16 +807,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = N426GUMBFG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -582,12 +833,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = N426GUMBFG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -595,11 +848,94 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
+		};
+		D25000000000000000000002 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = AucorsaIntentsExtension/AucorsaIntentsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				INFOPLIST_FILE = AucorsaIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.Intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG APP_INTENTS_EXTENSION";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D25000000000000000000003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = AucorsaIntentsExtension/AucorsaIntentsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				INFOPLIST_FILE = AucorsaIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.Intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) APP_INTENTS_EXTENSION";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D25000000000000000000004 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = AucorsaIntentsExtension/AucorsaIntentsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				INFOPLIST_FILE = AucorsaIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.Intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) APP_INTENTS_EXTENSION";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
 		};
 /* End XCBuildConfiguration section */
 
@@ -634,6 +970,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D25000000000000000000001 /* Build configuration list for PBXNativeTarget "AucorsaIntentsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D25000000000000000000002 /* Debug */,
+				D25000000000000000000003 /* Release */,
+				D25000000000000000000004 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -641,9 +987,25 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage;
 		};
+		A9670F3F282556A8A8CDB90B /* XCLocalSwiftPackageReference "AucorsaKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AucorsaKit;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		783F279C07D82B86433C2E3F /* AucorsaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AucorsaKit;
+		};
+		D26000000000000000000001 /* AucorsaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AucorsaKit;
+		};
+		D26000000000000000000002 /* AucorsaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AucorsaKit;
+		};
 		78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FlutterGeneratedPluginSwiftPackage;
