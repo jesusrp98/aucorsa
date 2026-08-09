@@ -71,32 +71,66 @@ enum ArrivalsFormatter {
     static func dialog(
         for estimation: BusStopLineEstimation?, lineID: String, stopName: String
     ) -> IntentDialog {
+        IntentDialog(
+            lineDialogResource(
+                for: estimation,
+                lineID: lineID,
+                stopName: stopName
+            )
+        )
+    }
+
+    /// Keeps every spoken word in one localized resource. In particular, the
+    /// duration must not be formatted into a `String` first: Foundation would
+    /// use the device locale, while App Intents resolves this resource using
+    /// Siri's selected language.
+    static func lineDialogResource(
+        for estimation: BusStopLineEstimation?, lineID: String, stopName: String
+    ) -> LocalizedStringResource {
         guard let estimation, let next = estimation.nextArrival else {
-            return IntentDialog(
-                LocalizedStringResource(
-                    "Line \(lineID) is not due at \(stopName) right now.",
-                    table: "Intents"
-                )
-            )
-        }
-
-        let nextLabel = spokenDuration(minutes: next)
-
-        if estimation.arrivals.count > 1 {
-            let followingLabel = spokenDuration(minutes: estimation.arrivals[1])
-            return IntentDialog(
-                LocalizedStringResource(
-                    "Line \(lineID) arrives at \(stopName) in \(nextLabel), then in \(followingLabel).",
-                    table: "Intents"
-                )
-            )
-        }
-
-        return IntentDialog(
-            LocalizedStringResource(
-                "Line \(lineID) arrives at \(stopName) in \(nextLabel).",
+            return LocalizedStringResource(
+                "Line \(lineID) is not due at \(stopName) right now.",
                 table: "Intents"
             )
+        }
+
+        if estimation.arrivals.count > 1 {
+            let following = estimation.arrivals[1]
+
+            switch (next == 1, following == 1) {
+            case (true, true):
+                return LocalizedStringResource(
+                    "Line \(lineID) arrives at \(stopName) in \(next) minute, then in \(following) minute.",
+                    table: "Intents"
+                )
+            case (true, false):
+                return LocalizedStringResource(
+                    "Line \(lineID) arrives at \(stopName) in \(next) minute, then in \(following) minutes.",
+                    table: "Intents"
+                )
+            case (false, true):
+                return LocalizedStringResource(
+                    "Line \(lineID) arrives at \(stopName) in \(next) minutes, then in \(following) minute.",
+                    table: "Intents"
+                )
+            case (false, false):
+                return LocalizedStringResource(
+                    "Line \(lineID) arrives at \(stopName) in \(next) minutes, then in \(following) minutes.",
+                    table: "Intents"
+                )
+            }
+        }
+
+        if next == 1 {
+            return LocalizedStringResource(
+                "Line \(lineID) arrives at \(stopName) in \(next) minute.",
+                table: "Intents"
+            )
+        }
+
+        return LocalizedStringResource(
+            "Line \(lineID) arrives at \(stopName) in \(next) minutes.",
+            table: "Intents"
         )
     }
 
@@ -110,18 +144,6 @@ enum ArrivalsFormatter {
             table: "Intents",
             comment: "One line's next arrival, joined by commas into a sentence"
         )
-    }
-
-    /// A voice-oriented duration that lets Foundation apply the current
-    /// locale's singular and plural rules ("1 minute", "2 minutes", etc.).
-    private static func spokenDuration(minutes: Int) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute]
-        formatter.unitsStyle = .full
-        formatter.maximumUnitCount = 1
-
-        return formatter.string(from: TimeInterval(minutes * 60))
-            ?? arrivalLabel(minutes: minutes)
     }
 
     /// One arrival, formatted like the Flutter tile: "13 min", "1 h 11 min",

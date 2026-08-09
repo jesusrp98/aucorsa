@@ -38,4 +38,19 @@ class RunnerTests: XCTestCase {
     XCTAssertEqual(style, .dark)
   }
 
+  func testLineDialogLocalizesDurationsUsingTheDialogLocale() {
+    let estimation = BusStopLineEstimation(lineID: "5", arrivals: [1, 40])
+    var resource = ArrivalsFormatter.lineDialogResource(
+      for: estimation,
+      lineID: "5",
+      stopName: "Casa"
+    )
+    resource.locale = Locale(identifier: "es")
+
+    XCTAssertEqual(
+      String(localized: resource),
+      "La línea 5 llega a Casa en 1 minuto, y luego en 40 minutos."
+    )
+  }
+
 }

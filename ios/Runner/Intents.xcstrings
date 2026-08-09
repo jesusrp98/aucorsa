@@ -255,24 +255,68 @@
         }
       }
     },
-    "Line %@ arrives at %@ in %@.": {
+    "Line %@ arrives at %@ in %lld minute.": {
       "extractionState": "manual",
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La línea %@ llega a %@ en %@."
+            "value": "La línea %@ llega a %@ en %lld minuto."
           }
         }
       }
     },
-    "Line %@ arrives at %@ in %@, then in %@.": {
+    "Line %@ arrives at %@ in %lld minutes.": {
       "extractionState": "manual",
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La línea %@ llega a %@ en %@, y luego en %@."
+            "value": "La línea %@ llega a %@ en %lld minutos."
+          }
+        }
+      }
+    },
+    "Line %@ arrives at %@ in %lld minute, then in %lld minute.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ llega a %@ en %lld minuto, y luego en %lld minuto."
+          }
+        }
+      }
+    },
+    "Line %@ arrives at %@ in %lld minute, then in %lld minutes.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ llega a %@ en %lld minuto, y luego en %lld minutos."
+          }
+        }
+      }
+    },
+    "Line %@ arrives at %@ in %lld minutes, then in %lld minute.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ llega a %@ en %lld minutos, y luego en %lld minuto."
+          }
+        }
+      }
+    },
+    "Line %@ arrives at %@ in %lld minutes, then in %lld minutes.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La línea %@ llega a %@ en %lld minutos, y luego en %lld minutos."
           }
         }
       }
