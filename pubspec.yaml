@@ -28,7 +28,7 @@ dependencies:
   hydrated_bloc: ^11.0.0
   in_app_review: ^2.0.10
   intl: ^0.20.2
-  latlong2: ^0.9.1
+  latlong2: ^0.10.1
   lucky_navigation_bar: ^1.0.0
   maplibre: ^0.3.5
   material_symbols_icons: ^4.2873.0
