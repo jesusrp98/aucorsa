@@ -326,6 +326,30 @@ abstract class AppLocalizations {
   /// **'Location access is permanently denied. Please open settings and enable it manually.'**
   String get locationPermissionDescription;
 
+  /// No description provided for @locationOutsideMapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location outside the map area'**
+  String get locationOutsideMapTitle;
+
+  /// No description provided for @locationOutsideMapDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current location is outside the area covered by this offline map.'**
+  String get locationOutsideMapDescription;
+
+  /// No description provided for @mapLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'The offline map could not be loaded.'**
+  String get mapLoadError;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
+
   /// No description provided for @openSettings.
   ///
   /// In en, this message translates to:

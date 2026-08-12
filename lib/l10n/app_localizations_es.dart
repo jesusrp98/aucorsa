@@ -131,6 +131,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'El acceso a la ubicación está permanentemente denegado. Por favor, abre los ajustes y habilítalo manualmente.';
 
   @override
+  String get locationOutsideMapTitle => 'Ubicación fuera del área del mapa';
+
+  @override
+  String get locationOutsideMapDescription =>
+      'Tu ubicación actual está fuera del área cubierta por este mapa sin conexión.';
+
+  @override
+  String get mapLoadError => 'No se ha podido cargar el mapa sin conexión.';
+
+  @override
+  String get retry => 'Volver a intentar';
+
+  @override
   String get openSettings => 'Abrir ajustes';
 
   @override

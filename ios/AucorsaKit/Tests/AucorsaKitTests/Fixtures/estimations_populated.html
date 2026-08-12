@@ -1,0 +1,22 @@
+<div class="ppp-content"><div class="ppp-stop-label">Parada 105: Fátima</div><div class="ppp-container"><div class="ppp-label"><div class="ppp-line-number" style="background-color: #df0b18">2</div><div class="ppp-line-route">FáTIMA - TEJARES - C. SANITARIA</div></div><div class="ppp-estimations" style="border-left: 2px solid #df0b18;"><div class="ppp-estimation" style="display:flex; align-items:center; justify-content: space-between;"><span>Pr&oacute;ximo autob&uacute;s: <strong>1 minuto</strong></span><div style="display:flex; align-items:center; justify-content: space-between;gap: 10px;"><img class="imgocupationbus" style="width:25px;" src="https://aucorsa.es/wp-content/plugins/aucorsa/assets/images/occ1.png" alt="Ocupación Baja"><span style="text-align:center;font-size:10px;min-width:60px;">Ocupaci&oacute;n<br>Baja</span></div></div><div class="ppp-estimation" style="display:flex; align-items:center; justify-content: space-between;"><span>Siguiente autob&uacute;s: <strong>19 minutos</strong></span></div></div></div><div class="ppp-container"><div class="ppp-label"><div class="ppp-line-number" style="background-color: #166c4b">1</div><div class="ppp-line-route">FáTIMA - TENDILLAS</div></div><div class="ppp-estimations" style="border-left: 2px solid #166c4b;"><div class="ppp-estimation" style="display:flex; align-items:center; justify-content: space-between;"><span>Pr&oacute;ximo autob&uacute;s: <strong>12 minutos</strong></span><div style="display:flex; align-items:center; justify-content: space-between;gap: 10px;"><img class="imgocupationbus" style="width:25px;" src="https://aucorsa.es/wp-content/plugins/aucorsa/assets/images/occ1.png" alt="Ocupación Baja"><span style="text-align:center;font-size:10px;min-width:60px;">Ocupaci&oacute;n<br>Baja</span></div></div><div class="ppp-estimation" style="display:flex; align-items:center; justify-content: space-between;"><span>Siguiente autob&uacute;s: <strong>32 minutos</strong></span></div></div></div><div class="ppp-favorited is-hidden " data-stop-id="105" data-line-id="0">A&ntilde;adir a mis paradas favoritas</div><div class="ppp-reload-estimation" data-current-line="" data-stop-id="105" >Actualizar</div></div>
+        <script>
+
+        if (typeof nIntervId === 'undefined') { 
+            var nIntervId;
+        }
+
+        if(nIntervId) {
+            clearInterval(nIntervId);
+        }
+
+        nIntervId = window.setInterval(function(){
+            jQuery.get(ajax_vars.api_light + "/estimations/stop", {current_line: "0", stop_id: "105", _wpnonce: ajax_vars.ajax_nonce}, function(data){
+                jQuery("#estimation-content").empty();
+                jQuery("#estimation-content").html(data);
+                jQuery("#estimation-content").find(".ppp-favorited").removeClass("is-hidden").addClass("is-visible");
+            });
+        }, 60000);
+
+        
+        </script>
+        

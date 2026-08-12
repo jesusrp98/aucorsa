@@ -1,4 +1,5 @@
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
+import 'package:aucorsa/common/cubits/app_group_sync_cubit.dart';
 import 'package:aucorsa/common/cubits/bus_service_cubit.dart';
 import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
 import 'package:aucorsa/common/cubits/theme_cubit.dart';
@@ -25,6 +26,17 @@ class AucorsaApp extends StatelessWidget {
         const BlocProvider(create: BusLineSelectorCubit.new),
         BlocProvider(create: (_) => BusStopCustomDataCubit()),
         BlocProvider(create: (_) => BonobusCubit()),
+
+        // Must come after the two cubits it reads, and must not be lazy:
+        // nothing in the UI watches it, so a lazy provider would never build it
+        // and the App Group mirror would silently stop updating.
+        BlocProvider(
+          lazy: false,
+          create: (context) => AppGroupSyncCubit(
+            favoriteStops: context.read<FavoriteStopsCubit>(),
+            customData: context.read<BusStopCustomDataCubit>(),
+          ),
+        ),
       ],
       child: Builder(
         builder: (context) => MaterialApp.router(

@@ -1,0 +1,11 @@
+/* App Shortcut phrases. Keys must match the phrase literals in
+   AucorsaShortcuts.swift exactly, including the ${...} tokens.
+   Using .strings rather than .xcstrings because the deployment
+   target is iOS 16 and AppShortcuts.xcstrings requires iOS 17. */
+
+"Bus arrivals with ${applicationName}" = "Llegadas de autobús con ${applicationName}";
+"Check my stop with ${applicationName}" = "Consultar mi parada con ${applicationName}";
+"${applicationName} arrivals at ${stop}" = "${applicationName} llegadas en ${stop}";
+"Next bus at ${stop} with ${applicationName}" = "Próximo autobús en ${stop} con ${applicationName}";
+"Next ${line} bus with ${applicationName}" = "Próximo autobús de la línea ${line} con ${applicationName}";
+"${applicationName} line ${line}" = "${applicationName} línea ${line}";

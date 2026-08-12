@@ -131,6 +131,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Location access is permanently denied. Please open settings and enable it manually.';
 
   @override
+  String get locationOutsideMapTitle => 'Location outside the map area';
+
+  @override
+  String get locationOutsideMapDescription =>
+      'Your current location is outside the area covered by this offline map.';
+
+  @override
+  String get mapLoadError => 'The offline map could not be loaded.';
+
+  @override
+  String get retry => 'Try again';
+
+  @override
   String get openSettings => 'Open Settings';
 
   @override
