@@ -347,7 +347,7 @@ abstract class AppLocalizations {
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
-  /// **'Try again'**
+  /// **'Retry'**
   String get retry;
 
   /// No description provided for @openSettings.
@@ -595,12 +595,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AUCORSA data could not be loaded'**
   String get aucorsaDataError;
-
-  /// No description provided for @retry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get retry;
 
   /// No description provided for @aucorsaSessionExpiredTitle.
   ///

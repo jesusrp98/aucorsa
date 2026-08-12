@@ -141,7 +141,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapLoadError => 'The offline map could not be loaded.';
 
   @override
-  String get retry => 'Try again';
+  String get retry => 'Retry';
 
   @override
   String get openSettings => 'Open Settings';
@@ -274,9 +274,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aucorsaDataError => 'AUCORSA data could not be loaded';
-
-  @override
-  String get retry => 'Retry';
 
   @override
   String get aucorsaSessionExpiredTitle => 'Session expired';

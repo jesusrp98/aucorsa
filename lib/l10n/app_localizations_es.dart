@@ -141,7 +141,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapLoadError => 'No se ha podido cargar el mapa sin conexión.';
 
   @override
-  String get retry => 'Volver a intentar';
+  String get retry => 'Reintentar';
 
   @override
   String get openSettings => 'Abrir ajustes';
@@ -274,9 +274,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aucorsaDataError => 'No se han podido cargar los datos de AUCORSA';
-
-  @override
-  String get retry => 'Reintentar';
 
   @override
   String get aucorsaSessionExpiredTitle => 'La sesión ha caducado';
