@@ -214,7 +214,6 @@ class _AucorsaMapState extends State<AucorsaMap> {
         minZoom: mapData.minimumZoom,
         maxZoom: AucorsaMapConfig.maximumZoom,
         maxBounds: mapBoundsReady ? mapData.bounds : null,
-        androidTextureMode: false,
         androidForegroundLoadColor: AucorsaMapConfig.baseMapColor[brightness]!,
       ),
       onMapCreated: _onMapCreated,
