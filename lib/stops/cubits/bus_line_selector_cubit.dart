@@ -5,7 +5,6 @@ import 'package:aucorsa/stops/utils/map_path_bearing_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 part 'bus_line_selector_state.dart';
@@ -42,10 +41,8 @@ class BusLineSelectorCubit extends Cubit<BusLineSelectorState> {
             .map(BusStopUtils.resolveCoordinates)
             .whereType<BusStopCoordinates>()
             .toList(),
-        arrowMarkers: MapPathBearingUtils.resolveArrowMarkers(
-          context: context,
+        pathArrows: MapPathBearingUtils.resolveArrows(
           path: linePath,
-          color: lineColor,
         ),
         linePath: linePath,
         lineColor: lineColor,

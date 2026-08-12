@@ -46,6 +46,8 @@ app.*.map.json
 
 *.env
 
-# Map style related
-/assets/vector-map-tiles/
-/assets/vector-map-styles/
+# Generated offline map data (regenerate with tools/generate_offline_map.py)
+/assets/map/
+/assets/offline_map.zip
+/assets/.map.generate-*/
+/assets/.map.backup-*/
