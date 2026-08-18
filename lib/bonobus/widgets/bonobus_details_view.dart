@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_balance_view.dart';
-import 'package:aucorsa/bonobus/widgets/bonobus_delete_dialog.dart';
+import 'package:aucorsa/bonobus/widgets/bonobus_options_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
@@ -17,7 +19,18 @@ class BonobusDetailsView extends StatelessWidget {
     BonobusProvider.consorcio: Urls.bonobusHelpConsorcio,
   };
 
-  const BonobusDetailsView({super.key});
+  final Future<void> Function()? onRefresh;
+  final VoidCallback? onViewMovements;
+  final VoidCallback? onEdit;
+  final Future<void> Function()? onDelete;
+
+  const BonobusDetailsView({
+    this.onRefresh,
+    this.onViewMovements,
+    this.onEdit,
+    this.onDelete,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,97 +51,120 @@ class BonobusDetailsView extends StatelessWidget {
           context.l10n.bonobus,
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
-        actions: const [
-          AboutButton(),
+        actions: [
+          AboutButton(
+            onReturn: onRefresh == null ? null : () => unawaited(onRefresh!()),
+          ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Column(
-            spacing: 40,
-            children: [
-              BonobusBalanceView(
-                balance: bonobusState.balance,
-                loading: bonobusState.status == BonobusStatus.loading,
-                lastUpdated: bonobusState.lastUpdated,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  spacing: 16,
-                  children: [
-                    if (bonobusState.provider == BonobusProvider.consorcio)
+      body: RefreshIndicator(
+        onRefresh: onRefresh ?? () async {},
+        notificationPredicate: (_) => onRefresh != null,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Column(
+              spacing: 40,
+              children: [
+                BonobusBalanceView(
+                  balance: bonobusState.balance,
+                  loading: bonobusState.status == BonobusStatus.loading,
+                  lastUpdated: bonobusState.lastUpdated,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    spacing: 16,
+                    children: [
+                      if (bonobusState.provider == BonobusProvider.consorcio)
+                        ListViewSection(
+                          children: [
+                            ListViewSectionTile(
+                              leading: const Icon(Symbols.contactless_rounded),
+                              title: Text(context.l10n.scanBonobusTitle),
+                              subtitle: Text(
+                                context.l10n.scanBonobusSubtitle,
+                              ),
+                            ),
+                          ],
+                        ),
                       ListViewSection(
                         children: [
                           ListViewSectionTile(
-                            leading: const Icon(Symbols.contactless_rounded),
-                            title: Text(context.l10n.scanBonobusTitle),
+                            leading: const Icon(Symbols.credit_card_rounded),
+                            title: Text(
+                              bonobusState.name ?? getDefaultProviderName(),
+                            ),
                             subtitle: Text(
-                              context.l10n.scanBonobusSubtitle,
+                              bonobusState.id!,
+                              style: GoogleFonts.robotoMono(
+                                textStyle: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ),
+                            onTap: () => showBonobusOptionsDialog(
+                              context: context,
+                              onEdit: onEdit,
+                              onDelete:
+                                  onDelete ??
+                                  () async =>
+                                      context.read<BonobusCubit>().reset(),
+                            ),
+                            trailing: Icon(
+                              Symbols.chevron_right_rounded,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                          if (bonobusState.provider ==
+                                  BonobusProvider.aucorsa &&
+                              onViewMovements != null)
+                            ListViewSectionTile(
+                              leading: const Icon(
+                                Symbols.receipt_long_rounded,
+                              ),
+                              title: Text(
+                                context.l10n.aucorsaCardMovements,
+                              ),
+                              subtitle: Text(
+                                context.l10n.aucorsaCardMovementsSubtitle,
+                              ),
+                              onTap: onViewMovements,
+                              trailing: Icon(
+                                Symbols.chevron_right_rounded,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ListViewSectionTile(
+                            leading: const Icon(Symbols.add_circle_rounded),
+                            title: Text(context.l10n.topUpBonobusTitle),
+                            subtitle: Text(
+                              context.l10n.topUpBonobusSubtitle,
+                            ),
+                            onTap: () => launchUrlString(
+                              _helpUrls[bonobusState.provider!]!,
+                            ),
+                            trailing: Icon(
+                              Symbols.chevron_right_rounded,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
                       ),
-                    ListViewSection(
-                      children: [
-                        ListViewSectionTile(
-                          leading: const Icon(Symbols.credit_card_rounded),
-                          title: Text(
-                            bonobusState.name ?? getDefaultProviderName(),
-                          ),
-                          subtitle: Text(
-                            bonobusState.id!,
-                            style: bonobusState.id != null
-                                ? GoogleFonts.robotoMono(
-                                    textStyle: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurfaceVariant,
-                                    ),
-                                  )
-                                : null,
-                          ),
-                        ),
-                        ListViewSectionTile(
-                          leading: const Icon(Symbols.add_circle_rounded),
-                          title: Text(context.l10n.topUpBonobusTitle),
-                          subtitle: Text(
-                            context.l10n.topUpBonobusSubtitle,
-                          ),
-                          onTap: () => launchUrlString(
-                            _helpUrls[bonobusState.provider!]!,
-                          ),
-                          trailing: Icon(
-                            Symbols.chevron_right_rounded,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                        ListViewSectionTile(
-                          leading: const Icon(Symbols.delete_rounded),
-                          title: Text(context.l10n.deleteBonobusTitle),
-                          subtitle: Text(
-                            context.l10n.deleteBonobusSubtitle,
-                          ),
-                          onTap: () => showBonobusDeleteDialog(
-                            context: context,
-                            onDelete: context.read<BonobusCubit>().reset,
-                          ),
-                          trailing: Icon(
-                            Symbols.chevron_right_rounded,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

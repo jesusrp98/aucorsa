@@ -1,20 +1,29 @@
 import 'dart:async';
 
-import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AucorsaAccountWebViewPage extends StatefulWidget {
+  /// Page the web view opens on.
   final String initialUrl;
-  final bool finishWhenAuthenticated;
 
-  const AucorsaAccountWebViewPage({
-    required this.initialUrl,
-    required this.finishWhenAuthenticated,
-    super.key,
-  });
+  /// Whether reaching the account area pops the page with `true`.
+  final bool detectAuthentication;
+
+  const AucorsaAccountWebViewPage({super.key})
+    : initialUrl = AucorsaCardRepository.signInUrl,
+      detectAuthentication = true;
+
+  /// Opens the AUCORSA card list so the user can manage their linked cards.
+  ///
+  /// The page stays open until the user closes it, since browsing the account
+  /// is the goal here instead of signing in.
+  const AucorsaAccountWebViewPage.cards({super.key})
+    : initialUrl = AucorsaCardRepository.cardsUrl,
+      detectAuthentication = false;
 
   @override
   State<AucorsaAccountWebViewPage> createState() =>
@@ -30,7 +39,7 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   Timer? authenticationPoller;
 
   Future<void> _finishAuthentication(WebUri? url) async {
-    if (!widget.finishWhenAuthenticated || completing || url == null) return;
+    if (!widget.detectAuthentication || completing || url == null) return;
     final authenticatedPath =
         url.path.startsWith('/mis-tarjetas') ||
         url.path.startsWith('/mi-cuenta');
@@ -41,7 +50,7 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   }
 
   Future<void> _completeAuthentication() async {
-    if (!widget.finishWhenAuthenticated || completing) return;
+    if (completing) return;
     completing = true;
     authenticationPoller?.cancel();
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -52,7 +61,7 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   }
 
   void _startAuthenticationPolling(InAppWebViewController controller) {
-    if (!widget.finishWhenAuthenticated || completing) return;
+    if (!widget.detectAuthentication || completing) return;
     authenticationPoller?.cancel();
     authenticationPoller = Timer.periodic(
       const Duration(milliseconds: 300),
@@ -93,7 +102,7 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   Future<void> _watchForAuthentication(
     InAppWebViewController controller,
   ) async {
-    if (!widget.finishWhenAuthenticated || completing) return;
+    if (!widget.detectAuthentication || completing) return;
 
     await controller.evaluateJavascript(
       source: r'''
@@ -159,14 +168,9 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.finishWhenAuthenticated
-              ? context.l10n.aucorsaAccountAccess
-              : context.l10n.aucorsaManageCards,
-        ),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             if (progress < 1) LinearProgressIndicator(value: progress),

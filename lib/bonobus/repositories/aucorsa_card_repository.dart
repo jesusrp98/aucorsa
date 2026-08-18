@@ -5,7 +5,6 @@ import 'package:aucorsa/bonobus/utils/aucorsa_card_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:html/parser.dart';
 
 class AucorsaSessionExpiredException implements Exception {
   const AucorsaSessionExpiredException();
@@ -25,88 +24,135 @@ class AucorsaCardRepository {
   static const cardsUrl = 'https://aucorsa.es/mis-tarjetas/';
   static const signInUrl =
       'https://aucorsa.es/inicia-sesion/?redirect_to=https%3A%2F%2Faucorsa.es%2Fmis-tarjetas%2F';
-  static const registerUrl = 'https://aucorsa.es/registro/';
-
   static const _apiUrl = 'https://aucorsa.es/wp-json/aucorsa/v1';
+  static const _accountOrigins = {
+    'https://aucorsa.es',
+    'https://www.aucorsa.es',
+  };
   static final _nonceRegex = RegExp(r'"ajax_nonce"\s*:\s*"([^"]+)"');
   static final _rootUri = WebUri(rootUrl);
+  static final _wwwRootUri = WebUri('https://www.aucorsa.es/');
 
   final Dio _client;
-  final CookieManager _cookieManager;
+  CookieManager? _cookieManager;
+  WebStorageManager? _webStorageManager;
   String? _nonce;
+  String? _publicNonce;
 
-  AucorsaCardRepository({Dio? client, CookieManager? cookieManager})
-    : _client =
-          client ??
-          Dio(
-            BaseOptions(
-              validateStatus: (status) => status != null && status < 500,
-            ),
-          ),
-      _cookieManager = cookieManager ?? CookieManager.instance();
+  AucorsaCardRepository({
+    Dio? client,
+    CookieManager? cookieManager,
+    WebStorageManager? webStorageManager,
+  }) : _client =
+           client ??
+           Dio(
+             BaseOptions(
+               validateStatus: (status) => status != null && status < 500,
+             ),
+           ),
+       _cookieManager = cookieManager,
+       _webStorageManager = webStorageManager;
 
-  Future<AucorsaCardsSnapshot> loadCards() async {
-    final cookieHeader = await _requireCookieHeader();
-    final pageResponse = await _client.get<String>(
-      cardsUrl,
-      options: _plainOptions(cookieHeader),
-    );
-    final pageHtml = pageResponse.data ?? '';
-    final document = parse(pageHtml);
-    final finalPath = pageResponse.realUri.path;
+  CookieManager get _cookies => _cookieManager ??= CookieManager.instance();
+  WebStorageManager get _webStorage =>
+      _webStorageManager ??= WebStorageManager.instance();
 
-    if (finalPath.contains('/inicia-sesion') ||
-        document.querySelector('a[href*="user_action=logout"]') == null) {
-      throw const AucorsaSessionExpiredException();
-    }
+  Future<void> clearAccountData() async {
+    _nonce = null;
+    _publicNonce = null;
 
-    _nonce = await _loadNonce(cookieHeader);
-    final references = AucorsaCardParser.parseCardReferences(pageHtml);
-    final cards = await Future.wait([
-      for (final reference in references)
-        _loadCard(reference, cookieHeader, _nonce!),
+    final webStorageCleanup = switch (defaultTargetPlatform) {
+      TargetPlatform.android => [
+        for (final origin in _accountOrigins)
+          _webStorage.deleteOrigin(origin: origin),
+      ],
+      TargetPlatform.iOS || TargetPlatform.macOS => [
+        _webStorage.removeDataModifiedSince(
+          dataTypes: WebsiteDataType.ALL,
+          date: DateTime.fromMillisecondsSinceEpoch(0),
+        ),
+      ],
+      _ => <Future<void>>[],
+    };
+    final cookieResults = await Future.wait([
+      _cookies.deleteCookies(url: _rootUri),
+      _cookies.deleteCookies(url: _wwwRootUri),
     ]);
-
-    return AucorsaCardsSnapshot(cards: cards, updatedAt: DateTime.now());
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await _cookies.flush();
+    }
+    if (cookieResults.any((deleted) => !deleted)) {
+      throw const AucorsaCardApiException(
+        'AUCORSA account data could not be removed',
+      );
+    }
+    await Future.wait(webStorageCleanup);
   }
 
-  Future<void> addCard(String cardNumber) async {
-    final cookieHeader = await _requireCookieHeader();
-    final nonce = await _loadNonce(cookieHeader);
-    _nonce = nonce;
-    final response = await _client.post<dynamic>(
-      '$_apiUrl/endusers/registercard',
-      data: Uri(
-        queryParameters: {
-          'card_number': cardNumber,
-          'token': '1',
-          '_wpnonce': nonce,
-        },
-      ).query,
+  Future<AucorsaCard> loadPublicCard(String cardNumber) async {
+    final nonce = _publicNonce ?? await _loadNonce();
+    _publicNonce = nonce;
+
+    return _loadPublicCard(
+      cardNumber: cardNumber,
+      nonce: nonce,
+      canRefreshNonce: true,
+    );
+  }
+
+  Future<AucorsaCard> _loadPublicCard({
+    required String cardNumber,
+    required String nonce,
+    required bool canRefreshNonce,
+  }) async {
+    final response = await _client.get<dynamic>(
+      '$_apiUrl/ui/forms/recharge/secondary',
+      queryParameters: {
+        'card_number': cardNumber,
+        'token': '1',
+        'show_extra_content': '1',
+        '_wpnonce': nonce,
+      },
       options: Options(
-        contentType: Headers.formUrlEncodedContentType,
-        headers: _headers(cookieHeader),
+        headers: _headers(),
+        responseType: ResponseType.json,
       ),
     );
-    if (response.statusCode == 401 || response.statusCode == 403) {
-      throw const AucorsaSessionExpiredException();
+
+    final body = _jsonObject(response.data);
+    final code = body['code']?.toString() ?? '';
+    if (canRefreshNonce && code.contains('nonce')) {
+      final freshNonce = await _loadNonce();
+      _publicNonce = freshNonce;
+      return _loadPublicCard(
+        cardNumber: cardNumber,
+        nonce: freshNonce,
+        canRefreshNonce: false,
+      );
     }
     if (response.statusCode != 200) {
       throw AucorsaCardApiException(
-        'AUCORSA add card request failed (${response.statusCode})',
+        'AUCORSA card request failed (${response.statusCode})',
+      );
+    }
+    if (_hasApiError(body['error'])) {
+      final message = body['error_msg']?.toString() ?? '';
+      throw AucorsaCardApiException(
+        message.isEmpty ? 'AUCORSA could not load the card' : message,
       );
     }
 
-    final body = _jsonObject(response.data);
-    if (_hasApiError(body['error'])) {
-      final message = body['error_msg']?.toString() ?? '';
-      if (_isAuthenticationError(message)) {
-        throw const AucorsaSessionExpiredException();
-      }
-      throw AucorsaCardApiException(
-        message.isEmpty ? 'AUCORSA could not add the card' : message,
+    final content = body['content']?.toString();
+    if (content == null || content.isEmpty) {
+      throw const AucorsaCardApiException(
+        'AUCORSA returned incomplete card details',
       );
     }
+
+    return AucorsaCardParser.parseCard(
+      content,
+      AucorsaCardReference(number: cardNumber, status: 'anonymous'),
+    );
   }
 
   Future<AucorsaCardMovements> loadMovements({
@@ -184,72 +230,7 @@ class AucorsaCardRepository {
     return AucorsaCardParser.parseMovements(rawHtml);
   }
 
-  Future<void> logout() async {
-    final cookieHeader = await _cookieHeader();
-    try {
-      if (cookieHeader.isNotEmpty) {
-        await _client.get<void>(
-          '$rootUrl?user_action=logout',
-          options: Options(headers: _headers(cookieHeader)),
-        );
-      }
-    } finally {
-      _nonce = null;
-      await _cookieManager.deleteCookies(url: _rootUri);
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        await _cookieManager.flush();
-      }
-    }
-  }
-
-  Future<AucorsaCard> _loadCard(
-    AucorsaCardReference reference,
-    String cookieHeader,
-    String nonce,
-  ) async {
-    final response = await _client.post<dynamic>(
-      '$_apiUrl/ui/forms/card/showtitle',
-      data: Uri(
-        queryParameters: {
-          'card_number': reference.number,
-          'card_status': reference.status,
-          '_wpnonce': nonce,
-        },
-      ).query,
-      options: Options(
-        contentType: Headers.formUrlEncodedContentType,
-        headers: _headers(cookieHeader),
-      ),
-    );
-    if (response.statusCode == 401 || response.statusCode == 403) {
-      throw const AucorsaSessionExpiredException();
-    }
-    if (response.statusCode != 200) {
-      throw AucorsaCardApiException(
-        'AUCORSA card request failed (${response.statusCode})',
-      );
-    }
-    final body = _jsonObject(response.data);
-    if (_hasApiError(body['error'])) {
-      final message = body['error_msg']?.toString() ?? '';
-      if (_isAuthenticationError(message)) {
-        throw const AucorsaSessionExpiredException();
-      }
-      throw AucorsaCardApiException(
-        message.isEmpty ? 'AUCORSA error' : message,
-      );
-    }
-
-    final content = body['content']?.toString();
-    if (content == null || content.isEmpty) {
-      throw const AucorsaCardApiException(
-        'AUCORSA returned incomplete card details',
-      );
-    }
-    return AucorsaCardParser.parseCard(content, reference);
-  }
-
-  Future<String> _loadNonce(String cookieHeader) async {
+  Future<String> _loadNonce([String cookieHeader = '']) async {
     final response = await _client.get<String>(
       rootUrl,
       queryParameters: {'_': DateTime.now().millisecondsSinceEpoch},
@@ -269,7 +250,7 @@ class AucorsaCardRepository {
   }
 
   Future<String> _cookieHeader() async {
-    final cookies = await _cookieManager.getCookies(url: _rootUri);
+    final cookies = await _cookies.getCookies(url: _rootUri);
     final values = <String>[];
     for (final cookie in cookies) {
       final value = cookie.value;
@@ -280,15 +261,15 @@ class AucorsaCardRepository {
     return values.join('; ');
   }
 
-  Options _plainOptions(String cookieHeader) => Options(
+  Options _plainOptions([String cookieHeader = '']) => Options(
     headers: _headers(cookieHeader),
     responseType: ResponseType.plain,
     followRedirects: true,
     maxRedirects: 5,
   );
 
-  Map<String, String> _headers(String cookieHeader) => {
-    'Cookie': cookieHeader,
+  Map<String, String> _headers([String cookieHeader = '']) => {
+    if (cookieHeader.isNotEmpty) 'Cookie': cookieHeader,
     'Cache-Control': 'no-cache',
   };
 

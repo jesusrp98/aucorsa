@@ -26,12 +26,6 @@ class BonobusState extends Equatable {
         ? BonobusProvider.values[json['provider'] as int]
         : null;
 
-    // AUCORSA accounts now use the official authenticated session. Discard
-    // card numbers and balances stored by the legacy anonymous scraper.
-    if (provider == BonobusProvider.aucorsa) {
-      return const BonobusState(provider: BonobusProvider.aucorsa);
-    }
-
     return BonobusState(
       status: BonobusStatus.values[json['status'] as int],
       provider: provider,

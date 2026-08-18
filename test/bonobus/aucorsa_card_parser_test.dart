@@ -4,22 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AucorsaCardParser', () {
-    test('extracts every unique linked card reference', () {
-      const html = '''
-        <div class="card-showtitle" data-card-number="111" data-card-status="register"></div>
-        <div class="card-showtitle" data-card-number="222" data-card-status="blocked"></div>
-        <div class="card-showtitle" data-card-number="111" data-card-status="register"></div>
-      ''';
-
-      expect(
-        AucorsaCardParser.parseCardReferences(html),
-        const [
-          AucorsaCardReference(number: '111', status: 'register'),
-          AucorsaCardReference(number: '222', status: 'blocked'),
-        ],
-      );
-    });
-
     test('extracts all card details returned by showtitle', () {
       const html = '''
         <div class="card-number-title">123456789</div>
@@ -39,6 +23,29 @@ void main() {
       expect(card.description, 'MONEDERO');
       expect(card.balance, '8.87 €');
       expect(card.canRecharge, isTrue);
+    });
+
+    test('extracts card details returned by the public recharge form', () {
+      const html = '''
+        <input type="hidden" name="card_number_precharge" value="1234567890">
+        <div class="card-number-content">TARJETA ORDINARIA</div>
+        <div class="card-number-title">1234567890</div>
+        <div class="card-real-balance">12.34 &euro;</div>
+      ''';
+
+      final card = AucorsaCardParser.parseCard(
+        html,
+        const AucorsaCardReference(
+          number: '1234567890',
+          status: 'anonymous',
+        ),
+      );
+
+      expect(card.number, '1234567890');
+      expect(card.status, 'anonymous');
+      expect(card.title, 'Tarjeta Ordinaria');
+      expect(card.balance, '12.34 €');
+      expect(card.canRecharge, isFalse);
     });
 
     test('extracts movement details, activation state, and pagination', () {

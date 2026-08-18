@@ -141,7 +141,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapLoadError => 'No se ha podido cargar el mapa sin conexión.';
 
   @override
-  String get retry => 'Reintentar';
+  String get retry => 'Volver a intentar';
 
   @override
   String get openSettings => 'Abrir ajustes';
@@ -183,6 +183,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get topUpBonobusSubtitle => 'Descubre más sobre cómo hacerlo aquí';
 
   @override
+  String get editBonobusTitle => 'Editar número de tarjeta';
+
+  @override
   String get deleteBonobusTitle => 'Eliminar detalles';
 
   @override
@@ -206,46 +209,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stopsList => 'Lista de paradas';
 
   @override
-  String get aucorsaAccountAccess => 'Cuenta de AUCORSA';
+  String get aucorsaUseAccount => 'Iniciar sesión o crear cuenta';
 
   @override
   String get aucorsaAccountTitle => 'Conecta tu cuenta de AUCORSA';
 
   @override
-  String get aucorsaAccountSubtitle =>
-      'Inicia sesión en la página segura de AUCORSA para ver todas tus tarjetas vinculadas, saldos y movimientos. Esta aplicación nunca lee ni guarda tu contraseña.';
+  String get aucorsaMovementsAccountSubtitle =>
+      'Inicia sesión con tu cuenta de AUCORSA para consultar los movimientos de este bonobús. Esta tarjeta debe estar ya vinculada a esa cuenta. Esta aplicación nunca lee ni guarda tu contraseña.';
 
   @override
-  String get aucorsaSignIn => 'Iniciar sesión';
+  String get aucorsaMovementsHelpTooltip => 'Ayuda';
 
   @override
-  String get aucorsaCreateAccount => 'Crear una cuenta';
+  String get aucorsaMovementsHelpTitle =>
+      'Cómo funciona el historial de movimientos';
 
   @override
-  String get chooseAnotherProvider => 'Elegir otro proveedor';
+  String get aucorsaMovementsHelpSubtitle =>
+      'Los movimientos provienen de tu cuenta de AUCORSA, no de la tarjeta. Inicia sesión con la cuenta a la que está vinculado este bonobús y sus movimientos aparecerán aquí.\n\nSi la lista sigue vacía, abre tus tarjetas de AUCORSA, añade este número de tarjeta a la cuenta y después actualiza esta página.';
 
   @override
-  String get aucorsaManageCards => 'Gestionar tarjetas';
-
-  @override
-  String get aucorsaAddCard => 'Añadir tarjeta';
-
-  @override
-  String get aucorsaAddCardSubtitle =>
-      'Vincula otra tarjeta a tu cuenta de AUCORSA';
+  String get aucorsaMovementsHelpCta => 'Abrir mis tarjetas de AUCORSA';
 
   @override
   String get aucorsaCardNumber => 'Número de tarjeta';
-
-  @override
-  String get aucorsaCardAdded => 'Tarjeta añadida';
-
-  @override
-  String get aucorsaNoCardsTitle => 'No hay tarjetas vinculadas';
-
-  @override
-  String get aucorsaNoCardsSubtitle =>
-      'Añade una tarjeta a tu cuenta de AUCORSA y vuelve aquí para actualizarla.';
 
   @override
   String get aucorsaCardMovements => 'Historial de movimientos';
@@ -263,36 +251,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aucorsaMovementTransfer => 'Transbordo';
 
   @override
-  String get aucorsaDisconnect => 'Cerrar sesión';
-
-  @override
-  String get aucorsaDisconnectTitle => '¿Cerrar sesión en AUCORSA?';
-
-  @override
-  String get aucorsaDisconnectSubtitle =>
-      'Esto elimina de este dispositivo la sesión de la web de AUCORSA. Tu cuenta y las tarjetas vinculadas no se modificarán.';
-
-  @override
   String get aucorsaDataError => 'No se han podido cargar los datos de AUCORSA';
 
   @override
-  String get aucorsaSessionExpiredTitle => 'La sesión ha caducado';
+  String get aucorsaMovementsUnavailableTitle =>
+      'Historial de movimientos no disponible';
 
   @override
-  String get aucorsaSessionExpiredSubtitle =>
-      'Vuelve a tus tarjetas e inicia sesión de nuevo en AUCORSA.';
+  String get aucorsaMovementsUnavailableSubtitle =>
+      'No hemos podido cargar los movimientos de este bonobús. Consulta el botón de ayuda de arriba e inténtalo de nuevo.';
 
   @override
   String get aucorsaNoMovementsTitle => 'No hay movimientos';
 
   @override
   String get aucorsaNoMovementsSubtitle =>
-      'AUCORSA no ha devuelto movimientos para esta página.';
-
-  @override
-  String aucorsaMovementsPage(int page) {
-    return 'Página $page';
-  }
+      'AUCORSA no ha devuelto movimientos para este bonobús. Consulta el botón de ayuda de arriba para comprobar que la tarjeta está vinculada a tu cuenta.';
 
   @override
   String get aucorsaRechargeActivated => 'Recarga online activada';
@@ -300,7 +274,4 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aucorsaRechargePending =>
       'Recarga online pendiente de activación. Se activará al pasar la tarjeta por la validadora del autobús.';
-
-  @override
-  String get aucorsaAvailableBalance => 'Saldo disponible';
 }

@@ -141,7 +141,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapLoadError => 'The offline map could not be loaded.';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Try again';
 
   @override
   String get openSettings => 'Open Settings';
@@ -183,6 +183,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topUpBonobusSubtitle => 'Learn more about it here';
 
   @override
+  String get editBonobusTitle => 'Edit card number';
+
+  @override
   String get deleteBonobusTitle => 'Remove details';
 
   @override
@@ -206,46 +209,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stopsList => 'Stops list';
 
   @override
-  String get aucorsaAccountAccess => 'AUCORSA account';
+  String get aucorsaUseAccount => 'Sign in or create account';
 
   @override
   String get aucorsaAccountTitle => 'Connect your AUCORSA account';
 
   @override
-  String get aucorsaAccountSubtitle =>
-      'Sign in on AUCORSA\'s secure page to see all your linked cards, balances, and movements. Your password is never read or stored by this app.';
+  String get aucorsaMovementsAccountSubtitle =>
+      'Sign in with your AUCORSA account to view the movements of this bonobus. This card must already be linked to that account. Your password is never read or stored by this app.';
 
   @override
-  String get aucorsaSignIn => 'Sign in';
+  String get aucorsaMovementsHelpTooltip => 'Help';
 
   @override
-  String get aucorsaCreateAccount => 'Create an account';
+  String get aucorsaMovementsHelpTitle => 'How the movement history works';
 
   @override
-  String get chooseAnotherProvider => 'Choose another provider';
+  String get aucorsaMovementsHelpSubtitle =>
+      'Movements come from your AUCORSA account, not from the card itself. Sign in with the account this bonobus is linked to and its movements will show up here.\n\nIf the list stays empty, open your AUCORSA cards, add this card number to the account, and then refresh this page.';
 
   @override
-  String get aucorsaManageCards => 'Manage cards';
-
-  @override
-  String get aucorsaAddCard => 'Add card';
-
-  @override
-  String get aucorsaAddCardSubtitle =>
-      'Link another card to your AUCORSA account';
+  String get aucorsaMovementsHelpCta => 'Open my AUCORSA cards';
 
   @override
   String get aucorsaCardNumber => 'Card number';
-
-  @override
-  String get aucorsaCardAdded => 'Card added';
-
-  @override
-  String get aucorsaNoCardsTitle => 'No linked cards';
-
-  @override
-  String get aucorsaNoCardsSubtitle =>
-      'Add a card to your AUCORSA account, then return here to refresh it.';
 
   @override
   String get aucorsaCardMovements => 'Movement history';
@@ -263,36 +250,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aucorsaMovementTransfer => 'Transfer';
 
   @override
-  String get aucorsaDisconnect => 'Sign out';
-
-  @override
-  String get aucorsaDisconnectTitle => 'Sign out of AUCORSA?';
-
-  @override
-  String get aucorsaDisconnectSubtitle =>
-      'This removes the AUCORSA website session from this device. Your account and linked cards will not be changed.';
-
-  @override
   String get aucorsaDataError => 'AUCORSA data could not be loaded';
 
   @override
-  String get aucorsaSessionExpiredTitle => 'Session expired';
+  String get aucorsaMovementsUnavailableTitle => 'Movement history unavailable';
 
   @override
-  String get aucorsaSessionExpiredSubtitle =>
-      'Return to your cards and sign in to AUCORSA again.';
+  String get aucorsaMovementsUnavailableSubtitle =>
+      'We couldn\'t load the movement history for this bonobus. Check the help button at the top and try again.';
 
   @override
   String get aucorsaNoMovementsTitle => 'No movements';
 
   @override
   String get aucorsaNoMovementsSubtitle =>
-      'AUCORSA did not return any movements for this page.';
-
-  @override
-  String aucorsaMovementsPage(int page) {
-    return 'Page $page';
-  }
+      'AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account.';
 
   @override
   String get aucorsaRechargeActivated => 'Online top-up activated';
@@ -300,7 +272,4 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aucorsaRechargePending =>
       'Online top-up pending activation. It will activate when the card is used on a bus validator.';
-
-  @override
-  String get aucorsaAvailableBalance => 'Available balance';
 }

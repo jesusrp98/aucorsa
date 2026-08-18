@@ -69,7 +69,7 @@ class AucorsaRouter {
           builder: (context, state) {
             final arguments = state.extra! as AucorsaMovementsRouteArguments;
             return AucorsaMovementsPage(
-              card: arguments.card,
+              cardNumber: arguments.cardNumber,
               repository: arguments.repository,
             );
           },

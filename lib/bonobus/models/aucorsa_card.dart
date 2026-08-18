@@ -27,24 +27,6 @@ class AucorsaCard extends Equatable {
     required this.canRecharge,
   });
 
-  factory AucorsaCard.fromJson(Map<String, dynamic> json) => AucorsaCard(
-    number: json['number'] as String,
-    status: json['status'] as String,
-    title: json['title'] as String,
-    description: json['description'] as String,
-    balance: json['balance'] as String,
-    canRecharge: json['canRecharge'] as bool,
-  );
-
-  Map<String, dynamic> toJson() => {
-    'number': number,
-    'status': status,
-    'title': title,
-    'description': description,
-    'balance': balance,
-    'canRecharge': canRecharge,
-  };
-
   @override
   List<Object> get props => [
     number,
@@ -75,6 +57,30 @@ class AucorsaCardMovement extends Equatable {
     this.activation,
   });
 
+  factory AucorsaCardMovement.fromJson(Map<String, dynamic> json) {
+    return AucorsaCardMovement(
+      date: json['date'] as String,
+      time: json['time'] as String,
+      operation: json['operation'] as String,
+      amount: json['amount'] as String,
+      activationLabel: json['activationLabel'] as String?,
+      activation: json['activation'] != null
+          ? AucorsaRechargeActivation.values[json['activation'] as int]
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date,
+      'time': time,
+      'operation': operation,
+      'amount': amount,
+      'activationLabel': activationLabel,
+      'activation': activation?.index,
+    };
+  }
+
   @override
   List<Object?> get props => [
     date,
@@ -99,14 +105,4 @@ class AucorsaCardMovements extends Equatable {
 
   @override
   List<Object> get props => [movements, hasPreviousPage, hasNextPage];
-}
-
-class AucorsaCardsSnapshot extends Equatable {
-  final List<AucorsaCard> cards;
-  final DateTime updatedAt;
-
-  const AucorsaCardsSnapshot({required this.cards, required this.updatedAt});
-
-  @override
-  List<Object> get props => [cards, updatedAt];
 }

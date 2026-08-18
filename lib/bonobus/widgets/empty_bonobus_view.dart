@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
+import 'package:aucorsa/bonobus/widgets/bonobus_id_dialog.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_scan_controller.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
@@ -18,13 +21,23 @@ class EmptyBonobusView extends StatefulWidget {
 class _EmptyBonobusViewState extends State<EmptyBonobusView> {
   BonobusProvider? provider;
 
+  Future<void> _selectAucorsa() async {
+    final cardNumber = await showBonobusIdDialog(context);
+    if (!mounted || cardNumber == null) return;
+
+    context.read<BonobusCubit>().set(
+      provider: BonobusProvider.aucorsa,
+      id: cardNumber,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (provider == null) {
       return _EmptyProviderView(
-        onSelect: (provider) async {
+        onSelect: (provider) {
           if (provider == BonobusProvider.aucorsa) {
-            context.read<BonobusCubit>().set(provider: provider);
+            unawaited(_selectAucorsa());
             return;
           }
           setState(() => this.provider = provider);

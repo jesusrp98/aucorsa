@@ -5,25 +5,6 @@ import 'package:html/parser.dart';
 class AucorsaCardParser {
   const AucorsaCardParser._();
 
-  static List<AucorsaCardReference> parseCardReferences(String rawHtml) {
-    final references = <AucorsaCardReference>[];
-    final numbers = <String>{};
-
-    for (final element in parse(rawHtml).querySelectorAll('.card-showtitle')) {
-      final number = element.attributes['data-card-number']?.trim() ?? '';
-      if (number.isEmpty || !numbers.add(number)) continue;
-
-      references.add(
-        AucorsaCardReference(
-          number: number,
-          status: element.attributes['data-card-status']?.trim() ?? 'register',
-        ),
-      );
-    }
-
-    return references;
-  }
-
   static AucorsaCard parseCard(
     String rawHtml,
     AucorsaCardReference reference,

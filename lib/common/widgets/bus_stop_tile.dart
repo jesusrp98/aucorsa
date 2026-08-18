@@ -505,7 +505,6 @@ class _BusStopCloseEstimationState extends State<_BusStopCloseEstimation>
     _animationController = AnimationController(
       duration: Durations.extralong1,
       vsync: this,
-      // ignore: discarded_futures
     )..repeat(reverse: true);
 
     _curvedAnimation = _animationController.drive(

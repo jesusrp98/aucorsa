@@ -347,7 +347,7 @@ abstract class AppLocalizations {
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
-  /// **'Retry'**
+  /// **'Try again'**
   String get retry;
 
   /// No description provided for @openSettings.
@@ -422,6 +422,12 @@ abstract class AppLocalizations {
   /// **'Learn more about it here'**
   String get topUpBonobusSubtitle;
 
+  /// No description provided for @editBonobusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit card number'**
+  String get editBonobusTitle;
+
   /// No description provided for @deleteBonobusTitle.
   ///
   /// In en, this message translates to:
@@ -464,11 +470,11 @@ abstract class AppLocalizations {
   /// **'Stops list'**
   String get stopsList;
 
-  /// No description provided for @aucorsaAccountAccess.
+  /// No description provided for @aucorsaUseAccount.
   ///
   /// In en, this message translates to:
-  /// **'AUCORSA account'**
-  String get aucorsaAccountAccess;
+  /// **'Sign in or create account'**
+  String get aucorsaUseAccount;
 
   /// No description provided for @aucorsaAccountTitle.
   ///
@@ -476,71 +482,41 @@ abstract class AppLocalizations {
   /// **'Connect your AUCORSA account'**
   String get aucorsaAccountTitle;
 
-  /// No description provided for @aucorsaAccountSubtitle.
+  /// No description provided for @aucorsaMovementsAccountSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in on AUCORSA\'s secure page to see all your linked cards, balances, and movements. Your password is never read or stored by this app.'**
-  String get aucorsaAccountSubtitle;
+  /// **'Sign in with your AUCORSA account to view the movements of this bonobus. This card must already be linked to that account. Your password is never read or stored by this app.'**
+  String get aucorsaMovementsAccountSubtitle;
 
-  /// No description provided for @aucorsaSignIn.
+  /// No description provided for @aucorsaMovementsHelpTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Sign in'**
-  String get aucorsaSignIn;
+  /// **'Help'**
+  String get aucorsaMovementsHelpTooltip;
 
-  /// No description provided for @aucorsaCreateAccount.
+  /// No description provided for @aucorsaMovementsHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Create an account'**
-  String get aucorsaCreateAccount;
+  /// **'How the movement history works'**
+  String get aucorsaMovementsHelpTitle;
 
-  /// No description provided for @chooseAnotherProvider.
+  /// No description provided for @aucorsaMovementsHelpSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose another provider'**
-  String get chooseAnotherProvider;
+  /// **'Movements come from your AUCORSA account, not from the card itself. Sign in with the account this bonobus is linked to and its movements will show up here.\n\nIf the list stays empty, open your AUCORSA cards, add this card number to the account, and then refresh this page.'**
+  String get aucorsaMovementsHelpSubtitle;
 
-  /// No description provided for @aucorsaManageCards.
+  /// No description provided for @aucorsaMovementsHelpCta.
   ///
   /// In en, this message translates to:
-  /// **'Manage cards'**
-  String get aucorsaManageCards;
-
-  /// No description provided for @aucorsaAddCard.
-  ///
-  /// In en, this message translates to:
-  /// **'Add card'**
-  String get aucorsaAddCard;
-
-  /// No description provided for @aucorsaAddCardSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Link another card to your AUCORSA account'**
-  String get aucorsaAddCardSubtitle;
+  /// **'Open my AUCORSA cards'**
+  String get aucorsaMovementsHelpCta;
 
   /// No description provided for @aucorsaCardNumber.
   ///
   /// In en, this message translates to:
   /// **'Card number'**
   String get aucorsaCardNumber;
-
-  /// No description provided for @aucorsaCardAdded.
-  ///
-  /// In en, this message translates to:
-  /// **'Card added'**
-  String get aucorsaCardAdded;
-
-  /// No description provided for @aucorsaNoCardsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'No linked cards'**
-  String get aucorsaNoCardsTitle;
-
-  /// No description provided for @aucorsaNoCardsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a card to your AUCORSA account, then return here to refresh it.'**
-  String get aucorsaNoCardsSubtitle;
 
   /// No description provided for @aucorsaCardMovements.
   ///
@@ -572,41 +548,23 @@ abstract class AppLocalizations {
   /// **'Transfer'**
   String get aucorsaMovementTransfer;
 
-  /// No description provided for @aucorsaDisconnect.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign out'**
-  String get aucorsaDisconnect;
-
-  /// No description provided for @aucorsaDisconnectTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign out of AUCORSA?'**
-  String get aucorsaDisconnectTitle;
-
-  /// No description provided for @aucorsaDisconnectSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'This removes the AUCORSA website session from this device. Your account and linked cards will not be changed.'**
-  String get aucorsaDisconnectSubtitle;
-
   /// No description provided for @aucorsaDataError.
   ///
   /// In en, this message translates to:
   /// **'AUCORSA data could not be loaded'**
   String get aucorsaDataError;
 
-  /// No description provided for @aucorsaSessionExpiredTitle.
+  /// No description provided for @aucorsaMovementsUnavailableTitle.
   ///
   /// In en, this message translates to:
-  /// **'Session expired'**
-  String get aucorsaSessionExpiredTitle;
+  /// **'Movement history unavailable'**
+  String get aucorsaMovementsUnavailableTitle;
 
-  /// No description provided for @aucorsaSessionExpiredSubtitle.
+  /// No description provided for @aucorsaMovementsUnavailableSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Return to your cards and sign in to AUCORSA again.'**
-  String get aucorsaSessionExpiredSubtitle;
+  /// **'We couldn\'t load the movement history for this bonobus. Check the help button at the top and try again.'**
+  String get aucorsaMovementsUnavailableSubtitle;
 
   /// No description provided for @aucorsaNoMovementsTitle.
   ///
@@ -617,14 +575,8 @@ abstract class AppLocalizations {
   /// No description provided for @aucorsaNoMovementsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'AUCORSA did not return any movements for this page.'**
+  /// **'AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account.'**
   String get aucorsaNoMovementsSubtitle;
-
-  /// No description provided for @aucorsaMovementsPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Page {page}'**
-  String aucorsaMovementsPage(int page);
 
   /// No description provided for @aucorsaRechargeActivated.
   ///
@@ -637,12 +589,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online top-up pending activation. It will activate when the card is used on a bus validator.'**
   String get aucorsaRechargePending;
-
-  /// No description provided for @aucorsaAvailableBalance.
-  ///
-  /// In en, this message translates to:
-  /// **'Available balance'**
-  String get aucorsaAvailableBalance;
 }
 
 class _AppLocalizationsDelegate

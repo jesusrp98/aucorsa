@@ -17,12 +17,19 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
     ),
   );
 
+  void loadFailed() => emit(state.copyWith(status: BonobusStatus.loaded));
+
   void set({BonobusProvider? provider, String? id}) => emit(
     state.copyWith(
       provider: provider,
       id: id,
     ),
   );
+
+  /// Replaces the card [id] of the current provider, dropping the balance and
+  /// name cached for the previous card.
+  void updateId(String id) =>
+      emit(BonobusState(provider: state.provider, id: id));
 
   void reset() => emit(const BonobusState());
 

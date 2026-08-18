@@ -4,27 +4,35 @@ import 'package:flutter/services.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 Future<String?> showBonobusIdDialog(
-  BuildContext context,
-) => showModalBottomSheet<String>(
+  BuildContext context, {
+  String? initialValue,
+}) => showModalBottomSheet<String>(
   context: context,
   useRootNavigator: true,
   useSafeArea: true,
   isScrollControlled: true,
-  builder: (_) => const _BonobusIdDialog(),
+  builder: (_) => _BonobusIdDialog(initialValue: initialValue),
   backgroundColor: Colors.transparent,
 );
 
 class _BonobusIdDialog extends StatefulWidget {
   static const bonobusIdLength = 10;
 
-  const _BonobusIdDialog();
+  final String? initialValue;
+
+  const _BonobusIdDialog({this.initialValue});
 
   @override
   State<_BonobusIdDialog> createState() => _BonobusIdDialogState();
 }
 
 class _BonobusIdDialogState extends State<_BonobusIdDialog> {
-  late final controller = TextEditingController()
+  late final controller = TextEditingController(text: widget.initialValue)
+    // Select the current number so typing replaces it right away
+    ..selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: widget.initialValue?.length ?? 0,
+    )
     ..addListener(() => setState(() {}));
 
   bool get actionEnabled =>

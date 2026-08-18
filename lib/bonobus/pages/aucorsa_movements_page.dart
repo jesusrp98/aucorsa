@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:aucorsa/bonobus/cubits/aucorsa_movements_cubit.dart';
 import 'package:aucorsa/bonobus/models/aucorsa_card.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_account_webview_page.dart';
 import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
+import 'package:aucorsa/bonobus/widgets/aucorsa_movements_help_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/date_time_format.dart';
+import 'package:aucorsa/common/widgets/big_tip.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +17,11 @@ import 'package:material_symbols_icons/symbols.dart';
 class AucorsaMovementsPage extends StatefulWidget {
   static const path = '/aucorsa-movements';
 
-  final AucorsaCard card;
+  final String cardNumber;
   final AucorsaCardRepository repository;
 
   const AucorsaMovementsPage({
-    required this.card,
+    required this.cardNumber,
     required this.repository,
     super.key,
   });
@@ -35,9 +38,9 @@ class _AucorsaMovementsPageState extends State<AucorsaMovementsPage> {
     super.initState();
     cubit = AucorsaMovementsCubit(
       loadMovements: widget.repository.loadMovements,
-      cardNumber: widget.card.number,
+      cardNumber: widget.cardNumber,
     );
-    unawaited(cubit.loadMore());
+    unawaited(cubit.refresh());
   }
 
   @override
@@ -46,48 +49,117 @@ class _AucorsaMovementsPageState extends State<AucorsaMovementsPage> {
     super.dispose();
   }
 
+  Future<void> _signIn() async {
+    final authenticated = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const AucorsaAccountWebViewPage(),
+      ),
+    );
+    if (!mounted || authenticated != true) return;
+    await cubit.refresh();
+  }
+
+  /// Opens the AUCORSA card list, where the user links this card themselves.
+  Future<void> _openCards() async {
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const AucorsaAccountWebViewPage.cards(),
+      ),
+    );
+    if (!mounted) return;
+    await cubit.refresh();
+  }
+
+  Future<void> _showHelp() => showAucorsaMovementsHelpDialog(
+    context: context,
+    onOpenCards: () => unawaited(_openCards()),
+  );
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: cubit,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            context.l10n.aucorsaCardMovements,
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
-        ),
-        body: SafeArea(
-          child: BlocBuilder<AucorsaMovementsCubit, AucorsaMovementsState>(
-            builder: (context, state) => switch (state.status) {
-              AucorsaMovementsStatus.unauthenticated => _MessageView(
-                icon: Symbols.lock_rounded,
-                title: context.l10n.aucorsaSessionExpiredTitle,
-                subtitle: context.l10n.aucorsaSessionExpiredSubtitle,
+      child: BlocBuilder<AucorsaMovementsCubit, AucorsaMovementsState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                context.l10n.aucorsaCardMovements,
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              _ => _MovementsView(state: state),
-            },
-          ),
-        ),
+              actions: [
+                IconButton(
+                  tooltip: context.l10n.aucorsaMovementsHelpTooltip,
+                  icon: const Icon(Symbols.help_rounded),
+                  onPressed: () => unawaited(_showHelp()),
+                ),
+              ],
+              bottom: state.movements.isNotEmpty && state.refreshing
+                  ? const PreferredSize(
+                      preferredSize: Size.fromHeight(4),
+                      child: LinearProgressIndicator(minHeight: 4),
+                    )
+                  : null,
+            ),
+            body: SafeArea(child: _buildBody(state)),
+          );
+        },
       ),
     );
+  }
+
+  Widget _buildBody(AucorsaMovementsState state) {
+    if (state.status == AucorsaMovementsStatus.unauthenticated) {
+      return _AccountAccessView(onContinue: () => unawaited(_signIn()));
+    }
+
+    return _MovementsView(state: state, onRefresh: cubit.refresh);
   }
 }
 
 class AucorsaMovementsRouteArguments {
-  final AucorsaCard card;
+  final String cardNumber;
   final AucorsaCardRepository repository;
 
   const AucorsaMovementsRouteArguments({
-    required this.card,
+    required this.cardNumber,
     required this.repository,
   });
 }
 
+class _AccountAccessView extends StatelessWidget {
+  final VoidCallback onContinue;
+
+  const _AccountAccessView({required this.onContinue});
+
+  @override
+  Widget build(BuildContext context) {
+    return BigTip(
+      title: Text(context.l10n.aucorsaAccountTitle),
+      subtitle: Text(context.l10n.aucorsaMovementsAccountSubtitle),
+      action: TextButton(
+        style: TextButton.styleFrom(
+          shape: const StadiumBorder(),
+          minimumSize: const Size.fromHeight(56),
+          textStyle: Theme.of(context).textTheme.titleMedium,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+        onPressed: onContinue,
+        child: Text(context.l10n.aucorsaUseAccount),
+      ),
+      child: const Icon(Symbols.account_circle_rounded),
+    );
+  }
+}
+
 class _MovementsView extends StatefulWidget {
   final AucorsaMovementsState state;
+  final Future<void> Function() onRefresh;
 
-  const _MovementsView({required this.state});
+  const _MovementsView({required this.state, required this.onRefresh});
 
   @override
   State<_MovementsView> createState() => _MovementsViewState();
@@ -121,6 +193,7 @@ class _MovementsViewState extends State<_MovementsView> {
   void _loadMoreIfNeeded() {
     if (!mounted || !_scrollController.hasClients) return;
     if (widget.state.status != AucorsaMovementsStatus.loaded ||
+        widget.state.refreshing ||
         widget.state.hasReachedMax) {
       return;
     }
@@ -132,13 +205,14 @@ class _MovementsViewState extends State<_MovementsView> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AucorsaMovementsCubit>();
+    final failed = widget.state.status == AucorsaMovementsStatus.failure;
     return RefreshIndicator(
-      onRefresh: cubit.refresh,
+      onRefresh: widget.onRefresh,
       child: CustomScrollView(
         controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: widget.state.movements.isEmpty
-            ? [SliverFillRemaining(child: _emptyState(context, cubit))]
+            ? [SliverFillRemaining(child: _emptyState(context))]
             : [
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -158,13 +232,12 @@ class _MovementsViewState extends State<_MovementsView> {
                       child: Center(child: CircularProgressIndicator()),
                     ),
                   ),
-                if (widget.state.status == AucorsaMovementsStatus.failure)
+                if (failed)
                   SliverToBoxAdapter(
-                    child: _MessageView(
-                      icon: Symbols.error_rounded,
-                      title: context.l10n.aucorsaDataError,
-                      subtitle: widget.state.error ?? '',
-                      onRetry: cubit.loadMore,
+                    child: _MovementLoadMoreError(
+                      onRetry: widget.state.hasReachedMax
+                          ? widget.onRefresh
+                          : cubit.loadMore,
                     ),
                   ),
               ],
@@ -172,15 +245,15 @@ class _MovementsViewState extends State<_MovementsView> {
     );
   }
 
-  Widget _emptyState(BuildContext context, AucorsaMovementsCubit cubit) {
+  Widget _emptyState(BuildContext context) {
+    if (widget.state.refreshing) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return switch (widget.state.status) {
       AucorsaMovementsStatus.initial || AucorsaMovementsStatus.loading =>
         const Center(child: CircularProgressIndicator()),
-      AucorsaMovementsStatus.failure => _MessageView(
-        icon: Symbols.error_rounded,
-        title: context.l10n.aucorsaDataError,
-        subtitle: widget.state.error ?? '',
-        onRetry: cubit.loadMore,
+      AucorsaMovementsStatus.failure => _MovementsErrorView(
+        onRetry: widget.onRefresh,
       ),
       _ => _MessageView(
         icon: Symbols.receipt_long_rounded,
@@ -188,6 +261,41 @@ class _MovementsViewState extends State<_MovementsView> {
         subtitle: context.l10n.aucorsaNoMovementsSubtitle,
       ),
     };
+  }
+}
+
+class _MovementsErrorView extends StatelessWidget {
+  final Future<void> Function() onRetry;
+
+  const _MovementsErrorView({required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return BigTip(
+      title: Text(context.l10n.aucorsaMovementsUnavailableTitle),
+      subtitle: Text(context.l10n.aucorsaMovementsUnavailableSubtitle),
+      action: TextButton(
+        onPressed: () => unawaited(onRetry()),
+        child: Text(context.l10n.retry),
+      ),
+      child: const Icon(Symbols.error_rounded),
+    );
+  }
+}
+
+class _MovementLoadMoreError extends StatelessWidget {
+  final Future<void> Function() onRetry;
+
+  const _MovementLoadMoreError({required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return _MessageView(
+      icon: Symbols.error_rounded,
+      title: context.l10n.aucorsaMovementsUnavailableTitle,
+      subtitle: context.l10n.aucorsaMovementsUnavailableSubtitle,
+      onRetry: () => unawaited(onRetry()),
+    );
   }
 }
 
@@ -235,7 +343,7 @@ class _MovementTile extends StatelessWidget {
         ? '${movement.date} · ${movement.time}'
         : formatShortDateTime(movementDateTime);
     return ListViewSectionTile(
-      leading: Icon(movementIcon, fill: 1),
+      leading: Icon(movementIcon),
       title: Text(movementTitle),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
