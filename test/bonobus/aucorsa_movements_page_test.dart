@@ -44,7 +44,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(BigTip), findsOneWidget);
-    expect(find.text('Connect your AUCORSA account'), findsOneWidget);
+    expect(find.text('Connect your account'), findsOneWidget);
     expect(find.text('Sign in or create account'), findsOneWidget);
   });
 

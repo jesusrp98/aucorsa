@@ -473,13 +473,13 @@ abstract class AppLocalizations {
   /// No description provided for @aucorsaAccountTitle.
   ///
   /// In en, this message translates to:
-  /// **'Connect your AUCORSA account'**
+  /// **'Connect your account'**
   String get aucorsaAccountTitle;
 
   /// No description provided for @aucorsaMovementsAccountSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in with your AUCORSA account to view the movements of this bonobus. This card must already be linked to that account. Your password is never read or stored by this app.'**
+  /// **'Sign in with your AUCORSA account to view the movement history. This card must already be linked to that account. Your password is never read or stored by this app.'**
   String get aucorsaMovementsAccountSubtitle;
 
   /// No description provided for @aucorsaMovementsHelpTitle.

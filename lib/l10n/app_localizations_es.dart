@@ -209,11 +209,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aucorsaUseAccount => 'Iniciar sesión o crear cuenta';
 
   @override
-  String get aucorsaAccountTitle => 'Conecta tu cuenta de AUCORSA';
+  String get aucorsaAccountTitle => 'Conecta tu cuenta';
 
   @override
   String get aucorsaMovementsAccountSubtitle =>
-      'Inicia sesión con tu cuenta de AUCORSA para consultar los movimientos de este bonobús. Esta tarjeta debe estar ya vinculada a esa cuenta. Esta aplicación nunca lee ni guarda tu contraseña.';
+      'Inicia sesión con tu cuenta de AUCORSA para consultar el historial de movimientos. Esta tarjeta debe estar ya vinculada a esa cuenta. Esta aplicación nunca lee ni guarda tu contraseña.';
 
   @override
   String get aucorsaMovementsHelpTitle => 'Ayuda';

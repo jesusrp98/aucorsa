@@ -129,7 +129,9 @@ class _AccountAccessView extends StatelessWidget {
       subtitle: Text(context.l10n.aucorsaMovementsAccountSubtitle),
       action: TextButton(
         style: TextButton.styleFrom(
-          shape: const StadiumBorder(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           minimumSize: const Size.fromHeight(56),
           textStyle: Theme.of(context).textTheme.titleMedium,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -163,7 +165,7 @@ class _MovementsView extends StatelessWidget {
     // The list scrolls under the system insets, and only its padding grows to
     // clear them, so the last movement is never cut off.
     final insets = MediaQuery.paddingOf(context);
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh: onRefresh,
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -194,7 +196,7 @@ class _MovementsView extends StatelessWidget {
               ),
               loadingBuilder: (_) => const Padding(
                 padding: EdgeInsets.all(24),
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: CircularProgressIndicator.adaptive()),
               ),
               errorBuilder: (_) => isEmpty
                   ? _MovementsErrorView(onRetry: onRefresh)

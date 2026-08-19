@@ -209,11 +209,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aucorsaUseAccount => 'Sign in or create account';
 
   @override
-  String get aucorsaAccountTitle => 'Connect your AUCORSA account';
+  String get aucorsaAccountTitle => 'Connect your account';
 
   @override
   String get aucorsaMovementsAccountSubtitle =>
-      'Sign in with your AUCORSA account to view the movements of this bonobus. This card must already be linked to that account. Your password is never read or stored by this app.';
+      'Sign in with your AUCORSA account to view the movement history. This card must already be linked to that account. Your password is never read or stored by this app.';
 
   @override
   String get aucorsaMovementsHelpTitle => 'Help';
