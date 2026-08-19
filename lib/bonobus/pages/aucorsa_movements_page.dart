@@ -42,11 +42,8 @@ class AucorsaMovementsView extends StatelessWidget {
 
   Future<void> _signIn(BuildContext context) async {
     final cubit = context.read<AucorsaMovementsCubit>();
-    final authenticated = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => const AucorsaAccountWebViewPage(),
-      ),
+    final authenticated = await context.push<bool>(
+      AucorsaAccountWebViewPage.path,
     );
     if (authenticated != true) return;
 

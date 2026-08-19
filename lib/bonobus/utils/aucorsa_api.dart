@@ -23,7 +23,6 @@ class AucorsaCardApiException implements Exception {
 /// handling; this only holds the pieces both of them need to talk to the site.
 class AucorsaApi {
   static const rootUrl = 'https://aucorsa.es/';
-  static const cardsUrl = 'https://aucorsa.es/mis-tarjetas/';
   static const signInUrl =
       'https://aucorsa.es/inicia-sesion/?redirect_to=https%3A%2F%2Faucorsa.es%2Fmis-tarjetas%2F';
   static const apiUrl = 'https://aucorsa.es/wp-json/aucorsa/v1';
