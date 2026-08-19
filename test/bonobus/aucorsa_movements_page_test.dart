@@ -14,6 +14,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Storage;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 void main() {
   const cardNumber = '1234567890';
@@ -186,7 +187,118 @@ void main() {
 
     expect(find.byType(LinearProgressIndicator), findsNothing);
   });
+
+  group('movement tile', () {
+    testWidgets('names a top-up and credits its amount', (tester) async {
+      await _pumpMovements(tester, [
+        _movement(
+          operation: 'Recarga online',
+          amount: '10,00 €',
+          activation: AucorsaRechargeActivation.activated,
+        ),
+      ]);
+
+      expect(find.text('Online top-up'), findsOneWidget);
+      expect(find.text('+10,00 €'), findsOneWidget);
+      expect(find.byIcon(Symbols.add_card_rounded), findsOneWidget);
+    });
+
+    testWidgets('flags a top-up the site has not activated yet', (
+      tester,
+    ) async {
+      await _pumpMovements(tester, [
+        _movement(
+          operation: 'Recarga online',
+          amount: '10,00 €',
+          activation: AucorsaRechargeActivation.pending,
+        ),
+      ]);
+
+      expect(find.text('Pending online top-up'), findsOneWidget);
+      expect(find.text('Online top-up'), findsNothing);
+    });
+
+    testWidgets('names a journey and debits its amount', (tester) async {
+      await _pumpMovements(tester, [
+        _movement(operation: 'Validación bus', amount: '-0,72 €'),
+      ]);
+
+      expect(find.text('Bus journey'), findsOneWidget);
+      // The typographic minus the tile renders, not the site's hyphen.
+      expect(find.text('−0,72 €'), findsOneWidget);
+      expect(find.byIcon(Symbols.contactless_rounded), findsOneWidget);
+    });
+
+    testWidgets('names a transfer and leaves its amount unsigned', (
+      tester,
+    ) async {
+      await _pumpMovements(tester, [
+        _movement(operation: 'Transbordo', amount: '0,00 €'),
+      ]);
+
+      expect(find.text('Transfer'), findsOneWidget);
+      expect(find.text('0,00 €'), findsOneWidget);
+      expect(find.byIcon(Symbols.conversion_path_rounded), findsOneWidget);
+    });
+
+    testWidgets("shows an unknown operation in the site's own words", (
+      tester,
+    ) async {
+      await _pumpMovements(tester, [
+        _movement(operation: 'Anulación manual', amount: '1,00 €'),
+      ]);
+
+      expect(find.text('Anulación manual'), findsOneWidget);
+      expect(find.text('−1,00 €'), findsOneWidget);
+      expect(find.byIcon(Symbols.directions_bus_rounded), findsOneWidget);
+    });
+
+    testWidgets('reads the date whichever way the site separates it', (
+      tester,
+    ) async {
+      await _pumpMovements(tester, [
+        _movement(operation: 'Validación bus', date: '17-08-2026'),
+      ]);
+
+      expect(find.text('17-08-2026 · 12:00'), findsNothing);
+    });
+
+    testWidgets('falls back to the raw date it could not read', (tester) async {
+      await _pumpMovements(tester, [
+        _movement(operation: 'Validación bus', date: '17.08.2026'),
+      ]);
+
+      expect(find.text('17.08.2026 · 12:00'), findsOneWidget);
+    });
+  });
 }
+
+Future<void> _pumpMovements(
+  WidgetTester tester,
+  List<AucorsaCardMovement> movements,
+) async {
+  final site = _FakeAucorsaSite(
+    loadMovements: ({required cardNumber, required page}) async =>
+        AucorsaCardMovements(movements: movements, hasNextPage: false),
+  );
+
+  await tester.pumpWidget(_app(site));
+  await tester.pumpAndSettle();
+}
+
+AucorsaCardMovement _movement({
+  required String operation,
+  String amount = '0,72 €',
+  String date = '17/08/2026',
+  String time = '12:00',
+  AucorsaRechargeActivation? activation,
+}) => AucorsaCardMovement(
+  date: date,
+  time: time,
+  operation: operation,
+  amount: amount,
+  activation: activation,
+);
 
 Widget _app(_FakeAucorsaSite site) {
   // The help button leaves the page through the router, so the test drives the
@@ -302,7 +414,7 @@ String _html(AucorsaCardMovements page) {
     for (final cell in [
       movement.date,
       movement.time,
-      movement.operation,
+      _operationCell(movement),
       movement.amount,
     ]) {
       buffer.write('<div class="grid-movements-movement">$cell</div>');
@@ -314,6 +426,19 @@ String _html(AucorsaCardMovements page) {
 
   return buffer.toString();
 }
+
+/// The operation cell, carrying the coloured marker the site puts in front of
+/// a top-up so its activation state survives the trip through the markup.
+String _operationCell(AucorsaCardMovement movement) =>
+    switch (movement.activation) {
+      null => movement.operation,
+      AucorsaRechargeActivation.activated =>
+        '<span title="Activada" style="color: green">\u25cf</span> '
+            '${movement.operation}',
+      AucorsaRechargeActivation.pending =>
+        '<span title="Pendiente" style="color: red">\u25cf</span> '
+            '${movement.operation}',
+    };
 
 class _FakeCookieManager implements CookieManager {
   @override

@@ -33,6 +33,45 @@ void main() {
       expect(card.balance, '12.34 €');
     });
 
+    test('rejects a card fragment with no balance in it', () {
+      const html = '<div class="card-number-content">TARJETA</div>';
+
+      expect(
+        () => AucorsaCardParser.parseCard(html),
+        throwsFormatException,
+      );
+    });
+
+    test('rejects a card fragment with no title in it', () {
+      const html = '<div class="card-real-balance">8.87 €</div>';
+
+      expect(
+        () => AucorsaCardParser.parseCard(html),
+        throwsFormatException,
+      );
+    });
+
+    test('rejects a card fragment the site left blank', () {
+      const html = '''
+        <div class="card-number-content"></div>
+        <div class="card-real-balance"></div>
+      ''';
+
+      expect(
+        () => AucorsaCardParser.parseCard(html),
+        throwsFormatException,
+      );
+    });
+
+    test('titles a name the site shouts across several words', () {
+      const html = '''
+        <div class="card-number-content">TARJETA  JOVEN   ANUAL</div>
+        <div class="card-real-balance">8.87 €</div>
+      ''';
+
+      expect(AucorsaCardParser.parseCard(html).title, 'Tarjeta Joven Anual');
+    });
+
     test('extracts movement details, activation state, and pagination', () {
       const html = '''
         <div class="grid-movements-movement">01/07/2026</div>
@@ -78,6 +117,64 @@ void main() {
       final movement = AucorsaCardParser.parseMovements(html).movements.single;
 
       expect(movement.activation, AucorsaRechargeActivation.pending);
+    });
+
+    test('reads the activation state the site words in English', () {
+      const html = '''
+        <div class="grid-movements-movement">30/06/2026</div>
+        <div class="grid-movements-movement">19:42</div>
+        <div class="grid-movements-movement"><span title="Activated">●</span> Recarga online</div>
+        <div class="grid-movements-movement">10,00 €</div>
+      ''';
+
+      final movement = AucorsaCardParser.parseMovements(html).movements.single;
+
+      expect(movement.activation, AucorsaRechargeActivation.activated);
+    });
+
+    test('leaves a movement that carries no marker unflagged', () {
+      const html = '''
+        <div class="grid-movements-movement">01/07/2026</div>
+        <div class="grid-movements-movement">08:13</div>
+        <div class="grid-movements-movement">Validación bus</div>
+        <div class="grid-movements-movement">-0,58 €</div>
+      ''';
+
+      final movement = AucorsaCardParser.parseMovements(html).movements.single;
+
+      expect(movement.activation, isNull);
+    });
+
+    test('strips the bullet the marker leaves in the operation', () {
+      const html = '''
+        <div class="grid-movements-movement">30/06/2026</div>
+        <div class="grid-movements-movement">19:42</div>
+        <div class="grid-movements-movement"><span title="Pendiente">•</span> Recarga online</div>
+        <div class="grid-movements-movement">10,00 €</div>
+      ''';
+
+      final movement = AucorsaCardParser.parseMovements(html).movements.single;
+
+      expect(movement.operation, 'Recarga online');
+    });
+
+    test('reads an empty history as a page without movements', () {
+      final result = AucorsaCardParser.parseMovements('<div></div>');
+
+      expect(result.movements, isEmpty);
+      expect(result.hasNextPage, isFalse);
+    });
+
+    test('reports the last page as having nothing after it', () {
+      const html = '''
+        <div class="grid-movements-movement">01/07/2026</div>
+        <div class="grid-movements-movement">08:13</div>
+        <div class="grid-movements-movement">Validación bus</div>
+        <div class="grid-movements-movement">-0,58 €</div>
+        <a class="card-movements-prev-page"></a>
+      ''';
+
+      expect(AucorsaCardParser.parseMovements(html).hasNextPage, isFalse);
     });
 
     test('rejects malformed movement grids', () {

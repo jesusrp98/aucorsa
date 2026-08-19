@@ -268,7 +268,324 @@ void main() {
       expect(restored.state.nextPage, 3);
       expect(restored.state.hasReachedMax, isTrue);
     });
+
+    test('refresh prepends only what a short history is missing', () async {
+      var pageOneLoads = 0;
+      final site = _FakeAucorsaSite((_) async {
+        pageOneLoads++;
+        return _page([
+          if (pageOneLoads > 1) ...[
+            _movement('Third'),
+            _movement('Second'),
+          ],
+          _movement('First'),
+        ]);
+      });
+      final cubit = _buildCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+      await cubit.refresh();
+
+      expect(
+        cubit.state.movements.map((movement) => movement.operation),
+        ['Third', 'Second', 'First'],
+      );
+    });
+
+    test('does not start a second refresh over a running one', () async {
+      final response = Completer<AucorsaCardMovements>();
+      final site = _FakeAucorsaSite((_) => response.future);
+      final cubit = _buildCubit(site);
+      addTearDown(cubit.close);
+
+      final refreshing = cubit.refresh();
+      await cubit.refresh();
+      await pumpEventQueue();
+
+      expect(site.requestedPages, [1]);
+
+      response.complete(_page([_movement('First')]));
+      await refreshing;
+    });
+
+    test('does not paginate while a refresh is running', () async {
+      final response = Completer<AucorsaCardMovements>();
+      final site = _FakeAucorsaSite((_) => response.future);
+      final cubit = _buildCubit(site);
+      addTearDown(cubit.close);
+
+      final refreshing = cubit.refresh();
+      await cubit.loadMore();
+      await pumpEventQueue();
+
+      expect(site.requestedPages, [1]);
+
+      response.complete(_page([_movement('First')]));
+      await refreshing;
+    });
   });
+
+  group('AucorsaMovementsCubit request handling', () {
+    test('asks for the card and page the caller wants', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) => _markup(options, 200, _movementsMarkup),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(site.movementQueries.single['card_number'], '123');
+      expect(site.movementQueries.single['page'], 1);
+    });
+
+    test('asks the site for a nonce only once for the whole history', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) =>
+            _markup(options, 200, _pagedMovementsMarkup),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+      await cubit.loadMore();
+
+      expect(site.nonceRequests, 1);
+      expect(site.sentNonces, ['first-nonce', 'first-nonce']);
+    });
+
+    test('refreshes a rejected nonce and retries the same page', () async {
+      final site = _RawAucorsaSite(
+        nonces: ['stale-nonce', 'fresh-nonce'],
+        onMovements: (options, attempt) => attempt == 0
+            ? _json(options, 403, {
+                'code': 'rest_cookie_invalid_nonce',
+                'message': 'Cookie check failed',
+              })
+            : _markup(options, 200, _movementsMarkup),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      // The stale nonce must not be mistaken for a rejected session.
+      expect(cubit.state.status, AucorsaMovementsStatus.loaded);
+      expect(site.sentNonces, ['stale-nonce', 'fresh-nonce']);
+      expect(site.nonceRequests, 2);
+    });
+
+    test('keeps the refreshed nonce for the pages that follow', () async {
+      final site = _RawAucorsaSite(
+        nonces: ['stale-nonce', 'fresh-nonce'],
+        onMovements: (options, attempt) => attempt == 0
+            ? _json(options, 403, {'code': 'rest_cookie_invalid_nonce'})
+            : _markup(options, 200, _pagedMovementsMarkup),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+      await cubit.loadMore();
+
+      expect(site.sentNonces, ['stale-nonce', 'fresh-nonce', 'fresh-nonce']);
+      expect(site.nonceRequests, 2);
+    });
+
+    test('stops after one nonce retry instead of looping', () async {
+      final site = _RawAucorsaSite(
+        nonces: ['stale-nonce', 'also-stale'],
+        onMovements: (options, _) =>
+            _json(options, 403, {'code': 'rest_cookie_invalid_nonce'}),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(site.sentNonces, hasLength(2));
+      expect(cubit.state.status, AucorsaMovementsStatus.unauthenticated);
+    });
+
+    test('signs the user out when the site rejects the session', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) =>
+            _json(options, 401, {'message': 'Cookie check failed'}),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.unauthenticated);
+    });
+
+    test('signs the user out on a rejection worded as plain text', () async {
+      // The site answers 200 and says so in the body instead.
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) =>
+            _json(options, 200, {'message': 'Usuario no registrado'}),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.unauthenticated);
+    });
+
+    test('signs the user out when the markup asks for a sign in', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) =>
+            _markup(options, 200, '<p>Inicia sesión para continuar</p>'),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.unauthenticated);
+    });
+
+    test('fails without signing the user out on a site error', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) =>
+            _json(options, 200, {'message': 'Tarjeta no encontrada'}),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.failure);
+    });
+
+    test('fails when the markup arrives with an error status', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) => _markup(options, 500, '<p>Oops</p>'),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.failure);
+    });
+
+    test('fails when the site sends a body it cannot read', () async {
+      final site = _RawAucorsaSite(
+        onMovements: (options, _) => Response<dynamic>(
+          requestOptions: options,
+          statusCode: 200,
+          data: 42,
+        ),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.failure);
+    });
+
+    test('signs the user out when the nonce page is fenced off', () async {
+      final site = _RawAucorsaSite(
+        nonces: const [],
+        onMovements: (options, _) => _markup(options, 200, _movementsMarkup),
+      );
+      final cubit = _buildRawCubit(site);
+      addTearDown(cubit.close);
+
+      await cubit.loadMore();
+
+      expect(cubit.state.status, AucorsaMovementsStatus.unauthenticated);
+      expect(site.sentNonces, isEmpty);
+    });
+  });
+}
+
+const _movementsMarkup =
+    '<div class="grid-movements-movement">19/07/2026</div> '
+    '<div class="grid-movements-movement">12:00</div> '
+    '<div class="grid-movements-movement">Validación bus</div> '
+    '<div class="grid-movements-movement">-0.72 €</div>';
+
+/// The same page, told to the app as one the history continues past.
+const _pagedMovementsMarkup =
+    '$_movementsMarkup<a class="card-movements-next-page"></a>';
+
+Response<dynamic> _markup(RequestOptions options, int status, String body) =>
+    Response<String>(
+      requestOptions: options,
+      statusCode: status,
+      data: body,
+    );
+
+Response<dynamic> _json(
+  RequestOptions options,
+  int status,
+  Map<String, dynamic> body,
+) => Response<Map<String, dynamic>>(
+  requestOptions: options,
+  statusCode: status,
+  data: body,
+);
+
+AucorsaMovementsCubit _buildRawCubit(_RawAucorsaSite site) {
+  return AucorsaMovementsCubit(
+    cardNumber: '123',
+    client: site.client,
+    cookieManager: _FakeCookieManager(signedIn: true),
+  );
+}
+
+/// Answers at the HTTP level, so the responses the cubit has to tell apart —
+/// a stale nonce, a rejected session, a site error — can be handed to it
+/// exactly as the endpoint would.
+class _RawAucorsaSite {
+  final List<String> nonces;
+  final Response<dynamic> Function(RequestOptions options, int attempt)
+  onMovements;
+
+  final List<String> sentNonces = [];
+  final List<Map<String, dynamic>> movementQueries = [];
+  int nonceRequests = 0;
+  int _attempts = 0;
+
+  late final Dio client = Dio()
+    ..interceptors.add(InterceptorsWrapper(onRequest: _onRequest));
+
+  _RawAucorsaSite({
+    required this.onMovements,
+    this.nonces = const ['first-nonce'],
+  });
+
+  void _onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) {
+    if (options.path == AucorsaApi.rootUrl) {
+      // Running past the end stands for a site that stopped handing out
+      // nonces, which is what it does once the session is gone.
+      final nonce = nonceRequests < nonces.length
+          ? nonces[nonceRequests]
+          : null;
+      nonceRequests++;
+      handler.resolve(
+        Response<String>(
+          requestOptions: options,
+          statusCode: 200,
+          data: nonce == null ? '<html></html>' : '{"ajax_nonce":"$nonce"}',
+        ),
+      );
+      return;
+    }
+
+    sentNonces.add(options.queryParameters['_wpnonce'] as String);
+    movementQueries.add(Map<String, dynamic>.from(options.queryParameters));
+    handler.resolve(onMovements(options, _attempts++));
+  }
 }
 
 AucorsaMovementsCubit _buildCubit(_FakeAucorsaSite site) {
@@ -362,7 +679,7 @@ String _html(AucorsaCardMovements page) {
     for (final cell in [
       movement.date,
       movement.time,
-      movement.operation,
+      _operationCell(movement),
       movement.amount,
     ]) {
       buffer.write('<div class="grid-movements-movement">$cell</div>');
@@ -374,6 +691,19 @@ String _html(AucorsaCardMovements page) {
 
   return buffer.toString();
 }
+
+/// The operation cell, carrying the coloured marker the site puts in front of
+/// a top-up so its activation state survives the trip through the markup.
+String _operationCell(AucorsaCardMovement movement) =>
+    switch (movement.activation) {
+      null => movement.operation,
+      AucorsaRechargeActivation.activated =>
+        '<span title="Activada" style="color: green">\u25cf</span> '
+            '${movement.operation}',
+      AucorsaRechargeActivation.pending =>
+        '<span title="Pendiente" style="color: red">\u25cf</span> '
+            '${movement.operation}',
+    };
 
 class _FakeCookieManager implements CookieManager {
   final bool signedIn;
