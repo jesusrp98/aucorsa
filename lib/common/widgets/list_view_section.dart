@@ -17,21 +17,45 @@ class ListViewSection extends StatelessWidget {
         spacing: 4,
         children: [
           for (final child in children.indexed)
-            Material(
-              color: Theme.of(context).colorScheme.surfaceContainerLow,
-              borderRadius: BorderRadius.vertical(
-                top: child.$1 == 0
-                    ? const Radius.circular(24)
-                    : const Radius.circular(4),
-                bottom: child.$1 == children.length - 1
-                    ? const Radius.circular(24)
-                    : const Radius.circular(4),
-              ),
-              clipBehavior: Clip.antiAlias,
+            ListViewSectionItem(
+              index: child.$1,
+              itemCount: children.length,
               child: child.$2,
             ),
         ],
       ),
+    );
+  }
+}
+
+/// A single item of a [ListViewSection], rounded according to its position.
+///
+/// Lets lazily built lists, like the ones paginated by `SliverInfiniteList`,
+/// wear the same look as the eager [ListViewSection].
+class ListViewSectionItem extends StatelessWidget {
+  final int index;
+  final int itemCount;
+  final Widget child;
+
+  const ListViewSectionItem({
+    required this.index,
+    required this.itemCount,
+    required this.child,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      borderRadius: BorderRadius.vertical(
+        top: index == 0 ? const Radius.circular(24) : const Radius.circular(4),
+        bottom: index == itemCount - 1
+            ? const Radius.circular(24)
+            : const Radius.circular(4),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: child,
     );
   }
 }

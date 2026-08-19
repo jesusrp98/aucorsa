@@ -183,6 +183,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topUpBonobusSubtitle => 'Learn more about it here';
 
   @override
+  String get editBonobusTitle => 'Edit card number';
+
+  @override
   String get deleteBonobusTitle => 'Remove details';
 
   @override
@@ -203,5 +206,98 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hold your bonobus card near the back of your device to scan it';
 
   @override
-  String get stopsList => 'Stops list';
+  String get aucorsaUseAccount => 'Sign in or create account';
+
+  @override
+  String get aucorsaAccountTitle => 'Connect your account';
+
+  @override
+  String get aucorsaMovementsAccountSubtitle =>
+      'Sign in with your AUCORSA account to view the movement history. This card must already be linked to that account. Your password is never read or stored by this app.';
+
+  @override
+  String get aucorsaMovementsHelpTitle => 'Help';
+
+  @override
+  String get aucorsaMovementsHelpIntro =>
+      'AUCORSA only serves the movements of a card to a user account that has that card added, and it also requires the account and the bonobus to share the same DNI or NIF. That is why an account is needed: the app signs in to aucorsa.es for you and asks for the movements of the card with that session. Without an account that meets both conditions AUCORSA returns nothing, no matter how many times the card is scanned.';
+
+  @override
+  String get aucorsaMovementsHelpStepsTitle => 'What you need to do';
+
+  @override
+  String get aucorsaMovementsHelpStepAccountTitle =>
+      'Create an AUCORSA account';
+
+  @override
+  String get aucorsaMovementsHelpStepAccountSubtitle =>
+      'Create the account on aucorsa.es. AUCORSA asks for your name, an email address, a password and a DNI or NIF, which has to be the same one the bonobus is registered under. If you already have an account, go straight to step 4.';
+
+  @override
+  String get aucorsaMovementsHelpStepActivateTitle =>
+      'Activate the account from your email';
+
+  @override
+  String get aucorsaMovementsHelpStepActivateSubtitle =>
+      'AUCORSA sends a confirmation email right after registering. The account stays inactive until you open the link inside that email, and signing in before doing so always fails. Check your spam folder if it does not arrive.';
+
+  @override
+  String get aucorsaMovementsHelpStepCardTitle =>
+      'Add this card to your account';
+
+  @override
+  String get aucorsaMovementsHelpStepCardSubtitle =>
+      'In your account, open the My cards section of aucorsa.es and register the number printed on the bonobus. Only the cards linked to the account you sign in with report their movements.';
+
+  @override
+  String get aucorsaMovementsHelpStepSignInTitle => 'Sign in from the app';
+
+  @override
+  String get aucorsaMovementsHelpStepSignInSubtitle =>
+      'Sign in with that same account. The session stays on this device, so you only have to do this again if AUCORSA closes it.';
+
+  @override
+  String get aucorsaMovementsHelpStepRefreshTitle => 'Refresh the history';
+
+  @override
+  String get aucorsaMovementsHelpStepRefreshSubtitle =>
+      'Pull down on the movement list to ask AUCORSA for it again. A journey or a top-up can take a few minutes to show up there.';
+
+  @override
+  String get aucorsaCardNumber => 'Card number';
+
+  @override
+  String get aucorsaCardMovements => 'Movement history';
+
+  @override
+  String get aucorsaCardMovementsSubtitle => 'View recent movements';
+
+  @override
+  String get aucorsaMovementOnlineTopUp => 'Online top-up';
+
+  @override
+  String get aucorsaMovementOnlineTopUpPending => 'Pending online top-up';
+
+  @override
+  String get aucorsaMovementBusJourney => 'Bus journey';
+
+  @override
+  String get aucorsaMovementTransfer => 'Transfer';
+
+  @override
+  String get aucorsaDataError => 'AUCORSA data could not be loaded';
+
+  @override
+  String get aucorsaMovementsUnavailableTitle => 'Movement history unavailable';
+
+  @override
+  String get aucorsaMovementsUnavailableSubtitle =>
+      'We couldn\'t load the movement history for this bonobus. Check the help button at the top and try again.';
+
+  @override
+  String get aucorsaNoMovementsTitle => 'No movements';
+
+  @override
+  String get aucorsaNoMovementsSubtitle =>
+      'AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account.';
 }

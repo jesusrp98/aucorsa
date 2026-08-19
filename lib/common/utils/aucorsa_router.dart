@@ -1,4 +1,7 @@
 import 'package:aucorsa/about/pages/about_page.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_account_webview_page.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_movements_page.dart';
 import 'package:aucorsa/bonobus/pages/bonobus_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
@@ -62,6 +65,22 @@ class AucorsaRouter {
         GoRoute(
           path: AboutPage.path,
           builder: (context, state) => const AboutPage(),
+        ),
+        GoRoute(
+          path: AucorsaMovementsHelpPage.path,
+          builder: (context, state) => const AucorsaMovementsHelpPage(),
+        ),
+        GoRoute(
+          path: AucorsaMovementsPage.path,
+          builder: (context, state) =>
+              AucorsaMovementsPage(cardNumber: state.extra! as String),
+        ),
+        GoRoute(
+          path: AucorsaAccountWebViewPage.path,
+          pageBuilder: (context, state) => const MaterialPage(
+            fullscreenDialog: true,
+            child: AucorsaAccountWebViewPage(),
+          ),
         ),
       ],
     );

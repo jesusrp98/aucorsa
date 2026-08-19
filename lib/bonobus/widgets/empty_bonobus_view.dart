@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_id_dialog.dart';
@@ -19,23 +21,26 @@ class EmptyBonobusView extends StatefulWidget {
 class _EmptyBonobusViewState extends State<EmptyBonobusView> {
   BonobusProvider? provider;
 
+  Future<void> _selectAucorsa() async {
+    final cardNumber = await showBonobusIdDialog(context);
+    if (!mounted || cardNumber == null) return;
+
+    context.read<BonobusCubit>().selectProvider(
+      BonobusProvider.aucorsa,
+      id: cardNumber,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (provider == null) {
       return _EmptyProviderView(
-        onSelect: (provider) async {
-          if (provider == BonobusProvider.consorcio) {
-            return setState(() => this.provider = provider);
+        onSelect: (provider) {
+          if (provider == BonobusProvider.aucorsa) {
+            unawaited(_selectAucorsa());
+            return;
           }
-
-          final id = await showBonobusIdDialog(context);
-
-          if (!context.mounted || id == null) return;
-
-          return context.read<BonobusCubit>().set(
-            provider: provider,
-            id: id,
-          );
+          setState(() => this.provider = provider);
         },
       );
     }
@@ -144,13 +149,9 @@ class _ScanBonobusView extends StatelessWidget {
           children: [
             BonobusScanController(
               onStateChanged: (state) {
-                context.read<BonobusCubit>().set(
-                  provider: provider,
-                  id: state.id,
-                );
-                context.read<BonobusCubit>().loaded(
-                  balance: state.balance,
-                );
+                context.read<BonobusCubit>()
+                  ..selectProvider(provider)
+                  ..scanned(id: state.id, balance: state.balance);
               },
             ),
             Center(

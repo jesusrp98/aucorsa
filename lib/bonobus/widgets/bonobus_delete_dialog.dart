@@ -4,7 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 Future<void> showBonobusDeleteDialog({
   required BuildContext context,
-  required VoidCallback onDelete,
+  required Future<void> Function() onDelete,
 }) => showModalBottomSheet<void>(
   context: context,
   useRootNavigator: true,
@@ -13,7 +13,7 @@ Future<void> showBonobusDeleteDialog({
 );
 
 class _BusStopDeleteDialogView extends StatelessWidget {
-  final VoidCallback onDelete;
+  final Future<void> Function() onDelete;
 
   const _BusStopDeleteDialogView(this.onDelete);
 
@@ -60,9 +60,9 @@ class _BusStopDeleteDialogView extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).pop();
-                  return onDelete();
+                  await onDelete();
                 },
                 child: Text(
                   context.l10n.deleteStopCta,

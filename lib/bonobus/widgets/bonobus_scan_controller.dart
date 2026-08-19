@@ -75,9 +75,7 @@ class _BonobusScanControllerState extends State<BonobusScanController> {
 
       if (!mounted) return;
 
-      return context.read<BonobusCubit>().loaded(
-        balance: balance,
-      );
+      return context.read<BonobusCubit>().scanned(balance: balance);
     },
   );
 
