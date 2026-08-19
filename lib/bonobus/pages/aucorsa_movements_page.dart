@@ -4,7 +4,6 @@ import 'package:aucorsa/bonobus/cubits/aucorsa_movements_cubit.dart';
 import 'package:aucorsa/bonobus/models/aucorsa_card.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_account_webview_page.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
-import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/aucorsa_theme.dart';
 import 'package:aucorsa/common/utils/date_time_format.dart';
@@ -17,126 +16,109 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
-class AucorsaMovementsPage extends StatefulWidget {
+class AucorsaMovementsPage extends StatelessWidget {
   static const path = '/aucorsa-movements';
 
   final String cardNumber;
-  final AucorsaCardRepository repository;
 
-  const AucorsaMovementsPage({
-    required this.cardNumber,
-    required this.repository,
-    super.key,
-  });
+  const AucorsaMovementsPage({required this.cardNumber, super.key});
 
   @override
-  State<AucorsaMovementsPage> createState() => _AucorsaMovementsPageState();
+  Widget build(BuildContext context) => BlocProvider(
+    create: (_) {
+      final cubit = AucorsaMovementsCubit(cardNumber: cardNumber);
+      unawaited(cubit.refresh());
+
+      return cubit;
+    },
+    child: const AucorsaMovementsView(),
+  );
 }
 
-class _AucorsaMovementsPageState extends State<AucorsaMovementsPage> {
-  late final AucorsaMovementsCubit cubit;
+/// The movements page itself, reading its cubit from the tree.
+@visibleForTesting
+class AucorsaMovementsView extends StatelessWidget {
+  const AucorsaMovementsView({super.key});
 
-  @override
-  void initState() {
-    super.initState();
-    cubit = AucorsaMovementsCubit(
-      loadMovements: widget.repository.loadMovements,
-      cardNumber: widget.cardNumber,
-    );
-    unawaited(cubit.refresh());
-  }
-
-  @override
-  void dispose() {
-    unawaited(cubit.close());
-    super.dispose();
-  }
-
-  Future<void> _signIn() async {
+  Future<void> _signIn(BuildContext context) async {
+    final cubit = context.read<AucorsaMovementsCubit>();
     final authenticated = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) => const AucorsaAccountWebViewPage(),
       ),
     );
-    if (!mounted || authenticated != true) return;
+    if (authenticated != true) return;
+
     await cubit.refresh();
   }
 
   /// Opens the step by step guide on what AUCORSA asks for.
-  void _showHelp() => unawaited(
+  void _showHelp(BuildContext context) => unawaited(
     context.push<void>(AucorsaMovementsHelpPage.path),
   );
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: cubit,
-      child: BlocBuilder<AucorsaMovementsCubit, AucorsaMovementsState>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                context.l10n.aucorsaCardMovements,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              actions: [
-                IconButton(
-                  tooltip: context.l10n.aucorsaMovementsHelpTitle,
-                  icon: const Icon(Symbols.help_rounded),
-                  onPressed: _showHelp,
-                ),
-              ],
+    return BlocBuilder<AucorsaMovementsCubit, AucorsaMovementsState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              context.l10n.aucorsaCardMovements,
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            // The progress bar floats over the list instead of living in the
-            // app bar, so showing it never shifts the content down.
-            body: Stack(
-              children: [
-                _buildBody(state),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: IgnorePointer(
-                    // A switcher rather than an opacity, so the indeterminate
-                    // bar leaves the tree once faded out and stops animating.
-                    child: AnimatedSwitcher(
-                      duration: kThemeAnimationDuration,
-                      switchInCurve: Curves.easeInOutCubic,
-                      switchOutCurve: Curves.easeInOutCubic,
-                      child: state.movements.isNotEmpty && state.refreshing
-                          ? const LinearProgressIndicator()
-                          : const SizedBox.shrink(),
-                    ),
+            actions: [
+              IconButton(
+                tooltip: context.l10n.aucorsaMovementsHelpTitle,
+                icon: const Icon(Symbols.help_rounded),
+                onPressed: () => _showHelp(context),
+              ),
+            ],
+          ),
+          // The progress bar floats over the list instead of living in the
+          // app bar, so showing it never shifts the content down.
+          body: Stack(
+            children: [
+              _buildBody(context, state),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: IgnorePointer(
+                  // A switcher rather than an opacity, so the indeterminate
+                  // bar leaves the tree once faded out and stops animating.
+                  child: AnimatedSwitcher(
+                    duration: kThemeAnimationDuration,
+                    switchInCurve: Curves.easeInOutCubic,
+                    switchOutCurve: Curves.easeInOutCubic,
+                    child: state.movements.isNotEmpty && state.refreshing
+                        ? const LinearProgressIndicator()
+                        : const SizedBox.shrink(),
                   ),
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildBody(AucorsaMovementsState state) {
+  Widget _buildBody(BuildContext context, AucorsaMovementsState state) {
     if (state.status == AucorsaMovementsStatus.unauthenticated) {
       return SafeArea(
-        child: _AccountAccessView(onContinue: () => unawaited(_signIn())),
+        child: _AccountAccessView(
+          onContinue: () => unawaited(_signIn(context)),
+        ),
       );
     }
 
-    return _MovementsView(state: state, onRefresh: cubit.refresh);
+    return _MovementsView(
+      state: state,
+      onRefresh: context.read<AucorsaMovementsCubit>().refresh,
+    );
   }
-}
-
-class AucorsaMovementsRouteArguments {
-  final String cardNumber;
-  final AucorsaCardRepository repository;
-
-  const AucorsaMovementsRouteArguments({
-    required this.cardNumber,
-    required this.repository,
-  });
 }
 
 class _AccountAccessView extends StatelessWidget {

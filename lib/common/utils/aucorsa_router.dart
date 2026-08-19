@@ -71,13 +71,8 @@ class AucorsaRouter {
         ),
         GoRoute(
           path: AucorsaMovementsPage.path,
-          builder: (context, state) {
-            final arguments = state.extra! as AucorsaMovementsRouteArguments;
-            return AucorsaMovementsPage(
-              cardNumber: arguments.cardNumber,
-              repository: arguments.repository,
-            );
-          },
+          builder: (context, state) =>
+              AucorsaMovementsPage(cardNumber: state.extra! as String),
         ),
       ],
     );

@@ -25,8 +25,8 @@ class _EmptyBonobusViewState extends State<EmptyBonobusView> {
     final cardNumber = await showBonobusIdDialog(context);
     if (!mounted || cardNumber == null) return;
 
-    context.read<BonobusCubit>().set(
-      provider: BonobusProvider.aucorsa,
+    context.read<BonobusCubit>().selectProvider(
+      BonobusProvider.aucorsa,
       id: cardNumber,
     );
   }
@@ -149,13 +149,9 @@ class _ScanBonobusView extends StatelessWidget {
           children: [
             BonobusScanController(
               onStateChanged: (state) {
-                context.read<BonobusCubit>().set(
-                  provider: provider,
-                  id: state.id,
-                );
-                context.read<BonobusCubit>().loaded(
-                  balance: state.balance,
-                );
+                context.read<BonobusCubit>()
+                  ..selectProvider(provider)
+                  ..scanned(id: state.id, balance: state.balance);
               },
             ),
             Center(

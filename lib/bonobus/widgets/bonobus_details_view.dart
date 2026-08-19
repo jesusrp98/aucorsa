@@ -107,8 +107,7 @@ class BonobusDetailsView extends StatelessWidget {
                               onEdit: onEdit,
                               onDelete:
                                   onDelete ??
-                                  () async =>
-                                      context.read<BonobusCubit>().reset(),
+                                  context.read<BonobusCubit>().delete,
                             ),
                             trailing: Icon(
                               Symbols.chevron_right_rounded,

@@ -9,11 +9,21 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 void main() {
   late BonobusCubit cubit;
 
-  setUp(() {
-    HydratedBloc.storage = _MemoryStorage();
-    cubit = BonobusCubit()
-      ..set(provider: BonobusProvider.aucorsa, id: '0546174400')
-      ..loaded(balance: '8.87 €', name: 'Tarjeta Estudiante');
+  setUp(() async {
+    final storage = _MemoryStorage();
+    HydratedBloc.storage = storage;
+    // Seeded through storage so the view starts on a fully loaded bonobus.
+    await storage.write(
+      'BonobusCubit',
+      const BonobusState(
+        status: BonobusStatus.loaded,
+        provider: BonobusProvider.aucorsa,
+        id: '0546174400',
+        balance: '8.87 €',
+        name: 'Tarjeta Estudiante',
+      ).toJson(),
+    );
+    cubit = BonobusCubit();
   });
 
   tearDown(() => cubit.close());

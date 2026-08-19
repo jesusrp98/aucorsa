@@ -1,87 +1,39 @@
 import 'package:aucorsa/bonobus/models/aucorsa_card.dart';
-import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
+import 'package:aucorsa/bonobus/utils/aucorsa_api.dart';
+import 'package:aucorsa/bonobus/utils/aucorsa_card_parser.dart';
+import 'package:aucorsa/bonobus/utils/aucorsa_session.dart';
+import 'package:aucorsa/common/utils/http_client.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-typedef AucorsaMovementsLoader =
-    Future<AucorsaCardMovements> Function({
-      required String cardNumber,
-      required int page,
-    });
+part 'aucorsa_movements_state.dart';
 
-enum AucorsaMovementsStatus {
-  initial,
-  loading,
-  loaded,
-  unauthenticated,
-  failure,
-}
-
-class AucorsaMovementsState extends Equatable {
-  final AucorsaMovementsStatus status;
-  final List<AucorsaCardMovement> movements;
-  final int nextPage;
-  final bool hasReachedMax;
-  final bool refreshing;
-  final String? error;
-
-  const AucorsaMovementsState({
-    this.status = AucorsaMovementsStatus.initial,
-    this.movements = const [],
-    this.nextPage = 1,
-    this.hasReachedMax = false,
-    this.refreshing = false,
-    this.error,
-  });
-
-  factory AucorsaMovementsState.fromJson(Map<String, dynamic> json) {
-    final movements = [
-      for (final movement in json['movements'] as List<dynamic>? ?? [])
-        AucorsaCardMovement.fromJson(
-          Map<String, dynamic>.from(movement as Map),
-        ),
-    ];
-
-    return AucorsaMovementsState(
-      status: movements.isEmpty
-          ? AucorsaMovementsStatus.initial
-          : AucorsaMovementsStatus.loaded,
-      movements: movements,
-      nextPage: json['nextPage'] as int? ?? 1,
-      hasReachedMax: json['hasReachedMax'] as bool? ?? false,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'movements': [for (final movement in movements) movement.toJson()],
-      'nextPage': nextPage,
-      'hasReachedMax': hasReachedMax,
-    };
-  }
-
-  @override
-  List<Object?> get props => [
-    status,
-    movements,
-    nextPage,
-    hasReachedMax,
-    refreshing,
-    error,
-  ];
-}
-
+/// Downloads and stores the movement history of a single AUCORSA card.
+///
+/// The endpoint is only reachable with the cookies the user got by signing in
+/// on the AUCORSA site, so every request starts by collecting them.
 class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
-  final AucorsaMovementsLoader loadMovements;
   final String cardNumber;
 
+  final Dio _client;
+  CookieManager? _cookieManager;
+  String? _nonce;
+
   AucorsaMovementsCubit({
-    required this.loadMovements,
     required this.cardNumber,
-  }) : super(const AucorsaMovementsState());
+    Dio? client,
+    CookieManager? cookieManager,
+  }) : _client = client ?? httpClient,
+       _cookieManager = cookieManager,
+       super(const AucorsaMovementsState());
 
   static String storageKey(String cardNumber) =>
       'AucorsaMovementsCubit$cardNumber';
+
+  CookieManager get _cookies => _cookieManager ??= CookieManager.instance();
 
   @override
   String get id => cardNumber;
@@ -104,10 +56,7 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
     );
 
     try {
-      final result = await loadMovements(
-        cardNumber: cardNumber,
-        page: page,
-      );
+      final result = await _loadMovements(page);
       if (isClosed) return;
       emit(
         AucorsaMovementsState(
@@ -164,7 +113,7 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
     );
 
     try {
-      final result = await loadMovements(cardNumber: cardNumber, page: 1);
+      final result = await _loadMovements(1);
       if (isClosed) return;
       final merged = _mergeWithCache(result.movements, cached);
       emit(
@@ -212,6 +161,121 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
 
   @override
   Map<String, dynamic>? toJson(AucorsaMovementsState state) => state.toJson();
+
+  Future<AucorsaCardMovements> _loadMovements(int page) async {
+    try {
+      final cookieHeader = await _sessionCookies();
+      final nonce = _nonce ??= await AucorsaApi.loadNonce(
+        _client,
+        cookieHeader,
+      );
+
+      return await _requestMovements(
+        page: page,
+        cookieHeader: cookieHeader,
+        nonce: nonce,
+        canRefreshNonce: true,
+      );
+    } on AucorsaSessionExpiredException {
+      // Whatever we were holding is no longer worth offering back.
+      await AucorsaSession.clear();
+      rethrow;
+    }
+  }
+
+  /// The cookies that prove the user is signed in.
+  ///
+  /// The web view jar wins while it still holds them, and every time it does
+  /// the header is copied to [AucorsaSession]. That copy is what answers here
+  /// after a restart, when the jar comes back empty.
+  Future<String> _sessionCookies() async {
+    final live = await AucorsaApi.cookieHeader(_cookies);
+    if (live.isNotEmpty) {
+      await AucorsaSession.save(live);
+      _log('using the web view cookies', live);
+
+      return live;
+    }
+
+    final stored = AucorsaSession.read();
+    _log('web view jar empty, falling back to the stored session', stored);
+    if (stored.isEmpty) throw const AucorsaSessionExpiredException();
+
+    return stored;
+  }
+
+  /// Names the cookies at hand, so a failing sign-in can be told apart from a
+  /// rejected one. Never logs the values, which are the credentials.
+  void _log(String message, String cookieHeader) {
+    if (!kDebugMode) return;
+
+    final names = cookieHeader.isEmpty
+        ? const <String>[]
+        : [
+            for (final cookie in cookieHeader.split('; '))
+              cookie.split('=').first,
+          ];
+    debugPrint('[aucorsa] $message: $names');
+  }
+
+  Future<AucorsaCardMovements> _requestMovements({
+    required int page,
+    required String cookieHeader,
+    required String nonce,
+    required bool canRefreshNonce,
+  }) async {
+    final response = await _client.get<dynamic>(
+      '${AucorsaApi.apiUrl}/recharges/cardmovements',
+      queryParameters: {
+        'card_number': cardNumber,
+        'page': page,
+        '_wpnonce': nonce,
+      },
+      options: Options(
+        headers: AucorsaApi.headers(cookieHeader),
+        responseType: ResponseType.json,
+      ),
+    );
+
+    // A JSON object always means a rejected request: the successful response is
+    // the HTML fragment holding the movements table.
+    final data = response.data;
+    if (data is Map) {
+      final body = Map<String, dynamic>.from(data);
+      final code = body['code']?.toString() ?? '';
+      final message = body['message']?.toString() ?? '';
+      if (canRefreshNonce && code.contains('nonce')) {
+        final freshNonce = await AucorsaApi.loadNonce(_client, cookieHeader);
+        _nonce = freshNonce;
+        return _requestMovements(
+          page: page,
+          cookieHeader: cookieHeader,
+          nonce: freshNonce,
+          canRefreshNonce: false,
+        );
+      }
+      if (response.statusCode == 401 ||
+          response.statusCode == 403 ||
+          AucorsaApi.isAuthenticationError(message)) {
+        throw const AucorsaSessionExpiredException();
+      }
+      throw AucorsaCardApiException(
+        message.isEmpty ? 'AUCORSA movements request failed' : message,
+      );
+    }
+
+    final rawHtml = AucorsaApi.stringResponse(data);
+    if (AucorsaApi.isAuthenticationError(rawHtml)) {
+      throw const AucorsaSessionExpiredException();
+    }
+    if (response.statusCode != 200) {
+      throw AucorsaCardApiException(
+        'AUCORSA movements request failed (${response.statusCode})',
+      );
+    }
+
+    return AucorsaCardParser.parseMovements(rawHtml);
+  }
 
   /// Prepends the movements of [fresh] that the [cached] history is missing.
   ///

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aucorsa/bonobus/utils/aucorsa_api.dart';
+import 'package:aucorsa/bonobus/utils/aucorsa_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +14,7 @@ class AucorsaAccountWebViewPage extends StatefulWidget {
   final bool detectAuthentication;
 
   const AucorsaAccountWebViewPage({super.key})
-    : initialUrl = AucorsaCardRepository.signInUrl,
+    : initialUrl = AucorsaApi.signInUrl,
       detectAuthentication = true;
 
   /// Opens the AUCORSA card list so the user can manage their linked cards.
@@ -22,7 +22,7 @@ class AucorsaAccountWebViewPage extends StatefulWidget {
   /// The page stays open until the user closes it, since browsing the account
   /// is the goal here instead of signing in.
   const AucorsaAccountWebViewPage.cards({super.key})
-    : initialUrl = AucorsaCardRepository.cardsUrl,
+    : initialUrl = AucorsaApi.cardsUrl,
       detectAuthentication = false;
 
   @override
@@ -53,9 +53,7 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
     if (completing) return;
     completing = true;
     authenticationPoller?.cancel();
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      await CookieManager.instance().flush();
-    }
+    await _storeSession();
     if (!mounted) return;
     Navigator.of(context).pop(true);
   }
@@ -162,7 +160,17 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   @override
   void dispose() {
     authenticationPoller?.cancel();
+    // The user may have signed in without the page noticing, or come here to
+    // manage their cards. Either way the session is worth keeping.
+    if (!completing) unawaited(_storeSession());
     super.dispose();
+  }
+
+  /// Keeps the freshly signed-in session both in the jar and in our own copy.
+  Future<void> _storeSession() async {
+    final cookies = CookieManager.instance();
+    await AucorsaApi.persistSession(cookies);
+    await AucorsaSession.save(await AucorsaApi.cookieHeader(cookies));
   }
 
   @override
