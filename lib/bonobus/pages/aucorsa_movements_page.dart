@@ -5,8 +5,7 @@ import 'package:aucorsa/bonobus/models/aucorsa_card.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_account_webview_page.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
-import 'package:aucorsa/common/utils/aucorsa_theme.dart';
-import 'package:aucorsa/common/utils/date_time_format.dart';
+import 'package:aucorsa/common/utils/date_time_extension.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:flutter/material.dart';
@@ -270,7 +269,7 @@ class _MovementTile extends StatelessWidget {
       '',
     );
     final amountColor = isPending
-        ? AucorsaTheme.pendingColor(Theme.of(context).brightness)
+        ? _pendingColor(Theme.of(context).brightness)
         : isRecharge
         ? Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.onSurface;
@@ -298,7 +297,7 @@ class _MovementTile extends StatelessWidget {
     final movementDateTime = _parseMovementDateTime(movement);
     final movementDateLabel = movementDateTime == null
         ? '${movement.date} · ${movement.time}'
-        : formatShortDateTime(movementDateTime);
+        : movementDateTime.shortDateTimeLabel;
     return ListViewSectionTile(
       leading: Icon(movementIcon),
       title: Text(movementTitle),
@@ -313,6 +312,20 @@ class _MovementTile extends StatelessWidget {
     );
   }
 }
+
+final _lightPendingColor = ColorScheme.fromSeed(
+  seedColor: Colors.amber,
+).primary;
+
+final _darkPendingColor = ColorScheme.fromSeed(
+  seedColor: Colors.amber,
+  brightness: Brightness.dark,
+).primary;
+
+/// Amber that flags pending states, built from the same tonal machinery as
+/// the rest of the palette so it sits well on the app surfaces.
+Color _pendingColor(Brightness brightness) =>
+    brightness == Brightness.dark ? _darkPendingColor : _lightPendingColor;
 
 DateTime? _parseMovementDateTime(AucorsaCardMovement movement) {
   final value = '${movement.date} ${movement.time}';

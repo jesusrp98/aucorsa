@@ -1,5 +1,5 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
-import 'package:aucorsa/common/utils/date_time_format.dart';
+import 'package:aucorsa/common/utils/date_time_extension.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:flutter/material.dart';
 
@@ -57,9 +57,7 @@ class BonobusBalanceView extends StatelessWidget {
         ),
         if (lastUpdated != null)
           Text(
-            context.l10n.lastUpdated(
-              formatShortDateTime(lastUpdated!),
-            ),
+            context.l10n.lastUpdated(lastUpdated!.shortDateTimeLabel),
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
