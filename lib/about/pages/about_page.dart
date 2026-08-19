@@ -25,13 +25,13 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     super.initState();
+
     unawaited(_initPackageInfo());
   }
 
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
 
-    if (!mounted) return;
     return setState(() => _packageInfo = info);
   }
 
@@ -81,7 +81,7 @@ class _AboutPageState extends State<AboutPage> {
                       onTap: () => launchUrlString(Urls.appSource),
                     ),
                     ListViewSectionTile(
-                      leading: const Icon(Symbols.design_services_rounded),
+                      leading: const Icon(Symbols.account_circle_rounded),
                       title: Text(context.l10n.authorTitle),
                       subtitle: Text(context.l10n.authorSubtitle),
                       onTap: () => launchUrlString(Urls.authorProfile),

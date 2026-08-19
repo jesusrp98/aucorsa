@@ -1,4 +1,5 @@
 import 'package:aucorsa/about/pages/about_page.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_movements_page.dart';
 import 'package:aucorsa/bonobus/pages/bonobus_page.dart';
 import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
@@ -63,6 +64,10 @@ class AucorsaRouter {
         GoRoute(
           path: AboutPage.path,
           builder: (context, state) => const AboutPage(),
+        ),
+        GoRoute(
+          path: AucorsaMovementsHelpPage.path,
+          builder: (context, state) => const AucorsaMovementsHelpPage(),
         ),
         GoRoute(
           path: AucorsaMovementsPage.path,

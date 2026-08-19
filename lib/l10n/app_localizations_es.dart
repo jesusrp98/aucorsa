@@ -219,18 +219,53 @@ class AppLocalizationsEs extends AppLocalizations {
       'Inicia sesión con tu cuenta de AUCORSA para consultar los movimientos de este bonobús. Esta tarjeta debe estar ya vinculada a esa cuenta. Esta aplicación nunca lee ni guarda tu contraseña.';
 
   @override
-  String get aucorsaMovementsHelpTooltip => 'Ayuda';
+  String get aucorsaMovementsHelpTitle => 'Ayuda';
 
   @override
-  String get aucorsaMovementsHelpTitle =>
-      'Cómo funciona el historial de movimientos';
+  String get aucorsaMovementsHelpIntro =>
+      'AUCORSA solo devuelve los movimientos de una tarjeta a una cuenta de usuario que la tenga añadida, y además exige que la cuenta y el bonobús compartan el mismo DNI o NIF. Por eso hace falta crear una cuenta: la aplicación inicia sesión en aucorsa.es por ti y pide los movimientos de la tarjeta con esa sesión. Sin una cuenta que cumpla ambas condiciones AUCORSA no devuelve nada, por mucho que escanees la tarjeta.';
 
   @override
-  String get aucorsaMovementsHelpSubtitle =>
-      'Los movimientos provienen de tu cuenta de AUCORSA, no de la tarjeta. Inicia sesión con la cuenta a la que está vinculado este bonobús y sus movimientos aparecerán aquí.\n\nSi la lista sigue vacía, abre tus tarjetas de AUCORSA, añade este número de tarjeta a la cuenta y después actualiza esta página.';
+  String get aucorsaMovementsHelpStepsTitle => 'Lo que tienes que hacer';
 
   @override
-  String get aucorsaMovementsHelpCta => 'Abrir mis tarjetas de AUCORSA';
+  String get aucorsaMovementsHelpStepAccountTitle =>
+      'Crea una cuenta en AUCORSA';
+
+  @override
+  String get aucorsaMovementsHelpStepAccountSubtitle =>
+      'Crea la cuenta en aucorsa.es. AUCORSA te pedirá tu nombre, un correo electrónico, una contraseña y un DNI o NIF, que tiene que ser el mismo con el que está registrado el bonobús. Si ya tienes cuenta, pasa directamente al paso 4.';
+
+  @override
+  String get aucorsaMovementsHelpStepActivateTitle =>
+      'Activa la cuenta desde tu correo';
+
+  @override
+  String get aucorsaMovementsHelpStepActivateSubtitle =>
+      'AUCORSA envía un correo de confirmación justo después del registro. La cuenta sigue inactiva hasta que abras el enlace de ese correo, y hasta entonces el inicio de sesión siempre falla. Revisa la carpeta de spam si no te llega.';
+
+  @override
+  String get aucorsaMovementsHelpStepCardTitle =>
+      'Añade esta tarjeta a tu cuenta';
+
+  @override
+  String get aucorsaMovementsHelpStepCardSubtitle =>
+      'Dentro de tu cuenta, abre la sección Mis tarjetas de aucorsa.es y registra el número impreso en el bonobús. Solo las tarjetas vinculadas a la cuenta con la que inicias sesión muestran sus movimientos.';
+
+  @override
+  String get aucorsaMovementsHelpStepSignInTitle =>
+      'Inicia sesión en la aplicación';
+
+  @override
+  String get aucorsaMovementsHelpStepSignInSubtitle =>
+      'Inicia sesión con esa misma cuenta. La sesión se queda en este dispositivo, así que solo tendrás que repetirlo si AUCORSA la cierra.';
+
+  @override
+  String get aucorsaMovementsHelpStepRefreshTitle => 'Actualiza el historial';
+
+  @override
+  String get aucorsaMovementsHelpStepRefreshSubtitle =>
+      'Desliza hacia abajo en la lista de movimientos para volver a pedírselos a AUCORSA. Un viaje o una recarga pueden tardar unos minutos en aparecer.';
 
   @override
   String get aucorsaCardNumber => 'Número de tarjeta';
@@ -243,6 +278,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aucorsaMovementOnlineTopUp => 'Recarga online';
+
+  @override
+  String get aucorsaMovementOnlineTopUpPending => 'Recarga online pendiente';
 
   @override
   String get aucorsaMovementBusJourney => 'Viaje';
@@ -267,11 +305,4 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aucorsaNoMovementsSubtitle =>
       'AUCORSA no ha devuelto movimientos para este bonobús. Consulta el botón de ayuda de arriba para comprobar que la tarjeta está vinculada a tu cuenta.';
-
-  @override
-  String get aucorsaRechargeActivated => 'Recarga online activada';
-
-  @override
-  String get aucorsaRechargePending =>
-      'Recarga online pendiente de activación. Se activará al pasar la tarjeta por la validadora del autobús.';
 }

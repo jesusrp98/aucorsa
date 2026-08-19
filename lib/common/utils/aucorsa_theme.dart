@@ -15,6 +15,20 @@ class AucorsaTheme {
     brightness: Brightness.dark,
   );
 
+  static final _lightPendingColor = ColorScheme.fromSeed(
+    seedColor: Colors.amber,
+  ).primary;
+
+  static final _darkPendingColor = ColorScheme.fromSeed(
+    seedColor: Colors.amber,
+    brightness: Brightness.dark,
+  ).primary;
+
+  /// Amber that flags pending states, built from the same tonal machinery as
+  /// the rest of the palette so it sits well on the app surfaces.
+  static Color pendingColor(Brightness brightness) =>
+      brightness == Brightness.dark ? _darkPendingColor : _lightPendingColor;
+
   static ThemeData from({required ColorScheme colorScheme}) => ThemeData(
     colorScheme: colorScheme,
     fontFamily: 'Rubik',

@@ -51,11 +51,7 @@ class BonobusDetailsView extends StatelessWidget {
           context.l10n.bonobus,
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
-        actions: [
-          AboutButton(
-            onReturn: onRefresh == null ? null : () => unawaited(onRefresh!()),
-          ),
-        ],
+        actions: const [AboutButton()],
       ),
       body: RefreshIndicator(
         onRefresh: onRefresh ?? () async {},

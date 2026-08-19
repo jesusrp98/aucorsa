@@ -3,16 +3,19 @@ import 'dart:async';
 import 'package:aucorsa/bonobus/cubits/aucorsa_movements_cubit.dart';
 import 'package:aucorsa/bonobus/models/aucorsa_card.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_account_webview_page.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
 import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
-import 'package:aucorsa/bonobus/widgets/aucorsa_movements_help_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/common/utils/aucorsa_theme.dart';
 import 'package:aucorsa/common/utils/date_time_format.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class AucorsaMovementsPage extends StatefulWidget {
   static const path = '/aucorsa-movements';
@@ -60,21 +63,9 @@ class _AucorsaMovementsPageState extends State<AucorsaMovementsPage> {
     await cubit.refresh();
   }
 
-  /// Opens the AUCORSA card list, where the user links this card themselves.
-  Future<void> _openCards() async {
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => const AucorsaAccountWebViewPage.cards(),
-      ),
-    );
-    if (!mounted) return;
-    await cubit.refresh();
-  }
-
-  Future<void> _showHelp() => showAucorsaMovementsHelpDialog(
-    context: context,
-    onOpenCards: () => unawaited(_openCards()),
+  /// Opens the step by step guide on what AUCORSA asks for.
+  void _showHelp() => unawaited(
+    context.push<void>(AucorsaMovementsHelpPage.path),
   );
 
   @override
@@ -91,19 +82,36 @@ class _AucorsaMovementsPageState extends State<AucorsaMovementsPage> {
               ),
               actions: [
                 IconButton(
-                  tooltip: context.l10n.aucorsaMovementsHelpTooltip,
+                  tooltip: context.l10n.aucorsaMovementsHelpTitle,
                   icon: const Icon(Symbols.help_rounded),
-                  onPressed: () => unawaited(_showHelp()),
+                  onPressed: _showHelp,
                 ),
               ],
-              bottom: state.movements.isNotEmpty && state.refreshing
-                  ? const PreferredSize(
-                      preferredSize: Size.fromHeight(4),
-                      child: LinearProgressIndicator(minHeight: 4),
-                    )
-                  : null,
             ),
-            body: SafeArea(child: _buildBody(state)),
+            // The progress bar floats over the list instead of living in the
+            // app bar, so showing it never shifts the content down.
+            body: Stack(
+              children: [
+                _buildBody(state),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: IgnorePointer(
+                    // A switcher rather than an opacity, so the indeterminate
+                    // bar leaves the tree once faded out and stops animating.
+                    child: AnimatedSwitcher(
+                      duration: kThemeAnimationDuration,
+                      switchInCurve: Curves.easeInOutCubic,
+                      switchOutCurve: Curves.easeInOutCubic,
+                      child: state.movements.isNotEmpty && state.refreshing
+                          ? const LinearProgressIndicator()
+                          : const SizedBox.shrink(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -112,7 +120,9 @@ class _AucorsaMovementsPageState extends State<AucorsaMovementsPage> {
 
   Widget _buildBody(AucorsaMovementsState state) {
     if (state.status == AucorsaMovementsStatus.unauthenticated) {
-      return _AccountAccessView(onContinue: () => unawaited(_signIn()));
+      return SafeArea(
+        child: _AccountAccessView(onContinue: () => unawaited(_signIn())),
+      );
     }
 
     return _MovementsView(state: state, onRefresh: cubit.refresh);
@@ -155,112 +165,74 @@ class _AccountAccessView extends StatelessWidget {
   }
 }
 
-class _MovementsView extends StatefulWidget {
+class _MovementsView extends StatelessWidget {
   final AucorsaMovementsState state;
   final Future<void> Function() onRefresh;
 
   const _MovementsView({required this.state, required this.onRefresh});
 
-  @override
-  State<_MovementsView> createState() => _MovementsViewState();
-}
-
-class _MovementsViewState extends State<_MovementsView> {
-  final _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_loadMoreIfNeeded);
-  }
-
-  @override
-  void didUpdateWidget(covariant _MovementsView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.state != widget.state) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _loadMoreIfNeeded());
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController
-      ..removeListener(_loadMoreIfNeeded)
-      ..dispose();
-    super.dispose();
-  }
-
-  void _loadMoreIfNeeded() {
-    if (!mounted || !_scrollController.hasClients) return;
-    if (widget.state.status != AucorsaMovementsStatus.loaded ||
-        widget.state.refreshing ||
-        widget.state.hasReachedMax) {
-      return;
-    }
-    if (_scrollController.position.extentAfter < 200) {
-      unawaited(context.read<AucorsaMovementsCubit>().loadMore());
-    }
-  }
+  /// Whether the spinner belongs on screen, either alone or below the history.
+  bool get _loading => switch (state.status) {
+    AucorsaMovementsStatus.initial || AucorsaMovementsStatus.loading => true,
+    _ => state.refreshing && state.movements.isEmpty,
+  };
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AucorsaMovementsCubit>();
-    final failed = widget.state.status == AucorsaMovementsStatus.failure;
+    final movements = state.movements;
+    final isEmpty = movements.isEmpty;
+    // The list scrolls under the system insets, and only its padding grows to
+    // clear them, so the last movement is never cut off.
+    final insets = MediaQuery.paddingOf(context);
     return RefreshIndicator(
-      onRefresh: widget.onRefresh,
+      onRefresh: onRefresh,
       child: CustomScrollView(
-        controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
-        slivers: widget.state.movements.isEmpty
-            ? [SliverFillRemaining(child: _emptyState(context))]
-            : [
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                  sliver: SliverToBoxAdapter(
-                    child: ListViewSection(
-                      children: [
-                        for (final movement in widget.state.movements)
-                          _MovementTile(movement),
-                      ],
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.fromLTRB(
+              16 + insets.left,
+              8,
+              16 + insets.right,
+              16 + insets.bottom,
+            ),
+            sliver: SliverInfiniteList(
+              itemCount: movements.length,
+              isLoading: _loading,
+              hasError: state.status == AucorsaMovementsStatus.failure,
+              // A refresh blocks pagination, and flipping this back when it
+              // ends is what asks for the next page again.
+              hasReachedMax: state.hasReachedMax || state.refreshing,
+              onFetchData: () => unawaited(cubit.loadMore()),
+              centerLoading: true,
+              centerEmpty: true,
+              centerError: isEmpty,
+              separatorBuilder: (_, _) => const SizedBox(height: 4),
+              itemBuilder: (context, index) => ListViewSectionItem(
+                index: index,
+                itemCount: movements.length,
+                child: _MovementTile(movements[index]),
+              ),
+              loadingBuilder: (_) => const Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              errorBuilder: (_) => isEmpty
+                  ? _MovementsErrorView(onRetry: onRefresh)
+                  : _MovementLoadMoreError(
+                      onRetry: state.hasReachedMax ? onRefresh : cubit.loadMore,
                     ),
-                  ),
-                ),
-                if (widget.state.status == AucorsaMovementsStatus.loading)
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.all(24),
-                      child: Center(child: CircularProgressIndicator()),
-                    ),
-                  ),
-                if (failed)
-                  SliverToBoxAdapter(
-                    child: _MovementLoadMoreError(
-                      onRetry: widget.state.hasReachedMax
-                          ? widget.onRefresh
-                          : cubit.loadMore,
-                    ),
-                  ),
-              ],
+              emptyBuilder: (context) => _MessageView(
+                icon: Symbols.receipt_long_rounded,
+                title: context.l10n.aucorsaNoMovementsTitle,
+                subtitle: context.l10n.aucorsaNoMovementsSubtitle,
+              ),
+            ),
+          ),
+        ],
       ),
     );
-  }
-
-  Widget _emptyState(BuildContext context) {
-    if (widget.state.refreshing) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    return switch (widget.state.status) {
-      AucorsaMovementsStatus.initial || AucorsaMovementsStatus.loading =>
-        const Center(child: CircularProgressIndicator()),
-      AucorsaMovementsStatus.failure => _MovementsErrorView(
-        onRetry: widget.onRefresh,
-      ),
-      _ => _MessageView(
-        icon: Symbols.receipt_long_rounded,
-        title: context.l10n.aucorsaNoMovementsTitle,
-        subtitle: context.l10n.aucorsaNoMovementsSubtitle,
-      ),
-    };
   }
 }
 
@@ -310,15 +282,19 @@ class _MovementTile extends StatelessWidget {
     final isRecharge = normalizedOperation.contains('recarga');
     final isTransfer = normalizedOperation.contains('transbordo');
     final isValidation = normalizedOperation.contains('validaci');
+    // Only top-ups carry an activation state, and a pending one is what the
+    // amount and the title flag in amber.
+    final isPending =
+        isRecharge && movement.activation == AucorsaRechargeActivation.pending;
     final unsignedAmount = movement.amount.replaceFirst(
       RegExp(r'^[+\-−]\s*'),
       '',
     );
-    final amountColor = isRecharge
+    final amountColor = isPending
+        ? AucorsaTheme.pendingColor(Theme.of(context).brightness)
+        : isRecharge
         ? Theme.of(context).colorScheme.primary
-        : isTransfer
-        ? Theme.of(context).colorScheme.onSurface
-        : Theme.of(context).colorScheme.error;
+        : Theme.of(context).colorScheme.onSurface;
     final amountPrefix = isRecharge
         ? '+'
         : isTransfer
@@ -331,7 +307,9 @@ class _MovementTile extends StatelessWidget {
         : isValidation
         ? Symbols.contactless_rounded
         : Symbols.directions_bus_rounded;
-    final movementTitle = isRecharge
+    final movementTitle = isPending
+        ? context.l10n.aucorsaMovementOnlineTopUpPending
+        : isRecharge
         ? context.l10n.aucorsaMovementOnlineTopUp
         : isTransfer
         ? context.l10n.aucorsaMovementTransfer
@@ -345,16 +323,7 @@ class _MovementTile extends StatelessWidget {
     return ListViewSectionTile(
       leading: Icon(movementIcon),
       title: Text(movementTitle),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(movementDateLabel),
-          if (movement.activation != null) ...[
-            const SizedBox(height: 8),
-            _ActivationStatus(movement),
-          ],
-        ],
-      ),
+      subtitle: Text(movementDateLabel),
       trailing: Text(
         '$amountPrefix$unsignedAmount',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -370,45 +339,6 @@ DateTime? _parseMovementDateTime(AucorsaCardMovement movement) {
   final value = '${movement.date} ${movement.time}';
   return DateFormat('dd-MM-yyyy HH:mm').tryParseStrict(value) ??
       DateFormat('dd/MM/yyyy HH:mm').tryParseStrict(value);
-}
-
-class _ActivationStatus extends StatelessWidget {
-  final AucorsaCardMovement movement;
-
-  const _ActivationStatus(this.movement);
-
-  @override
-  Widget build(BuildContext context) {
-    final activated =
-        movement.activation == AucorsaRechargeActivation.activated;
-    final color = activated
-        ? Colors.green.shade700
-        : Theme.of(context).colorScheme.error;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: Icon(
-            activated ? Symbols.check_circle_rounded : Symbols.pending_rounded,
-            size: 18,
-            color: color,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Expanded(
-          child: Text(
-            activated
-                ? context.l10n.aucorsaRechargeActivated
-                : context.l10n.aucorsaRechargePending,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: color),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class _MessageView extends StatelessWidget {

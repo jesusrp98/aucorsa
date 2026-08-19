@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:aucorsa/bonobus/cubits/aucorsa_movements_cubit.dart';
 import 'package:aucorsa/bonobus/models/aucorsa_card.dart';
+import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_movements_page.dart';
 import 'package:aucorsa/bonobus/repositories/aucorsa_card_repository.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 void main() {
@@ -62,6 +64,26 @@ void main() {
     expect(find.text('Bus journey'), findsOneWidget);
   });
 
+  testWidgets('asks for the next page once the first one is on screen', (
+    tester,
+  ) async {
+    final repository = _FakeRepository(
+      loadMovements: ({required cardNumber, required page}) async {
+        return AucorsaCardMovements(
+          movements: const [movement],
+          hasPreviousPage: page > 1,
+          hasNextPage: page < 2,
+        );
+      },
+    );
+
+    await tester.pumpWidget(_app(repository));
+    await tester.pumpAndSettle();
+
+    expect(repository.movementRequests, [(cardNumber, 1), (cardNumber, 2)]);
+    expect(find.text('Bus journey'), findsNWidgets(2));
+  });
+
   testWidgets('points to the help button when AUCORSA returns no movements', (
     tester,
   ) async {
@@ -82,7 +104,7 @@ void main() {
     expect(find.textContaining('Check the help button'), findsOneWidget);
   });
 
-  testWidgets('explains how the history works from the help button', (
+  testWidgets('opens the step by step guide from the help button', (
     tester,
   ) async {
     final repository = _FakeRepository(
@@ -97,8 +119,15 @@ void main() {
     await tester.tap(find.byTooltip('Help'));
     await tester.pumpAndSettle();
 
-    expect(find.text('How the movement history works'), findsOneWidget);
-    expect(find.text('Open my AUCORSA cards'), findsOneWidget);
+    expect(find.byType(AucorsaMovementsHelpPage), findsOneWidget);
+    // The medium app bar paints its title both collapsed and expanded.
+    expect(find.text('Help'), findsWidgets);
+    expect(find.text('Create an AUCORSA account'), findsOneWidget);
+    expect(
+      find.text('Activate the account from your email'),
+      findsOneWidget,
+    );
+    expect(find.text('Add this card to your account'), findsOneWidget);
   });
 
   testWidgets('shows a card-specific error when history cannot be loaded', (
@@ -161,12 +190,26 @@ void main() {
 }
 
 Widget _app(AucorsaCardRepository repository) {
-  return MaterialApp(
+  // The help button leaves the page through the router, so the test drives the
+  // same two routes the app registers.
+  return MaterialApp.router(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: AucorsaMovementsPage(
-      cardNumber: '1234567890',
-      repository: repository,
+    routerConfig: GoRouter(
+      initialLocation: AucorsaMovementsPage.path,
+      routes: [
+        GoRoute(
+          path: AucorsaMovementsPage.path,
+          builder: (_, _) => AucorsaMovementsPage(
+            cardNumber: '1234567890',
+            repository: repository,
+          ),
+        ),
+        GoRoute(
+          path: AucorsaMovementsHelpPage.path,
+          builder: (_, _) => const AucorsaMovementsHelpPage(),
+        ),
+      ],
     ),
   );
 }

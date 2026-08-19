@@ -488,29 +488,83 @@ abstract class AppLocalizations {
   /// **'Sign in with your AUCORSA account to view the movements of this bonobus. This card must already be linked to that account. Your password is never read or stored by this app.'**
   String get aucorsaMovementsAccountSubtitle;
 
-  /// No description provided for @aucorsaMovementsHelpTooltip.
-  ///
-  /// In en, this message translates to:
-  /// **'Help'**
-  String get aucorsaMovementsHelpTooltip;
-
   /// No description provided for @aucorsaMovementsHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'How the movement history works'**
+  /// **'Help'**
   String get aucorsaMovementsHelpTitle;
 
-  /// No description provided for @aucorsaMovementsHelpSubtitle.
+  /// No description provided for @aucorsaMovementsHelpIntro.
   ///
   /// In en, this message translates to:
-  /// **'Movements come from your AUCORSA account, not from the card itself. Sign in with the account this bonobus is linked to and its movements will show up here.\n\nIf the list stays empty, open your AUCORSA cards, add this card number to the account, and then refresh this page.'**
-  String get aucorsaMovementsHelpSubtitle;
+  /// **'AUCORSA only serves the movements of a card to a user account that has that card added, and it also requires the account and the bonobus to share the same DNI or NIF. That is why an account is needed: the app signs in to aucorsa.es for you and asks for the movements of the card with that session. Without an account that meets both conditions AUCORSA returns nothing, no matter how many times the card is scanned.'**
+  String get aucorsaMovementsHelpIntro;
 
-  /// No description provided for @aucorsaMovementsHelpCta.
+  /// No description provided for @aucorsaMovementsHelpStepsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Open my AUCORSA cards'**
-  String get aucorsaMovementsHelpCta;
+  /// **'What you need to do'**
+  String get aucorsaMovementsHelpStepsTitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an AUCORSA account'**
+  String get aucorsaMovementsHelpStepAccountTitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepAccountSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the account on aucorsa.es. AUCORSA asks for your name, an email address, a password and a DNI or NIF, which has to be the same one the bonobus is registered under. If you already have an account, go straight to step 4.'**
+  String get aucorsaMovementsHelpStepAccountSubtitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepActivateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate the account from your email'**
+  String get aucorsaMovementsHelpStepActivateTitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepActivateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AUCORSA sends a confirmation email right after registering. The account stays inactive until you open the link inside that email, and signing in before doing so always fails. Check your spam folder if it does not arrive.'**
+  String get aucorsaMovementsHelpStepActivateSubtitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this card to your account'**
+  String get aucorsaMovementsHelpStepCardTitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'In your account, open the My cards section of aucorsa.es and register the number printed on the bonobus. Only the cards linked to the account you sign in with report their movements.'**
+  String get aucorsaMovementsHelpStepCardSubtitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepSignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in from the app'**
+  String get aucorsaMovementsHelpStepSignInTitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepSignInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with that same account. The session stays on this device, so you only have to do this again if AUCORSA closes it.'**
+  String get aucorsaMovementsHelpStepSignInSubtitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepRefreshTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh the history'**
+  String get aucorsaMovementsHelpStepRefreshTitle;
+
+  /// No description provided for @aucorsaMovementsHelpStepRefreshSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down on the movement list to ask AUCORSA for it again. A journey or a top-up can take a few minutes to show up there.'**
+  String get aucorsaMovementsHelpStepRefreshSubtitle;
 
   /// No description provided for @aucorsaCardNumber.
   ///
@@ -535,6 +589,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online top-up'**
   String get aucorsaMovementOnlineTopUp;
+
+  /// No description provided for @aucorsaMovementOnlineTopUpPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending online top-up'**
+  String get aucorsaMovementOnlineTopUpPending;
 
   /// No description provided for @aucorsaMovementBusJourney.
   ///
@@ -577,18 +637,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account.'**
   String get aucorsaNoMovementsSubtitle;
-
-  /// No description provided for @aucorsaRechargeActivated.
-  ///
-  /// In en, this message translates to:
-  /// **'Online top-up activated'**
-  String get aucorsaRechargeActivated;
-
-  /// No description provided for @aucorsaRechargePending.
-  ///
-  /// In en, this message translates to:
-  /// **'Online top-up pending activation. It will activate when the card is used on a bus validator.'**
-  String get aucorsaRechargePending;
 }
 
 class _AppLocalizationsDelegate
