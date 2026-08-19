@@ -14,7 +14,6 @@ class AucorsaMovementsState extends Equatable {
   final int nextPage;
   final bool hasReachedMax;
   final bool refreshing;
-  final String? error;
 
   const AucorsaMovementsState({
     this.status = AucorsaMovementsStatus.initial,
@@ -22,7 +21,6 @@ class AucorsaMovementsState extends Equatable {
     this.nextPage = 1,
     this.hasReachedMax = false,
     this.refreshing = false,
-    this.error,
   });
 
   factory AucorsaMovementsState.fromJson(Map<String, dynamic> json) {
@@ -58,6 +56,5 @@ class AucorsaMovementsState extends Equatable {
     nextPage,
     hasReachedMax,
     refreshing,
-    error,
   ];
 }

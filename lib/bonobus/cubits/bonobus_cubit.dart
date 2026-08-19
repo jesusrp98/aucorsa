@@ -69,10 +69,22 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
     }
   }
 
-  /// Replaces the card [id] of the current provider, dropping the balance and
-  /// name cached for the previous card, and loads the new one.
+  /// Replaces the card [id] of the current provider, dropping everything
+  /// cached for the previous card, and loads the new one.
   Future<void> updateId(String id) async {
-    emit(BonobusState(provider: state.provider, id: id));
+    final provider = state.provider;
+    final previousId = state.id;
+    emit(BonobusState(provider: provider, id: id));
+
+    // The movements of the previous card are stored under its own key, which
+    // nothing reaches once the card number is gone.
+    if (provider == BonobusProvider.aucorsa &&
+        previousId != null &&
+        previousId != id) {
+      await HydratedBloc.storage.delete(
+        AucorsaMovementsCubit.storageKey(previousId),
+      );
+    }
 
     return refresh();
   }
@@ -154,7 +166,20 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
       ),
     );
 
-    final body = AucorsaApi.jsonObject(response.data);
+    final Map<String, dynamic> body;
+    try {
+      body = AucorsaApi.jsonObject(response.data);
+    } on AucorsaCardApiException {
+      // A body that is not JSON at all is the server's own error page, and its
+      // status says more about what went wrong than the body does.
+      if (response.statusCode != 200) {
+        throw AucorsaCardApiException(
+          'AUCORSA card request failed (${response.statusCode})',
+        );
+      }
+      rethrow;
+    }
+
     final code = body['code']?.toString() ?? '';
     if (canRefreshNonce && code.contains('nonce')) {
       final freshNonce = await AucorsaApi.loadNonce(_client);
@@ -184,10 +209,7 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
       );
     }
 
-    return AucorsaCardParser.parseCard(
-      content,
-      AucorsaCardReference(number: cardNumber, status: 'anonymous'),
-    );
+    return AucorsaCardParser.parseCard(content);
   }
 
   /// Signs the user out of the AUCORSA site and drops everything cached for

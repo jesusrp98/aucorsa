@@ -76,7 +76,7 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
           hasReachedMax: state.hasReachedMax,
         ),
       );
-    } catch (error) {
+    } catch (_) {
       if (isClosed) return;
       emit(
         AucorsaMovementsState(
@@ -84,7 +84,6 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
           movements: state.movements,
           nextPage: page,
           hasReachedMax: state.hasReachedMax,
-          error: error.toString(),
         ),
       );
     }
@@ -141,7 +140,7 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
           hasReachedMax: state.hasReachedMax,
         ),
       );
-    } catch (error) {
+    } catch (_) {
       if (isClosed) return;
       emit(
         AucorsaMovementsState(
@@ -149,7 +148,6 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
           movements: cached,
           nextPage: state.nextPage,
           hasReachedMax: state.hasReachedMax,
-          error: error.toString(),
         ),
       );
     }

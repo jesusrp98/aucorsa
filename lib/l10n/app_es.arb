@@ -77,7 +77,6 @@
     "addBonobusSubtitle": "Selecciona tu proveedor de bonobús antes de añadir los datos de tu tarjeta",
     "scanBonobusPageTitle": "Escanea tu bonobús",
     "scanBonobusPageSubtitle": "Acerca tu tarjeta bonobús a la parte trasera de tu dispositivo para escanearla",
-    "stopsList": "Lista de paradas",
     "aucorsaUseAccount": "Iniciar sesión o crear cuenta",
     "aucorsaAccountTitle": "Conecta tu cuenta de AUCORSA",
     "aucorsaMovementsAccountSubtitle": "Inicia sesión con tu cuenta de AUCORSA para consultar los movimientos de este bonobús. Esta tarjeta debe estar ya vinculada a esa cuenta. Esta aplicación nunca lee ni guarda tu contraseña.",

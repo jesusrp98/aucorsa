@@ -24,8 +24,6 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
 
   double progress = 0;
   bool completing = false;
-  bool checkingAuthentication = false;
-  Timer? authenticationPoller;
 
   Future<void> _finishAuthentication(WebUri? url) async {
     if (completing || url == null) return;
@@ -41,58 +39,21 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   Future<void> _completeAuthentication() async {
     if (completing) return;
     completing = true;
-    authenticationPoller?.cancel();
     await _storeSession();
     if (!mounted) return;
     context.pop(true);
   }
 
-  void _startAuthenticationPolling(InAppWebViewController controller) {
-    if (completing) return;
-    authenticationPoller?.cancel();
-    authenticationPoller = Timer.periodic(
-      const Duration(milliseconds: 300),
-      (_) => unawaited(_checkAuthenticationText(controller)),
-    );
-    unawaited(_checkAuthenticationText(controller));
-  }
-
-  Future<void> _checkAuthenticationText(
-    InAppWebViewController controller,
-  ) async {
-    if (checkingAuthentication || completing || !mounted) return;
-    checkingAuthentication = true;
-    try {
-      final result = await controller.evaluateJavascript(
-        source: r'''
-(() => {
-  const text = document.body?.innerText ?? '';
-  return text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .split(/\n+/)
-    .map(line => line.trim().toLowerCase().replace(/[\u00a1!.,:]/g, ''))
-    .some(line => line === 'exito');
-})();
-''',
-      );
-      if (result == true || result == 1 || result == 'true') {
-        await _completeAuthentication();
-      }
-    } catch (_) {
-      // A navigation can temporarily make the JavaScript context unavailable.
-    } finally {
-      checkingAuthentication = false;
-    }
-  }
-
+  /// Watches the page for the message the site shows when a sign-in succeeds
+  /// without leaving the form, which no navigation would tell us about.
   Future<void> _watchForAuthentication(
     InAppWebViewController controller,
   ) async {
     if (completing) return;
 
-    await controller.evaluateJavascript(
-      source: r'''
+    try {
+      await controller.evaluateJavascript(
+        source: r'''
 (() => {
   const observerKey = '__aucorsaAuthenticationObserver';
   window[observerKey]?.disconnect();
@@ -125,7 +86,11 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
   });
 })();
 ''',
-    );
+      );
+    } catch (_) {
+      // A navigation can temporarily make the JavaScript context unavailable.
+      // The redirect the sign-in form ends on still reports the sign-in.
+    }
   }
 
   Future<NavigationActionPolicy> _handleNavigation(
@@ -148,7 +113,6 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
 
   @override
   void dispose() {
-    authenticationPoller?.cancel();
     // The user may have signed in without the page noticing, so the session
     // is worth keeping either way.
     if (!completing) unawaited(_storeSession());
@@ -199,7 +163,6 @@ class _AucorsaAccountWebViewPageState extends State<AucorsaAccountWebViewPage> {
                   await _finishAuthentication(url);
                   if (!mounted || completing) return;
                   await _watchForAuthentication(controller);
-                  _startAuthenticationPolling(controller);
                 },
               ),
             ),

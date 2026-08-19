@@ -1,41 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class AucorsaCardReference extends Equatable {
-  final String number;
-  final String status;
-
-  const AucorsaCardReference({required this.number, required this.status});
-
-  @override
-  List<Object> get props => [number, status];
-}
-
 class AucorsaCard extends Equatable {
-  final String number;
-  final String status;
   final String title;
-  final String description;
   final String balance;
-  final bool canRecharge;
 
-  const AucorsaCard({
-    required this.number,
-    required this.status,
-    required this.title,
-    required this.description,
-    required this.balance,
-    required this.canRecharge,
-  });
+  const AucorsaCard({required this.title, required this.balance});
 
   @override
-  List<Object> get props => [
-    number,
-    status,
-    title,
-    description,
-    balance,
-    canRecharge,
-  ];
+  List<Object> get props => [title, balance];
 }
 
 enum AucorsaRechargeActivation { activated, pending }
@@ -45,7 +17,6 @@ class AucorsaCardMovement extends Equatable {
   final String time;
   final String operation;
   final String amount;
-  final String? activationLabel;
   final AucorsaRechargeActivation? activation;
 
   const AucorsaCardMovement({
@@ -53,7 +24,6 @@ class AucorsaCardMovement extends Equatable {
     required this.time,
     required this.operation,
     required this.amount,
-    this.activationLabel,
     this.activation,
   });
 
@@ -63,7 +33,6 @@ class AucorsaCardMovement extends Equatable {
       time: json['time'] as String,
       operation: json['operation'] as String,
       amount: json['amount'] as String,
-      activationLabel: json['activationLabel'] as String?,
       activation: json['activation'] != null
           ? AucorsaRechargeActivation.values[json['activation'] as int]
           : null,
@@ -76,33 +45,23 @@ class AucorsaCardMovement extends Equatable {
       'time': time,
       'operation': operation,
       'amount': amount,
-      'activationLabel': activationLabel,
       'activation': activation?.index,
     };
   }
 
   @override
-  List<Object?> get props => [
-    date,
-    time,
-    operation,
-    amount,
-    activationLabel,
-    activation,
-  ];
+  List<Object?> get props => [date, time, operation, amount, activation];
 }
 
 class AucorsaCardMovements extends Equatable {
   final List<AucorsaCardMovement> movements;
-  final bool hasPreviousPage;
   final bool hasNextPage;
 
   const AucorsaCardMovements({
     required this.movements,
-    required this.hasPreviousPage,
     required this.hasNextPage,
   });
 
   @override
-  List<Object> get props => [movements, hasPreviousPage, hasNextPage];
+  List<Object> get props => [movements, hasNextPage];
 }

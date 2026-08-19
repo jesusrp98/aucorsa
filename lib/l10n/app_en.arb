@@ -84,7 +84,6 @@
     "addBonobusSubtitle": "Select your bonobus provider before adding your card details",
     "scanBonobusPageTitle": "Scan your bonobus",
     "scanBonobusPageSubtitle": "Hold your bonobus card near the back of your device to scan it",
-    "stopsList": "Stops list",
     "aucorsaUseAccount": "Sign in or create account",
     "aucorsaAccountTitle": "Connect your AUCORSA account",
     "aucorsaMovementsAccountSubtitle": "Sign in with your AUCORSA account to view the movements of this bonobus. This card must already be linked to that account. Your password is never read or stored by this app.",

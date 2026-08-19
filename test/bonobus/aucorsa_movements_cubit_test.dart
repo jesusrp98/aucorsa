@@ -285,7 +285,6 @@ AucorsaCardMovements _page(
 }) {
   return AucorsaCardMovements(
     movements: movements,
-    hasPreviousPage: false,
     hasNextPage: hasNextPage,
   );
 }
@@ -368,9 +367,6 @@ String _html(AucorsaCardMovements page) {
     ]) {
       buffer.write('<div class="grid-movements-movement">$cell</div>');
     }
-  }
-  if (page.hasPreviousPage) {
-    buffer.write('<a class="card-movements-prev-page"></a>');
   }
   if (page.hasNextPage) {
     buffer.write('<a class="card-movements-next-page"></a>');

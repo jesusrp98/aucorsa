@@ -464,12 +464,6 @@ abstract class AppLocalizations {
   /// **'Hold your bonobus card near the back of your device to scan it'**
   String get scanBonobusPageSubtitle;
 
-  /// No description provided for @stopsList.
-  ///
-  /// In en, this message translates to:
-  /// **'Stops list'**
-  String get stopsList;
-
   /// No description provided for @aucorsaUseAccount.
   ///
   /// In en, this message translates to:

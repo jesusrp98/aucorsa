@@ -32,6 +32,40 @@ void main() {
     },
   );
 
+  test('updateId drops the movements stored for the previous card', () async {
+    await storage.write(
+      AucorsaMovementsCubit.storageKey('0546174400'),
+      {'movements': <Object>[]},
+    );
+    final cubit = BonobusCubit(client: _failingClient())
+      ..selectProvider(BonobusProvider.aucorsa, id: '0546174400');
+    addTearDown(cubit.close);
+
+    await cubit.updateId('1234567890');
+
+    expect(
+      storage.read(AucorsaMovementsCubit.storageKey('0546174400')),
+      isNull,
+    );
+  });
+
+  test('updateId keeps the movements of an unchanged card number', () async {
+    await storage.write(
+      AucorsaMovementsCubit.storageKey('0546174400'),
+      {'movements': <Object>[]},
+    );
+    final cubit = BonobusCubit(client: _failingClient())
+      ..selectProvider(BonobusProvider.aucorsa, id: '0546174400');
+    addTearDown(cubit.close);
+
+    await cubit.updateId('0546174400');
+
+    expect(
+      storage.read(AucorsaMovementsCubit.storageKey('0546174400')),
+      isNotNull,
+    );
+  });
+
   test('loads a public card balance without sending account cookies', () async {
     final requests = <RequestOptions>[];
     final cubit = BonobusCubit(client: _cardClient(requests))

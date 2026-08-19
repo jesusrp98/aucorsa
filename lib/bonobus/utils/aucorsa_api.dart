@@ -142,8 +142,12 @@ class AucorsaApi {
     if (data is Map<String, dynamic>) return data;
     if (data is Map) return Map<String, dynamic>.from(data);
     if (data is String) {
-      final decoded = jsonDecode(data);
-      if (decoded is Map) return Map<String, dynamic>.from(decoded);
+      try {
+        final decoded = jsonDecode(data);
+        if (decoded is Map) return Map<String, dynamic>.from(decoded);
+      } on FormatException {
+        // An error page rather than the JSON the endpoint promises.
+      }
     }
     throw const AucorsaCardApiException('AUCORSA returned an invalid response');
   }

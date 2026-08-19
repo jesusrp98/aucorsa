@@ -206,9 +206,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Acerca tu tarjeta bonobús a la parte trasera de tu dispositivo para escanearla';
 
   @override
-  String get stopsList => 'Lista de paradas';
-
-  @override
   String get aucorsaUseAccount => 'Iniciar sesión o crear cuenta';
 
   @override

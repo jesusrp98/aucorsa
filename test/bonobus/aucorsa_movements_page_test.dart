@@ -54,7 +54,6 @@ void main() {
       loadMovements: ({required cardNumber, required page}) async {
         return const AucorsaCardMovements(
           movements: [movement],
-          hasPreviousPage: false,
           hasNextPage: false,
         );
       },
@@ -74,7 +73,6 @@ void main() {
       loadMovements: ({required cardNumber, required page}) async {
         return AucorsaCardMovements(
           movements: const [movement],
-          hasPreviousPage: page > 1,
           hasNextPage: page < 2,
         );
       },
@@ -94,7 +92,6 @@ void main() {
       loadMovements: ({required cardNumber, required page}) async {
         return const AucorsaCardMovements(
           movements: [],
-          hasPreviousPage: false,
           hasNextPage: false,
         );
       },
@@ -182,7 +179,6 @@ void main() {
     downloaded.complete(
       const AucorsaCardMovements(
         movements: [],
-        hasPreviousPage: false,
         hasNextPage: false,
       ),
     );
@@ -311,9 +307,6 @@ String _html(AucorsaCardMovements page) {
     ]) {
       buffer.write('<div class="grid-movements-movement">$cell</div>');
     }
-  }
-  if (page.hasPreviousPage) {
-    buffer.write('<a class="card-movements-prev-page"></a>');
   }
   if (page.hasNextPage) {
     buffer.write('<a class="card-movements-next-page"></a>');
