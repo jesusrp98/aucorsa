@@ -1,11 +1,10 @@
 import 'package:maplibre/maplibre.dart' as ml;
 import 'package:material_ui/material_ui.dart';
 
-/// Layers whose equality represents only their native style configuration.
+/// Layers whose equality includes both source data and style configuration.
 ///
-/// MapLibre updates the GeoJSON source separately before comparing layers.
-/// Excluding the feature list from equality lets it update the source without
-/// tearing down and recreating the native style layer.
+/// MapLibre uses layer equality to decide whether to update the GeoJSON source.
+/// The layer cache retains these instances while their inputs are unchanged.
 final class StablePolylineLayer extends ml.Layer<ml.Feature<ml.LineString>> {
   final String colorProperty;
   final int width;
@@ -41,11 +40,12 @@ final class StablePolylineLayer extends ml.Layer<ml.Feature<ml.LineString>> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is StablePolylineLayer &&
+          super == other &&
           colorProperty == other.colorProperty &&
           width == other.width;
 
   @override
-  int get hashCode => Object.hash(colorProperty, width);
+  int get hashCode => Object.hash(super.hashCode, colorProperty, width);
 }
 
 final class StableCircleLayer extends ml.Layer<ml.Feature<ml.Point>> {
@@ -94,20 +94,13 @@ final class StableCircleLayer extends ml.Layer<ml.Feature<ml.Point>> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is StableCircleLayer &&
+          super == other &&
           radius == other.radius &&
           color == other.color &&
-          colorProperty == other.colorProperty &&
-          minZoom == other.minZoom &&
-          maxZoom == other.maxZoom;
+          colorProperty == other.colorProperty;
 
   @override
-  int get hashCode => Object.hash(
-    radius,
-    color,
-    colorProperty,
-    minZoom,
-    maxZoom,
-  );
+  int get hashCode => Object.hash(super.hashCode, radius, color, colorProperty);
 }
 
 final class StableMarkerLayer extends ml.Layer<ml.Feature<ml.Point>> {
@@ -163,6 +156,7 @@ final class StableMarkerLayer extends ml.Layer<ml.Feature<ml.Point>> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is StableMarkerLayer &&
+          super == other &&
           iconImage == other.iconImage &&
           iconSize == other.iconSize &&
           bearingProperty == other.bearingProperty &&
@@ -170,6 +164,7 @@ final class StableMarkerLayer extends ml.Layer<ml.Feature<ml.Point>> {
 
   @override
   int get hashCode => Object.hash(
+    super.hashCode,
     iconImage,
     iconSize,
     bearingProperty,

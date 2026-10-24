@@ -13,6 +13,7 @@ import 'package:aucorsa/stops/map/widgets/aucorsa_map_controls.dart';
 import 'package:aucorsa/stops/map/widgets/aucorsa_map_error.dart';
 import 'package:aucorsa/stops/map/widgets/aucorsa_user_location.dart';
 import 'package:aucorsa/stops/utils/location_permission_utils.dart';
+import 'package:aucorsa/stops/widgets/bus_line_selector_dialog.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
 import 'package:aucorsa/stops/widgets/location_outside_map_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +22,9 @@ import 'package:maplibre/maplibre.dart' as ml;
 import 'package:material_ui/material_ui.dart';
 
 class AucorsaMap extends StatefulWidget {
-  final EdgeInsets? margin;
   final bool zoomToLocationOnStart;
 
-  const new({super.key, this.margin, this.zoomToLocationOnStart = true});
+  const new({super.key, this.zoomToLocationOnStart = true});
 
   @override
   State<AucorsaMap> createState() => _AucorsaMapState();
@@ -152,24 +152,27 @@ class _AucorsaMapState extends State<AucorsaMap> {
         Positioned.fill(
           child: _buildMap(busLineSelectorState, customDataState, brightness),
         ),
-        if (preparedMap != null) ...[
+        if (preparedMap != null)
           Positioned(
-            top: widget.margin?.top ?? padding.top + 16,
+            bottom: padding.bottom + 16,
             right: max(padding.right, 16),
-            child: AucorsaMapCompassButton(
-              rotation: rotation,
-              onPressed: _resetBearing,
+            child: Column(
+              mainAxisSize: .min,
+              spacing: 8,
+              children: [
+                AucorsaMapCompassButton(
+                  rotation: rotation,
+                  onPressed: _resetBearing,
+                ),
+                AucorsaMapActionPill(
+                  selectedLine: busLineSelectorState.lineId,
+                  followLocation: followLocation,
+                  onLinePressed: () => showBusLineSelector(context),
+                  onLocationPressed: onLocationButtonPressed,
+                ),
+              ],
             ),
           ),
-          Positioned(
-            top: padding.top + 24 + kToolbarHeight,
-            right: max(padding.right, 16),
-            child: AucorsaMapLocationButton(
-              followLocation: followLocation,
-              onPressed: onLocationButtonPressed,
-            ),
-          ),
-        ],
       ],
     );
   }

@@ -24,9 +24,13 @@ class ThemeMenu extends StatelessWidget {
               onPressed: () => context.read<ThemeCubit>().setThemeMode(themeMode),
               style: themeMode == selectedTheme
                   ? ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(colors.primary),
-                      foregroundColor: WidgetStatePropertyAll(colors.onPrimary),
-                      iconColor: WidgetStatePropertyAll(colors.onPrimary),
+                      backgroundColor: WidgetStatePropertyAll(
+                        colors.primaryFixed,
+                      ),
+                      foregroundColor: WidgetStatePropertyAll(
+                        colors.onPrimaryFixed,
+                      ),
+                      iconColor: WidgetStatePropertyAll(colors.onPrimaryFixed),
                     )
                   : null,
               leadingIcon: Icon(switch (themeMode) {

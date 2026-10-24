@@ -11,11 +11,9 @@ import 'package:material_ui/material_ui.dart';
 
 /// Retains layer and feature-list identity until a real layer input changes.
 ///
-/// Stable layer equality prevents unnecessary native style-layer replacement.
-/// The caller also memoizes the `MapLibreMap` widget using this list's
-/// identity;
-/// that is what prevents an unchanged list from reaching `didUpdateWidget` and
-/// being serialized to GeoJSON again.
+/// Reusing the layers prevents unnecessary native source and style updates.
+/// The caller also memoizes the `MapLibreMap` widget using this list's identity,
+/// preventing unchanged layers from reaching `didUpdateWidget`.
 final class AucorsaMapLayerCache {
   BusLineSelectorState? _lineState;
   List<int>? _stopIconCodes;
@@ -31,10 +29,7 @@ final class AucorsaMapLayerCache {
   }) {
     final stopIconCodes = [
       for (final stop in lineState.stopCoordinates)
-        AucorsaMapIcons.resolveStopIcon(
-          stop.key,
-          customDataState,
-        ).codePoint,
+        AucorsaMapIcons.resolveStopIcon(stop.key, customDataState).codePoint,
     ];
     if (identical(_lineState, lineState) &&
         listEquals(_stopIconCodes, stopIconCodes) &&
@@ -103,10 +98,7 @@ final class AucorsaMapLayerCache {
         },
         geometry: ml.LineString.from(
           state.linePath.map(
-            (point) => ml.Geographic(
-              lon: point.longitude,
-              lat: point.latitude,
-            ),
+            (point) => ml.Geographic(lon: point.longitude, lat: point.latitude),
           ),
         ),
       ),
@@ -135,19 +127,13 @@ final class AucorsaMapLayerCache {
     ]);
   }
 
-  ({
-    List<ml.Feature<ml.Point>> dots,
-    List<ml.Feature<ml.Point>> interactive,
-  })
+  ({List<ml.Feature<ml.Point>> dots, List<ml.Feature<ml.Point>> interactive})
   _buildStopFeatures(BusLineSelectorState state) {
     final dots = <ml.Feature<ml.Point>>[];
     final interactive = <ml.Feature<ml.Point>>[];
     for (final stop in state.stopCoordinates) {
       final geometry = ml.Point(
-        ml.Geographic(
-          lon: stop.value.longitude,
-          lat: stop.value.latitude,
-        ),
+        ml.Geographic(lon: stop.value.longitude, lat: stop.value.latitude),
       );
       dots.add(ml.Feature(id: stop.key, geometry: geometry));
       interactive.add(
@@ -177,10 +163,7 @@ final class AucorsaMapLayerCache {
     };
     for (var index = 0; index < state.stopCoordinates.length; index++) {
       final stop = state.stopCoordinates[index];
-      final icon = AucorsaMapIcons.resolveStopIcon(
-        stop.key,
-        customDataState,
-      );
+      final icon = AucorsaMapIcons.resolveStopIcon(stop.key, customDataState);
       stopsByIcon[icon]!.add(stopFeatures[index]);
     }
 
