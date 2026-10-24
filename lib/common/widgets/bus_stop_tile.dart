@@ -12,7 +12,7 @@ import 'package:aucorsa/common/utils/bus_stop_custom_icons.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
-import 'package:aucorsa/common/widgets/bus_stop_options_dialog.dart';
+import 'package:aucorsa/common/widgets/bus_stop_options_menu.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
@@ -25,11 +25,7 @@ class BusStopTile extends StatelessWidget {
   final int stopId;
   final bool alwaysExpanded;
 
-  const new({
-    required this.stopId,
-    super.key,
-    this.alwaysExpanded = false,
-  });
+  const new({required this.stopId, super.key, this.alwaysExpanded = false});
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +116,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
         color: Theme.of(context).colorScheme.surfaceContainerLow,
         shadowColor: Colors.transparent,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         clipBehavior: Clip.antiAlias,
         child: GestureDetector(
           onTap: _onTap,
@@ -136,9 +130,8 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                     ? Theme.of(context).colorScheme.surfaceContainer
                     : Theme.of(context).colorScheme.surfaceContainerLow,
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ).copyWith(right: 20),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16)
+                      .copyWith(right: 20),
                   leading: SizedBox.square(
                     dimension: 40,
                     child: DecoratedBox(
@@ -148,9 +141,9 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                       ),
                       child: Icon(
                         _resolveIcon(busStopCustomData, isFavorite),
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSecondaryContainer,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSecondaryContainer,
                         fill: 1,
                       ),
                     ),
@@ -214,33 +207,16 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                                         _requestData(hapticFeedback: true),
                                     icon: const Icon(Symbols.refresh_rounded),
                                     label: Text(
-                                      MaterialLocalizations.of(
-                                        context,
-                                      ).refreshIndicatorSemanticLabel,
+                                      MaterialLocalizations.of(context)
+                                          .refreshIndicatorSemanticLabel,
                                     ),
                                   ),
                                 ),
                                 if (isFavorite)
                                   Expanded(
-                                    child: TextButton.icon(
-                                      style: TextButton.styleFrom(
-                                        foregroundColor: Theme.of(
-                                          context,
-                                        ).colorScheme.primary,
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                      ),
-                                      onPressed: () => showBusStopOptionsDialog(
-                                        context: context,
-                                        stopId: widget.stopId,
-                                        onDelete: _toggleFavorite,
-                                      ),
-                                      icon: const Icon(Symbols.pending_rounded),
-                                      label: Text(
-                                        MaterialLocalizations.of(
-                                          context,
-                                        ).moreButtonTooltip,
-                                      ),
+                                    child: BusStopOptionsMenu(
+                                      stopId: widget.stopId,
+                                      onDelete: _toggleFavorite,
                                     ),
                                   )
                                 else

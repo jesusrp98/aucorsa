@@ -79,24 +79,18 @@ class ListViewSectionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       leading: leading != null
           ? SizedBox.square(
               dimension: 40,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.secondaryContainer,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
                 ),
                 child: IconTheme.merge(
                   data: IconThemeData(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSecondaryContainer,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
                   ),
                   child: leading!,
                 ),

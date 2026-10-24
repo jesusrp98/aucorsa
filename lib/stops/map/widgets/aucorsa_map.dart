@@ -11,6 +11,7 @@ import 'package:aucorsa/stops/map/offline/offline_map_installer.dart';
 import 'package:aucorsa/stops/map/offline/offline_map_style.dart';
 import 'package:aucorsa/stops/map/widgets/aucorsa_map_controls.dart';
 import 'package:aucorsa/stops/map/widgets/aucorsa_map_error.dart';
+import 'package:aucorsa/stops/map/widgets/aucorsa_user_location.dart';
 import 'package:aucorsa/stops/utils/location_permission_utils.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
 import 'package:aucorsa/stops/widgets/location_outside_map_dialog.dart';
@@ -32,7 +33,9 @@ class AucorsaMap extends StatefulWidget {
 class _AucorsaMapState extends State<AucorsaMap> {
   final rotation = ValueNotifier<double>(0);
   final followLocation = ValueNotifier<bool>(false);
+  final currentPosition = ValueNotifier<Position?>(null);
   final layerCache = AucorsaMapLayerCache();
+  StreamSubscription<Position>? positionSubscription;
 
   ml.MapController? mapController;
   Brightness? mapStyleBrightness;
@@ -69,6 +72,8 @@ class _AucorsaMapState extends State<AucorsaMap> {
 
   @override
   void dispose() {
+    unawaited(positionSubscription?.cancel());
+    currentPosition.dispose();
     rotation.dispose();
     followLocation.dispose();
     super.dispose();
@@ -94,6 +99,7 @@ class _AucorsaMapState extends State<AucorsaMap> {
     if (!mounted) return;
 
     initialLocationResolved = true;
+    currentPosition.value = initialPosition;
     _resolveInitialCenter();
   }
 
@@ -144,11 +150,7 @@ class _AucorsaMapState extends State<AucorsaMap> {
     return Stack(
       children: [
         Positioned.fill(
-          child: _buildMap(
-            busLineSelectorState,
-            customDataState,
-            brightness,
-          ),
+          child: _buildMap(busLineSelectorState, customDataState, brightness),
         ),
         if (preparedMap != null) ...[
           Positioned(
@@ -220,6 +222,7 @@ class _AucorsaMapState extends State<AucorsaMap> {
       onStyleLoaded: _onStyleLoaded,
       onEvent: _onMapEvent,
       layers: layers,
+      children: [AucorsaUserLocation(position: currentPosition)],
     );
     cachedWidgetMapData = mapData;
     cachedWidgetInitialCenter = center;
@@ -262,16 +265,52 @@ class _AucorsaMapState extends State<AucorsaMap> {
 
   Future<void> _enableCurrentLocation() async {
     try {
-      await mapController?.enableLocation(
-        bearingRenderMode: ml.BearingRenderMode.compass,
-      );
-      if (followLocation.value) {
-        await mapController?.trackLocation(
-          trackBearing: ml.BearingTrackMode.none,
-        );
-      }
+      positionSubscription ??=
+          Geolocator.getPositionStream(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.best,
+              distanceFilter: 1,
+            ),
+          ).listen(
+            _onPositionChanged,
+            onError: (Object error) {
+              // Keep the last fix visible, but allow the location button to retry.
+              unawaited(positionSubscription?.cancel());
+              positionSubscription = null;
+              if (mounted) followLocation.value = false;
+            },
+          );
     } on Exception {
-      // The map remains usable if native location rendering is unavailable.
+      // The map remains usable if location updates are unavailable.
+    }
+  }
+
+  void _onPositionChanged(Position position) {
+    if (!mounted) return;
+
+    final previous = currentPosition.value;
+    currentPosition.value = position;
+    if (!followLocation.value) return;
+    if (!_contains(position)) {
+      followLocation.value = false;
+      return;
+    }
+    if (previous?.latitude == position.latitude &&
+        previous?.longitude == position.longitude) {
+      return;
+    }
+
+    unawaited(_followPosition(position));
+  }
+
+  Future<void> _followPosition(Position position) async {
+    try {
+      await mapController?.animateCamera(
+        center: ml.Geographic(lon: position.longitude, lat: position.latitude),
+        nativeDuration: Durations.medium2,
+      );
+    } on Exception {
+      // A camera transition may finish after the map has been disposed.
     }
   }
 
@@ -281,12 +320,6 @@ class _AucorsaMapState extends State<AucorsaMap> {
     )) {
       if (followLocation.value) {
         followLocation.value = false;
-        unawaited(
-          mapController?.trackLocation(
-            trackLocation: false,
-            trackBearing: ml.BearingTrackMode.none,
-          ),
-        );
       }
       return;
     }
@@ -355,27 +388,16 @@ class _AucorsaMapState extends State<AucorsaMap> {
     final isInsideMap = _contains(position);
     followLocation.value = isInsideMap;
     locationPermissionGranted = true;
+    currentPosition.value = position;
 
     if (!isInsideMap) {
-      try {
-        await mapController?.trackLocation(
-          trackLocation: false,
-          trackBearing: ml.BearingTrackMode.none,
-        );
-      } on Exception {
-        // The dialog is independent of native location tracking.
-      }
-
       if (mounted) await showLocationOutsideMapDialog(context);
       return;
     }
 
     await _enableCurrentLocation();
     await mapController?.animateCamera(
-      center: ml.Geographic(
-        lon: position.longitude,
-        lat: position.latitude,
-      ),
+      center: ml.Geographic(lon: position.longitude, lat: position.latitude),
       zoom: AucorsaMapConfig.userLocationZoom,
       nativeDuration: Durations.medium2,
     );

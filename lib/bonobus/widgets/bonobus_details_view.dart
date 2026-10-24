@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:aucorsa/about/widgets/about_button.dart';
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_balance_view.dart';
-import 'package:aucorsa/bonobus/widgets/bonobus_options_dialog.dart';
+import 'package:aucorsa/bonobus/widgets/bonobus_options_menu.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
@@ -79,78 +79,73 @@ class BonobusDetailsView extends StatelessWidget {
                             ListViewSectionTile(
                               leading: const Icon(Symbols.contactless_rounded),
                               title: Text(context.l10n.scanBonobusTitle),
-                              subtitle: Text(
-                                context.l10n.scanBonobusSubtitle,
-                              ),
+                              subtitle: Text(context.l10n.scanBonobusSubtitle),
                             ),
                           ],
                         ),
                       ListViewSection(
                         children: [
-                          ListViewSectionTile(
-                            leading: const Icon(Symbols.credit_card_rounded),
-                            title: Text(
-                              bonobusState.name ?? getDefaultProviderName(),
-                            ),
-                            subtitle: Text(
-                              bonobusState.id!,
-                              style: GoogleFonts.robotoMono(
-                                textStyle: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant,
+                          BonobusOptionsMenu(
+                            onEdit: onEdit,
+                            onDelete:
+                                onDelete ?? context.read<BonobusCubit>().delete,
+                            builder: (context, toggleMenu) =>
+                                ListViewSectionTile(
+                                  leading: const Icon(
+                                    Symbols.credit_card_rounded,
+                                  ),
+                                  title: Text(
+                                    bonobusState.name ??
+                                        getDefaultProviderName(),
+                                  ),
+                                  subtitle: Text(
+                                    bonobusState.id!,
+                                    style: GoogleFonts.robotoMono(
+                                      textStyle: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: toggleMenu,
+                                  trailing: Icon(
+                                    Symbols.chevron_right_rounded,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            onTap: () => showBonobusOptionsDialog(
-                              context: context,
-                              onEdit: onEdit,
-                              onDelete:
-                                  onDelete ??
-                                  context.read<BonobusCubit>().delete,
-                            ),
-                            trailing: Icon(
-                              Symbols.chevron_right_rounded,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant,
-                            ),
                           ),
                           if (bonobusState.provider ==
                                   BonobusProvider.aucorsa &&
                               onViewMovements != null)
                             ListViewSectionTile(
-                              leading: const Icon(
-                                Symbols.receipt_long_rounded,
-                              ),
-                              title: Text(
-                                context.l10n.aucorsaCardMovements,
-                              ),
+                              leading: const Icon(Symbols.receipt_long_rounded),
+                              title: Text(context.l10n.aucorsaCardMovements),
                               subtitle: Text(
                                 context.l10n.aucorsaCardMovementsSubtitle,
                               ),
                               onTap: onViewMovements,
                               trailing: Icon(
                                 Symbols.chevron_right_rounded,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurfaceVariant,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
                               ),
                             ),
                           ListViewSectionTile(
                             leading: const Icon(Symbols.add_circle_rounded),
                             title: Text(context.l10n.topUpBonobusTitle),
-                            subtitle: Text(
-                              context.l10n.topUpBonobusSubtitle,
-                            ),
+                            subtitle: Text(context.l10n.topUpBonobusSubtitle),
                             onTap: () => launchUrlString(
                               _helpUrls[bonobusState.provider!]!,
                             ),
                             trailing: Icon(
                               Symbols.chevron_right_rounded,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                           ),
                         ],

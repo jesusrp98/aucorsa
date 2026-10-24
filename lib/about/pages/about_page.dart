@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
-import 'package:aucorsa/common/widgets/theme_bottom_sheet.dart';
+import 'package:aucorsa/common/widgets/theme_menu.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:material_ui/material_ui.dart';
@@ -50,16 +50,7 @@ class _AboutPageState extends State<AboutPage> {
             padding: const EdgeInsets.all(16).copyWith(top: 0),
             sliver: SliverList.list(
               children: [
-                ListViewSection(
-                  children: [
-                    ListViewSectionTile(
-                      leading: const Icon(Symbols.palette_rounded),
-                      title: Text(context.l10n.appearanceTitle),
-                      subtitle: Text(context.l10n.appearanceSubtitle),
-                      onTap: () => showThemeBottomSheet(context),
-                    ),
-                  ],
-                ),
+                const ListViewSection(children: [ThemeMenu()]),
                 const SizedBox(height: 16),
                 ListViewSection(
                   children: [
