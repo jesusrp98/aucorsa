@@ -21,6 +21,7 @@ class BusLinePage extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: line.color,
           brightness: Theme.of(context).brightness,
+          dynamicSchemeVariant: .rainbow,
         ),
       ),
       child: Builder(
