@@ -16,7 +16,7 @@ class FavoriteStopsPage extends StatelessWidget {
 
   static final currentEvents = EventsCalendar.currentEvents;
 
-  const FavoriteStopsPage({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class _PageSection extends StatelessWidget {
   final Widget sliver;
   final EdgeInsets padding;
 
-  const _PageSection({
+  const new({
     required this.title,
     required this.sliver,
     this.padding = EdgeInsets.zero,
@@ -90,7 +90,7 @@ class _PageSection extends StatelessWidget {
 
 class _EventsSection extends StatelessWidget {
   final List<Event> currentEvents;
-  const _EventsSection(this.currentEvents);
+  const new(this.currentEvents);
 
   @override
   Widget build(BuildContext context) {

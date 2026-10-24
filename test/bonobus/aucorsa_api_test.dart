@@ -344,7 +344,7 @@ class _FakeCookieManager implements CookieManager {
   final List<Cookie> stored = [];
   int flushes = 0;
 
-  _FakeCookieManager(this._cookies);
+  new(this._cookies);
 
   @override
   Future<List<Cookie>> getCookies({

@@ -4,7 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 class ListViewSection extends StatelessWidget {
   final List<Widget> children;
 
-  const ListViewSection({required this.children, super.key});
+  const new({required this.children, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class ListViewSectionItem extends StatelessWidget {
   final int itemCount;
   final Widget child;
 
-  const ListViewSectionItem({
+  const new({
     required this.index,
     required this.itemCount,
     required this.child,
@@ -67,7 +67,7 @@ class ListViewSectionTile extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? trailing;
 
-  const ListViewSectionTile({
+  const new({
     this.leading,
     this.title,
     this.subtitle,

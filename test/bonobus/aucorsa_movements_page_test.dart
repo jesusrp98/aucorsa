@@ -342,13 +342,9 @@ class _FakeAucorsaSite {
 
   final List<(String, int)> movementRequests = [];
 
-  _FakeAucorsaSite({
-    required Future<AucorsaCardMovements> Function({
-      required String cardNumber,
-      required int page,
-    })
-    loadMovements,
-  }) : _loadMovements = loadMovements;
+  new({
+    required this._loadMovements,
+  });
 
   late final Dio _client = Dio()
     ..interceptors.add(InterceptorsWrapper(onRequest: _onRequest));

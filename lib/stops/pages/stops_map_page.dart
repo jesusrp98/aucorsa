@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class StopsMapPage extends StatefulWidget {
   static const path = '/stops-map';
 
-  const StopsMapPage({super.key});
+  const new({super.key});
 
   @override
   State<StopsMapPage> createState() => _StopsMapPageState();

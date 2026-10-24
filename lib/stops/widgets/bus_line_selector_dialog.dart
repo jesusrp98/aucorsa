@@ -20,7 +20,7 @@ Future<String?> showBusLineSelector(BuildContext context) =>
 class _BusLineSelectorDialogView extends StatelessWidget {
   static final lines = BusLineUtils.lines;
 
-  const _BusLineSelectorDialogView();
+  const new();
 
   @override
   Widget build(BuildContext context) {

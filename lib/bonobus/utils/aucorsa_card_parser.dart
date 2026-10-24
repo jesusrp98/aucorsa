@@ -3,7 +3,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class AucorsaCardParser {
-  const AucorsaCardParser._();
+  const new _();
 
   static AucorsaCard parseCard(String rawHtml) {
     final document = parse(rawHtml);

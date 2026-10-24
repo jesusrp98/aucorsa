@@ -9,7 +9,7 @@ import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:latlong2/latlong.dart';
 
 class BusLineUtils {
-  const BusLineUtils._();
+  const new _();
 
   static BusLine getLine(String id) =>
       lines.singleWhere((line) => line.id == id);

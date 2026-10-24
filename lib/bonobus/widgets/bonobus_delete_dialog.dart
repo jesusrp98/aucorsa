@@ -15,7 +15,7 @@ Future<void> showBonobusDeleteDialog({
 class _BusStopDeleteDialogView extends StatelessWidget {
   final Future<void> Function() onDelete;
 
-  const _BusStopDeleteDialogView(this.onDelete);
+  const new(this.onDelete);
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ final class AucorsaMapCompassButton extends StatelessWidget {
   final ValueListenable<double> rotation;
   final VoidCallback onPressed;
 
-  const AucorsaMapCompassButton({
+  const new({
     required this.rotation,
     required this.onPressed,
     super.key,
@@ -40,7 +40,7 @@ final class AucorsaMapLocationButton extends StatelessWidget {
   final ValueListenable<bool> followLocation;
   final VoidCallback onPressed;
 
-  const AucorsaMapLocationButton({
+  const new({
     required this.followLocation,
     required this.onPressed,
     super.key,

@@ -25,13 +25,11 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
   WebStorageManager? _webStorageManager;
   String? _nonce;
 
-  BonobusCubit({
+  new({
     Dio? client,
-    CookieManager? cookieManager,
-    WebStorageManager? webStorageManager,
+    this._cookieManager,
+    this._webStorageManager,
   }) : _client = client ?? httpClient,
-       _cookieManager = cookieManager,
-       _webStorageManager = webStorageManager,
        super(const BonobusState());
 
   CookieManager get _cookies => _cookieManager ??= CookieManager.instance();

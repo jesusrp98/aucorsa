@@ -39,7 +39,7 @@ typedef AppGroupSyncCallback =
 /// never break the app, but the caller still needs to know, because a silent
 /// failure means Siri quietly stops knowing the user's stops.
 class AppGroupBridge {
-  const AppGroupBridge._();
+  const new _();
 
   static const _channel = MethodChannel('com.chechu.aucorsa/app_group');
 

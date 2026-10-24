@@ -15,7 +15,7 @@ Future<void> showThemeBottomSheet(BuildContext context) =>
     );
 
 class _ThemeBottomSheet extends StatelessWidget {
-  const _ThemeBottomSheet();
+  const new();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _ThemeBottomSheet extends StatelessWidget {
 class _ThemeListTile extends StatelessWidget {
   final ThemeMode themeMode;
 
-  const _ThemeListTile(this.themeMode);
+  const new(this.themeMode);
 
   @override
   Widget build(BuildContext context) {

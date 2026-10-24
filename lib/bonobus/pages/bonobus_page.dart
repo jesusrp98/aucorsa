@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BonobusPage extends StatelessWidget {
   static const path = '/bonobus';
 
-  const BonobusPage({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

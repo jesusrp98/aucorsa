@@ -22,12 +22,11 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
   CookieManager? _cookieManager;
   String? _nonce;
 
-  AucorsaMovementsCubit({
+  new({
     required this.cardNumber,
     Dio? client,
-    CookieManager? cookieManager,
+    this._cookieManager,
   }) : _client = client ?? httpClient,
-       _cookieManager = cookieManager,
        super(const AucorsaMovementsState());
 
   static String storageKey(String cardNumber) =>

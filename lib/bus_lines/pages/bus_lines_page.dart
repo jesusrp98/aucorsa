@@ -10,7 +10,7 @@ import 'package:material_symbols_icons/symbols.dart';
 class BusLinesPages extends StatelessWidget {
   static const path = '/bus-lines';
 
-  const BusLinesPages({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

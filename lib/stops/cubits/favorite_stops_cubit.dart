@@ -1,7 +1,7 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class FavoriteStopsCubit extends HydratedCubit<List<int>> {
-  FavoriteStopsCubit() : super([]);
+  new() : super([]);
 
   bool isFavorite(int stopId) => state.contains(stopId);
 

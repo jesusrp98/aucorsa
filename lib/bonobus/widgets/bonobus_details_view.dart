@@ -24,7 +24,7 @@ class BonobusDetailsView extends StatelessWidget {
   final VoidCallback? onEdit;
   final Future<void> Function()? onDelete;
 
-  const BonobusDetailsView({
+  const new({
     this.onRefresh,
     this.onViewMovements,
     this.onEdit,

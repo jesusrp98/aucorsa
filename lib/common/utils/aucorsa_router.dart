@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 import 'package:go_transitions/go_transitions.dart';
 
 class AucorsaRouter {
-  const AucorsaRouter._();
+  const new _();
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>(
     debugLabel: 'root',

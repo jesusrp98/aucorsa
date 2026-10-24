@@ -15,7 +15,7 @@ Future<void> showBusStopDeleteDialog({
 class _BusStopDeleteDialogView extends StatelessWidget {
   final VoidCallback onDelete;
 
-  const _BusStopDeleteDialogView(this.onDelete);
+  const new(this.onDelete);
 
   @override
   Widget build(BuildContext context) {

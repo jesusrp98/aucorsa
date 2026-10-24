@@ -10,7 +10,7 @@ class BusLinePage extends StatelessWidget {
 
   final String lineId;
 
-  const BusLinePage({required this.lineId, super.key});
+  const new({required this.lineId, super.key});
 
   @override
   Widget build(BuildContext context) {

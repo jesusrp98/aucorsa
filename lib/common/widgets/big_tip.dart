@@ -31,7 +31,7 @@ class BigTip extends StatelessWidget {
   /// the bottom of the view.
   final Widget? action;
 
-  const BigTip({
+  const new({
     super.key,
     this.child,
     this.childSpace = 16,

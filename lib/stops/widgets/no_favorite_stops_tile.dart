@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NoFavoriteStopsTile extends StatelessWidget {
-  const NoFavoriteStopsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

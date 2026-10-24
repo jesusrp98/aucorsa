@@ -6,7 +6,7 @@ class AucorsaScrollingSheet extends StatelessWidget {
   final double initialSheetSize;
   final ScrollableWidgetBuilder builder;
 
-  const AucorsaScrollingSheet({
+  const new({
     required this.builder,
     this.initialSheetSize = 0.72,
     super.key,

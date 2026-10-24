@@ -7,7 +7,7 @@ class BusStopCubit extends Cubit<BusStopState> {
   final BusServiceCubit busServiceCubit;
   final int stopId;
 
-  BusStopCubit({required this.busServiceCubit, required this.stopId})
+  new({required this.busServiceCubit, required this.stopId})
     : super(BusStopState(stopId: stopId));
 
   Future<void> fetchEstimations() async {

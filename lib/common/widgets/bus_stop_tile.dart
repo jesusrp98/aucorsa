@@ -25,7 +25,7 @@ class BusStopTile extends StatelessWidget {
   final int stopId;
   final bool alwaysExpanded;
 
-  const BusStopTile({
+  const new({
     required this.stopId,
     super.key,
     this.alwaysExpanded = false,
@@ -47,7 +47,7 @@ class _BusStopTileView extends StatefulWidget {
   final int stopId;
   final bool alwaysExpanded;
 
-  const _BusStopTileView({required this.stopId, this.alwaysExpanded = false});
+  const new({required this.stopId, this.alwaysExpanded = false});
 
   @override
   State<_BusStopTileView> createState() => _BusStopTileViewState();
@@ -338,7 +338,7 @@ class _BusStopTileLoading extends StatelessWidget {
 
   final int rows;
 
-  const _BusStopTileLoading(this.rows);
+  const new(this.rows);
 
   @override
   Widget build(BuildContext context) {
@@ -384,7 +384,7 @@ class _BusStopTileLoading extends StatelessWidget {
 }
 
 class _BusStopTileBody extends StatelessWidget {
-  const _BusStopTileBody();
+  const new();
 
   @override
   Widget build(BuildContext context) {
@@ -484,7 +484,7 @@ class _BusStopTileBody extends StatelessWidget {
 }
 
 class _BusStopCloseEstimation extends StatefulWidget {
-  const _BusStopCloseEstimation();
+  const new();
 
   @override
   State<StatefulWidget> createState() => _BusStopCloseEstimationState();

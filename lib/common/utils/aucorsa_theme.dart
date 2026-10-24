@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
 
 class AucorsaTheme {
-  const AucorsaTheme._();
+  const new _();
 
   static const defaultColor = Colors.green;
 

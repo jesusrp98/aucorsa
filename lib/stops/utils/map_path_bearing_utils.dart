@@ -8,11 +8,11 @@ class MapPathArrow {
   final LatLng point;
   final double angle;
 
-  const MapPathArrow({required this.point, required this.angle});
+  const new({required this.point, required this.angle});
 }
 
 class MapPathBearingUtils {
-  MapPathBearingUtils._();
+  new _();
 
   static List<MapPathArrow> resolveArrows({
     required List<LatLng> path,

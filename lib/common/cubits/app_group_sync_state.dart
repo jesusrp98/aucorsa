@@ -21,7 +21,7 @@ class AppGroupSyncState extends Equatable {
   /// When the mirror last reached the container, or null if it never has.
   final DateTime? lastSyncedAt;
 
-  const AppGroupSyncState({
+  const new({
     this.status = AppGroupSyncStatus.idle,
     this.lastSyncedAt,
   });

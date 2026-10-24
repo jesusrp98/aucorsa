@@ -480,7 +480,7 @@ class _RawCardSite {
   late final Dio client = Dio()
     ..interceptors.add(InterceptorsWrapper(onRequest: _onRequest));
 
-  _RawCardSite({required this.onCard, this.nonces = const ['first-nonce']});
+  new({required this.onCard, this.nonces = const ['first-nonce']});
 
   Future<void> _onRequest(
     RequestOptions options,
@@ -511,7 +511,7 @@ class _FakeCookieManager implements CookieManager {
   final List<WebUri> deletedUrls = [];
   final bool canDelete;
 
-  _FakeCookieManager({this.canDelete = true});
+  new({this.canDelete = true});
 
   @override
   Future<bool> deleteCookies({

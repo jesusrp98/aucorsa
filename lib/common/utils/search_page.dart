@@ -70,7 +70,7 @@ class SearchPage<T> extends SearchDelegate<T?> {
 
   final IndexedWidgetBuilder? separatorBuilder;
 
-  SearchPage({
+  new({
     required this.builder,
     required this.filter,
     required this.items,

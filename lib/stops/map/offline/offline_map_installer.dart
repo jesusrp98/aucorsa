@@ -16,14 +16,14 @@ typedef _DecodedMapPackage = ({
 });
 
 final class OfflineMapAssetsUnavailable implements Exception {
-  const OfflineMapAssetsUnavailable();
+  const new();
 }
 
 final class InstalledOfflineMap {
   final Directory directory;
   final OfflineMapManifest manifest;
 
-  const InstalledOfflineMap({
+  const new({
     required this.directory,
     required this.manifest,
   });
@@ -38,7 +38,7 @@ final class OfflineMapInstaller {
   final Future<Directory> Function() _supportDirectoryProvider;
   Future<InstalledOfflineMap>? _installation;
 
-  OfflineMapInstaller({
+  new({
     AssetBundle? assetBundle,
     Future<Directory> Function()? supportDirectoryProvider,
   }) : _assetBundle = assetBundle ?? rootBundle,

@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 class AboutPage extends StatefulWidget {
   static const path = '/about';
 
-  const AboutPage({super.key});
+  const new({super.key});
 
   @override
   State<AboutPage> createState() => _AboutPageState();
@@ -135,7 +135,7 @@ class _AboutPageState extends State<AboutPage> {
 }
 
 class _DataOriginBottomSheet extends StatelessWidget {
-  const _DataOriginBottomSheet();
+  const new();
 
   @override
   Widget build(BuildContext context) {

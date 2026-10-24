@@ -23,7 +23,7 @@ class AucorsaMap extends StatefulWidget {
   final EdgeInsets? margin;
   final bool zoomToLocationOnStart;
 
-  const AucorsaMap({super.key, this.margin, this.zoomToLocationOnStart = true});
+  const new({super.key, this.margin, this.zoomToLocationOnStart = true});
 
   @override
   State<AucorsaMap> createState() => _AucorsaMapState();

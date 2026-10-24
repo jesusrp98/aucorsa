@@ -22,7 +22,7 @@ class _BusStopOptionsDialogView extends StatelessWidget {
   final VoidCallback onDelete;
   final int stopId;
 
-  const _BusStopOptionsDialogView(this.onDelete, this.stopId);
+  const new(this.onDelete, this.stopId);
 
   @override
   Widget build(BuildContext context) {

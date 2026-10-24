@@ -15,7 +15,7 @@ class AucorsaMovementsState extends Equatable {
   final bool hasReachedMax;
   final bool refreshing;
 
-  const AucorsaMovementsState({
+  const new({
     this.status = AucorsaMovementsStatus.initial,
     this.movements = const [],
     this.nextPage = 1,
@@ -23,7 +23,7 @@ class AucorsaMovementsState extends Equatable {
     this.refreshing = false,
   });
 
-  factory AucorsaMovementsState.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     final movements = [
       for (final movement in json['movements'] as List<dynamic>? ?? [])
         AucorsaCardMovement.fromJson(

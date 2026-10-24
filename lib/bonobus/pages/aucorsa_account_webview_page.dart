@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AucorsaAccountWebViewPage extends StatefulWidget {
   static const path = '/aucorsa-account';
 
-  const AucorsaAccountWebViewPage({super.key});
+  const new({super.key});
 
   @override
   State<AucorsaAccountWebViewPage> createState() =>

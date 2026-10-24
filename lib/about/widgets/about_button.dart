@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class AboutButton extends StatelessWidget {
-  const AboutButton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

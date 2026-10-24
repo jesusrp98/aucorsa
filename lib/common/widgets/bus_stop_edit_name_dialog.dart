@@ -19,7 +19,7 @@ Future<void> showBusStopEditNameDialog(
 class _BusStopEditNameDialog extends StatefulWidget {
   final int stopId;
 
-  const _BusStopEditNameDialog(this.stopId);
+  const new(this.stopId);
 
   @override
   State<_BusStopEditNameDialog> createState() => _BusStopEditNameDialogState();

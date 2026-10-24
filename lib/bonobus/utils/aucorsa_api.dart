@@ -5,13 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class AucorsaSessionExpiredException implements Exception {
-  const AucorsaSessionExpiredException();
+  const new();
 }
 
 class AucorsaCardApiException implements Exception {
   final String message;
 
-  const AucorsaCardApiException(this.message);
+  const new(this.message);
 
   @override
   String toString() => message;
@@ -39,7 +39,7 @@ class AucorsaApi {
   static final rootUri = WebUri(rootUrl);
   static final wwwRootUri = WebUri('https://www.aucorsa.es/');
 
-  const AucorsaApi._();
+  const new _();
 
   /// Reads the nonce the site publishes in plain text on its index page.
   ///

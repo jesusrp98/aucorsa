@@ -11,7 +11,7 @@ final class PreparedOfflineMap {
   final double minimumZoom;
   final double maximumNativeZoom;
 
-  const PreparedOfflineMap({
+  const new({
     required this.styleJson,
     required this.bounds,
     required this.minimumZoom,
@@ -21,7 +21,7 @@ final class PreparedOfflineMap {
 
 /// Prepares a MapLibre style backed by the installed offline Córdoba map.
 class OfflineMapStyle {
-  OfflineMapStyle._();
+  new _();
 
   static Future<PreparedOfflineMap> prepare(Brightness brightness) async {
     final installation = await OfflineMapInstaller.shared.install();

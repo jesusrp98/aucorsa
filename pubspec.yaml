@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.6.0+15
 
 environment:
-  sdk: ">=3.10.0 <4.0.0"
+  sdk: ">=3.13.0 <4.0.0"
 
 dependencies:
   archive: ^4.0.9
@@ -21,9 +21,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   geolocator: ^14.0.3
-  go_router: ^17.0.0
+  go_router: ^18.0.0
   go_transitions: ^0.8.3
-  google_fonts: ^8.0.1
+  google_fonts: ^9.0.0
   html: ^0.15.5
   hydrated_bloc: ^11.0.0
   in_app_review: ^2.0.10
@@ -35,7 +35,7 @@ dependencies:
   nfc_manager: ^4.0.2
   package_info_plus: ^10.0.0
   path_provider: ^2.1.5
-  shimmer: ^3.0.0
+  shimmer: ^4.0.0
   url_launcher: ^6.3.1
   very_good_infinite_list: ^0.9.0
 
@@ -44,7 +44,7 @@ dev_dependencies:
   flutter_native_splash: ^2.4.4
   flutter_test:
     sdk: flutter
-  very_good_analysis: ^10.0.0
+  very_good_analysis: ^11.0.0
 
 flutter_launcher_icons:
   image_path: assets/icons/icon_app.png

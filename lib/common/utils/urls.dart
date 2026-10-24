@@ -1,5 +1,5 @@
 class Urls {
-  const Urls._();
+  const new _();
 
   static const appSource = 'https://github.com/jesusrp98/aucorsa';
 

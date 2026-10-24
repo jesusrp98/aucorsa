@@ -18,7 +18,7 @@ Future<void> showFeriaLinesDialog(BuildContext context) => showModalBottomSheet(
 );
 
 class _FeriaLinesDialog extends StatelessWidget {
-  const _FeriaLinesDialog();
+  const new();
 
   @override
   Widget build(BuildContext context) {

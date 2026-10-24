@@ -6,7 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 typedef BusStopCustomNameState = Map<int, BusStopCustomData>;
 
 class BusStopCustomDataCubit extends HydratedCubit<BusStopCustomNameState> {
-  BusStopCustomDataCubit() : super(BusStopCustomNameState());
+  new() : super(BusStopCustomNameState());
 
   void set({required int stopId, String? name, int? icon}) => emit({
     ...state,

@@ -22,7 +22,7 @@ class BusLineSelectorCubit extends Cubit<BusLineSelectorState> {
 
   final BuildContext context;
 
-  BusLineSelectorCubit(this.context) : super(initialState);
+  new(this.context) : super(initialState);
 
   void select(String lineId) {
     final linePath = BusLineUtils.getLinePath(lineId);

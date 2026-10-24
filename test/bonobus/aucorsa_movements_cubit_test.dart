@@ -556,7 +556,7 @@ class _RawAucorsaSite {
   late final Dio client = Dio()
     ..interceptors.add(InterceptorsWrapper(onRequest: _onRequest));
 
-  _RawAucorsaSite({
+  new({
     required this.onMovements,
     this.nonces = const ['first-nonce'],
   });
@@ -629,7 +629,7 @@ class _FakeAucorsaSite {
 
   /// [signedIn] mirrors whether the web view jar still holds the session,
   /// which it does not after the app is restarted.
-  _FakeAucorsaSite(this.onLoad, {bool signedIn = true})
+  new(this.onLoad, {bool signedIn = true})
     : cookies = _FakeCookieManager(signedIn: signedIn);
 
   Future<void> _onRequest(
@@ -708,7 +708,7 @@ String _operationCell(AucorsaCardMovement movement) =>
 class _FakeCookieManager implements CookieManager {
   final bool signedIn;
 
-  _FakeCookieManager({required this.signedIn});
+  new({required this.signedIn});
 
   @override
   Future<List<Cookie>> getCookies({

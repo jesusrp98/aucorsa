@@ -31,7 +31,7 @@ class AppGroupSyncCubit extends Cubit<AppGroupSyncState> {
   bool _isSyncing = false;
   bool _isResyncQueued = false;
 
-  AppGroupSyncCubit({
+  new({
     required FavoriteStopsCubit favoriteStops,
     required BusStopCustomDataCubit customData,
     AppGroupSyncCallback? sync,

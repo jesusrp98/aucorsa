@@ -113,7 +113,7 @@ final class _MemoryAssetBundle extends CachingAssetBundle {
   int bundleFailuresRemaining = 0;
   int bundleLoads = 0;
 
-  _MemoryAssetBundle(this.assets);
+  new(this.assets);
 
   @override
   Future<ByteData> load(String key) async {

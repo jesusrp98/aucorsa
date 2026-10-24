@@ -20,7 +20,7 @@ class AucorsaMovementsPage extends StatelessWidget {
 
   final String cardNumber;
 
-  const AucorsaMovementsPage({required this.cardNumber, super.key});
+  const new({required this.cardNumber, super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider(
@@ -37,7 +37,7 @@ class AucorsaMovementsPage extends StatelessWidget {
 /// The movements page itself, reading its cubit from the tree.
 @visibleForTesting
 class AucorsaMovementsView extends StatelessWidget {
-  const AucorsaMovementsView({super.key});
+  const new({super.key});
 
   Future<void> _signIn(BuildContext context) async {
     final cubit = context.read<AucorsaMovementsCubit>();
@@ -120,7 +120,7 @@ class AucorsaMovementsView extends StatelessWidget {
 class _AccountAccessView extends StatelessWidget {
   final VoidCallback onContinue;
 
-  const _AccountAccessView({required this.onContinue});
+  const new({required this.onContinue});
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +149,7 @@ class _MovementsView extends StatelessWidget {
   final AucorsaMovementsState state;
   final Future<void> Function() onRefresh;
 
-  const _MovementsView({required this.state, required this.onRefresh});
+  const new({required this.state, required this.onRefresh});
 
   /// Whether the spinner belongs on screen, either alone or below the history.
   bool get _loading => switch (state.status) {
@@ -219,7 +219,7 @@ class _MovementsView extends StatelessWidget {
 class _MovementsErrorView extends StatelessWidget {
   final Future<void> Function() onRetry;
 
-  const _MovementsErrorView({required this.onRetry});
+  const new({required this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +238,7 @@ class _MovementsErrorView extends StatelessWidget {
 class _MovementLoadMoreError extends StatelessWidget {
   final Future<void> Function() onRetry;
 
-  const _MovementLoadMoreError({required this.onRetry});
+  const new({required this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +254,7 @@ class _MovementLoadMoreError extends StatelessWidget {
 class _MovementTile extends StatelessWidget {
   final AucorsaCardMovement movement;
 
-  const _MovementTile(this.movement);
+  const new(this.movement);
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +341,7 @@ class _MessageView extends StatelessWidget {
   final String subtitle;
   final VoidCallback? onRetry;
 
-  const _MessageView({
+  const new({
     required this.icon,
     required this.title,
     required this.subtitle,

@@ -10,7 +10,7 @@ final class OfflineMapManifest {
   final double minimumZoom;
   final double maximumNativeZoom;
 
-  const OfflineMapManifest({
+  const new({
     required this.cacheKey,
     required this.archivePath,
     required this.archiveSha256,
@@ -21,7 +21,7 @@ final class OfflineMapManifest {
     required this.maximumNativeZoom,
   });
 
-  factory OfflineMapManifest.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     final cacheKey = json['cache_key'];
     final archive = json['archive'];
     final installFiles = json['install_files'];

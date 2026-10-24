@@ -129,7 +129,7 @@ class _TestApp extends StatelessWidget {
   final BonobusCubit cubit;
   final Widget child;
 
-  const _TestApp({required this.cubit, required this.child});
+  const new({required this.cubit, required this.child});
 
   @override
   Widget build(BuildContext context) => MaterialApp(

@@ -7,7 +7,7 @@ class BusStopState extends Equatable {
   final AucorsaStateStatus status;
   final int stopId;
 
-  const BusStopState({
+  const new({
     required this.stopId,
     this.estimations = const [],
     this.status = AucorsaStateStatus.initial,

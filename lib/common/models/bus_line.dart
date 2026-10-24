@@ -9,7 +9,7 @@ class BusLine {
   final Color color;
   final EventId? eventId;
 
-  const BusLine({
+  const new({
     required this.id,
     required this.name,
     required this.stops,

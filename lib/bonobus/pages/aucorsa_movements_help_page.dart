@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AucorsaMovementsHelpPage extends StatelessWidget {
   static const path = '/aucorsa-movements-help';
 
-  const AucorsaMovementsHelpPage({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,7 @@ class _HelpStep extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  const _HelpStep({
+  const new({
     required this.step,
     required this.title,
     required this.subtitle,

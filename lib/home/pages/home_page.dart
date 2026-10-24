@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
   final Widget child;
   final GoRouterState state;
 
-  const HomePage({required this.child, required this.state, super.key});
+  const new({required this.child, required this.state, super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

@@ -11,7 +11,7 @@ Future<void> showLocationOutsideMapDialog(BuildContext context) =>
     );
 
 class _LocationOutsideMapDialogView extends StatelessWidget {
-  const _LocationOutsideMapDialogView();
+  const new();
 
   @override
   Widget build(BuildContext context) {

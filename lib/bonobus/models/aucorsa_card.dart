@@ -4,7 +4,7 @@ class AucorsaCard extends Equatable {
   final String title;
   final String balance;
 
-  const AucorsaCard({required this.title, required this.balance});
+  const new({required this.title, required this.balance});
 
   @override
   List<Object> get props => [title, balance];
@@ -19,7 +19,7 @@ class AucorsaCardMovement extends Equatable {
   final String amount;
   final AucorsaRechargeActivation? activation;
 
-  const AucorsaCardMovement({
+  const new({
     required this.date,
     required this.time,
     required this.operation,
@@ -27,7 +27,7 @@ class AucorsaCardMovement extends Equatable {
     this.activation,
   });
 
-  factory AucorsaCardMovement.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     return AucorsaCardMovement(
       date: json['date'] as String,
       time: json['time'] as String,
@@ -57,7 +57,7 @@ class AucorsaCardMovements extends Equatable {
   final List<AucorsaCardMovement> movements;
   final bool hasNextPage;
 
-  const AucorsaCardMovements({
+  const new({
     required this.movements,
     required this.hasNextPage,
   });

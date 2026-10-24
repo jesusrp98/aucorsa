@@ -20,7 +20,7 @@ class _BonobusIdDialog extends StatefulWidget {
 
   final String? initialValue;
 
-  const _BonobusIdDialog({this.initialValue});
+  const new({this.initialValue});
 
   @override
   State<_BonobusIdDialog> createState() => _BonobusIdDialogState();

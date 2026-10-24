@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 typedef BusStopCoordinates = MapEntry<int, LatLng>;
 
 class BusStopUtils {
-  const BusStopUtils._();
+  const new _();
 
   static String resolveName(int stopId) => _busStopNames[stopId] ?? '';
 

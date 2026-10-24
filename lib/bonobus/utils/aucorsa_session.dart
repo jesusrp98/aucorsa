@@ -15,7 +15,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 class AucorsaSession {
   static const storageKey = 'AucorsaSession';
 
-  const AucorsaSession._();
+  const new _();
 
   /// The stored `Cookie` header, or an empty string when there is none.
   static String read([Storage? storage]) {

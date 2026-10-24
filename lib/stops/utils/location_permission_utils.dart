@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationPermissionUtils {
-  const LocationPermissionUtils._();
+  const new _();
 
   static Future<bool> resolve({
     required BuildContext context,

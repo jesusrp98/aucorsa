@@ -19,7 +19,7 @@ class BonobusState extends Equatable {
   /// the session that produced it.
   final String? error;
 
-  const BonobusState({
+  const new({
     this.status = BonobusStatus.initial,
     this.provider,
     this.id,
@@ -29,7 +29,7 @@ class BonobusState extends Equatable {
     this.error,
   });
 
-  factory BonobusState.fromJson(Map<String, dynamic> json) {
+  factory fromJson(Map<String, dynamic> json) {
     final provider = json['provider'] != null
         ? BonobusProvider.values[json['provider'] as int]
         : null;

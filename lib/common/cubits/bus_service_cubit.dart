@@ -7,7 +7,7 @@ class BusServiceCubit extends HydratedCubit<String?> {
       'https://lightapi.aucorsa.es/wp-json/aucorsa/v1/estimations/stop';
   static final nonceRegex = RegExp(r'"ajax_nonce"\s*:\s*"([^"]+)"');
 
-  BusServiceCubit() : super(null);
+  new() : super(null);
 
   /// Save the nonce from the website, which is present in plain text in the
   /// HTML of the index page.

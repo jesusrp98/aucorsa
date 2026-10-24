@@ -23,7 +23,7 @@ class _BonobusOptionsDialogView extends StatelessWidget {
   final Future<void> Function() onDelete;
   final VoidCallback? onEdit;
 
-  const _BonobusOptionsDialogView({required this.onDelete, this.onEdit});
+  const new({required this.onDelete, this.onEdit});
 
   @override
   Widget build(BuildContext context) {

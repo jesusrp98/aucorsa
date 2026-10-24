@@ -12,7 +12,7 @@ import 'package:nfc_manager/nfc_manager_android.dart';
 class BonobusScanController extends StatefulWidget {
   final ValueSetter<BonobusState>? onStateChanged;
 
-  const BonobusScanController({super.key, this.onStateChanged});
+  const new({super.key, this.onStateChanged});
 
   @override
   State<BonobusScanController> createState() => _BonobusScanControllerState();

@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AucorsaApp extends StatelessWidget {
   static final router = AucorsaRouter.initialize();
 
-  const AucorsaApp({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

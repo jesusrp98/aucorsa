@@ -7,7 +7,7 @@ class BusLineSelectorState extends Equatable {
   final String? lineId;
   final Color? lineColor;
 
-  const BusLineSelectorState({
+  const new({
     this.stopCoordinates = const [],
     this.pathArrows = const [],
     this.linePath = const [],

@@ -6,7 +6,7 @@ class Event extends Equatable {
   final DateTime startDate;
   final DateTime endDate;
 
-  const Event({
+  const new({
     required this.id,
     required this.startDate,
     required this.endDate,

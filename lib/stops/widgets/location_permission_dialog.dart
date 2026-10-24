@@ -14,7 +14,7 @@ Future<void> showLocationPermissionDialog(BuildContext context) =>
     );
 
 class _LocationPermissionDialogView extends StatelessWidget {
-  const _LocationPermissionDialogView();
+  const new();
 
   @override
   Widget build(BuildContext context) {

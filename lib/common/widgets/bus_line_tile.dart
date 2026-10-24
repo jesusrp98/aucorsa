@@ -15,7 +15,7 @@ class BusLineTile extends StatelessWidget {
         Brightness.dark => Color.lerp(color, Colors.black, .24)!,
       };
 
-  const BusLineTile({
+  const new({
     required this.lineId,
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
     this.onTap,

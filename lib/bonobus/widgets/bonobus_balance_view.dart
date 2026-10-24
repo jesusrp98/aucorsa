@@ -8,7 +8,7 @@ class BonobusBalanceView extends StatelessWidget {
   final bool loading;
   final DateTime? lastUpdated;
 
-  const BonobusBalanceView({
+  const new({
     required this.balance,
     this.loading = false,
     this.lastUpdated,

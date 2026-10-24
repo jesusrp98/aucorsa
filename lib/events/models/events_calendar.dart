@@ -18,5 +18,5 @@ class EventsCalendar {
       )
       .toList();
 
-  const EventsCalendar();
+  const new();
 }

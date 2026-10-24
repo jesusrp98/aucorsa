@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class EmptyBonobusView extends StatefulWidget {
-  const EmptyBonobusView({super.key});
+  const new({super.key});
 
   @override
   State<EmptyBonobusView> createState() => _EmptyBonobusViewState();
@@ -55,7 +55,7 @@ class _EmptyBonobusViewState extends State<EmptyBonobusView> {
 class _EmptyProviderView extends StatelessWidget {
   final ValueSetter<BonobusProvider> onSelect;
 
-  const _EmptyProviderView({required this.onSelect});
+  const new({required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class _ScanBonobusView extends StatelessWidget {
   final VoidCallback onCancel;
   final BonobusProvider provider;
 
-  const _ScanBonobusView({required this.onCancel, required this.provider});
+  const new({required this.onCancel, required this.provider});
 
   @override
   Widget build(BuildContext context) {

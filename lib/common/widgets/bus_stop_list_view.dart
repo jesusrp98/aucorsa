@@ -5,7 +5,7 @@ class BusStopListView extends StatelessWidget {
   final List<int> stopIds;
   final EdgeInsets? padding;
 
-  const BusStopListView({required this.stopIds, this.padding, super.key});
+  const new({required this.stopIds, this.padding, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 final class AucorsaMapError extends StatelessWidget {
   final VoidCallback onRetry;
 
-  const AucorsaMapError({required this.onRetry, super.key});
+  const new({required this.onRetry, super.key});
 
   @override
   Widget build(BuildContext context) => Center(

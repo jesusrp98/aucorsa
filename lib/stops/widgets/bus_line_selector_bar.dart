@@ -9,7 +9,7 @@ class BusLineSelectorBar extends StatelessWidget {
   final String? selectedLine;
   final VoidCallback? onTap;
 
-  const BusLineSelectorBar({required this.selectedLine, this.onTap, super.key});
+  const new({required this.selectedLine, this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {

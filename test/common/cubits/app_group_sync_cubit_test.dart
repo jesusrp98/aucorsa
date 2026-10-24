@@ -20,7 +20,7 @@ class _RecordingBridge {
   final List<Completer<AppGroupSyncOutcome>> pending = [];
   bool manual;
 
-  _RecordingBridge({
+  new({
     this.outcome = AppGroupSyncOutcome.synced,
     this.manual = false,
   });

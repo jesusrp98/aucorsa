@@ -10,7 +10,7 @@ final class StablePolylineLayer extends ml.Layer<ml.Feature<ml.LineString>> {
   final String colorProperty;
   final int width;
 
-  const StablePolylineLayer({
+  const new({
     required List<ml.Feature<ml.LineString>> polylines,
     required this.colorProperty,
     required this.width,
@@ -53,7 +53,7 @@ final class StableCircleLayer extends ml.Layer<ml.Feature<ml.Point>> {
   final Color? color;
   final String? colorProperty;
 
-  const StableCircleLayer({
+  const new({
     required List<ml.Feature<ml.Point>> points,
     required this.radius,
     this.color,
@@ -116,7 +116,7 @@ final class StableMarkerLayer extends ml.Layer<ml.Feature<ml.Point>> {
   final String? bearingProperty;
   final double? visibleFromZoom;
 
-  const StableMarkerLayer({
+  const new({
     required List<ml.Feature<ml.Point>> points,
     required this.iconImage,
     required this.iconSize,

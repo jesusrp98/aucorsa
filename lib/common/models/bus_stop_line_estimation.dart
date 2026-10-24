@@ -7,7 +7,7 @@ class BusStopLineEstimation implements Comparable<BusStopLineEstimation> {
   final String lineId;
   final List<Duration> estimations;
 
-  const BusStopLineEstimation({
+  const new({
     required this.lineId,
     required this.estimations,
   });
