@@ -43,7 +43,10 @@ class AucorsaApp extends StatelessWidget {
           title: 'Aucorsa GO!',
           routerConfig: router,
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: const [
+            ...AppLocalizations.localizationsDelegates,
+            ...GlobalMaterialLocalizations.delegates,
+          ],
           supportedLocales: AppLocalizations.supportedLocales,
           themeMode: context.watch<ThemeCubit>().state,
           theme: AucorsaTheme.from(

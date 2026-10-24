@@ -37,7 +37,9 @@ class AucorsaMovementsPage extends StatelessWidget {
 /// The movements page itself, reading its cubit from the tree.
 @visibleForTesting
 class AucorsaMovementsView extends StatelessWidget {
-  const new({super.key});
+  final DateTime? now;
+
+  const new({this.now, super.key});
 
   Future<void> _signIn(BuildContext context) async {
     final cubit = context.read<AucorsaMovementsCubit>();
@@ -50,9 +52,8 @@ class AucorsaMovementsView extends StatelessWidget {
   }
 
   /// Opens the step by step guide on what AUCORSA asks for.
-  void _showHelp(BuildContext context) => unawaited(
-    context.push<void>(AucorsaMovementsHelpPage.path),
-  );
+  void _showHelp(BuildContext context) =>
+      unawaited(context.push<void>(AucorsaMovementsHelpPage.path));
 
   @override
   Widget build(BuildContext context) {
@@ -72,30 +73,7 @@ class AucorsaMovementsView extends StatelessWidget {
               ),
             ],
           ),
-          // The progress bar floats over the list instead of living in the
-          // app bar, so showing it never shifts the content down.
-          body: Stack(
-            children: [
-              _buildBody(context, state),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: IgnorePointer(
-                  // A switcher rather than an opacity, so the indeterminate
-                  // bar leaves the tree once faded out and stops animating.
-                  child: AnimatedSwitcher(
-                    duration: kThemeAnimationDuration,
-                    switchInCurve: Curves.easeInOutCubic,
-                    switchOutCurve: Curves.easeInOutCubic,
-                    child: state.movements.isNotEmpty && state.refreshing
-                        ? const LinearProgressIndicator()
-                        : const SizedBox.shrink(),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          body: _buildBody(context, state),
         );
       },
     );
@@ -113,6 +91,7 @@ class AucorsaMovementsView extends StatelessWidget {
     return _MovementsView(
       state: state,
       onRefresh: context.read<AucorsaMovementsCubit>().refresh,
+      now: now ?? DateTime.now(),
     );
   }
 }
@@ -148,8 +127,9 @@ class _AccountAccessView extends StatelessWidget {
 class _MovementsView extends StatelessWidget {
   final AucorsaMovementsState state;
   final Future<void> Function() onRefresh;
+  final DateTime now;
 
-  const new({required this.state, required this.onRefresh});
+  const new({required this.state, required this.onRefresh, required this.now});
 
   /// Whether the spinner belongs on screen, either alone or below the history.
   bool get _loading => switch (state.status) {
@@ -160,7 +140,7 @@ class _MovementsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AucorsaMovementsCubit>();
-    final movements = state.movements;
+    final movements = _groupMovements(context, state.movements, now);
     final isEmpty = movements.isEmpty;
     // The list scrolls under the system insets, and only its padding grows to
     // clear them, so the last movement is never cut off.
@@ -189,11 +169,57 @@ class _MovementsView extends StatelessWidget {
               centerEmpty: true,
               centerError: isEmpty,
               separatorBuilder: (_, _) => const SizedBox(height: 4),
-              itemBuilder: (context, index) => ListViewSectionItem(
-                index: index,
-                itemCount: movements.length,
-                child: _MovementTile(movements[index]),
-              ),
+              itemBuilder: (context, index) {
+                final entry = movements[index];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (entry.index == 0)
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          16,
+                          index == 0 ? 8 : 12,
+                          16,
+                          12,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Semantics(
+                                header: true,
+                                child: Text(
+                                  entry.title,
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              ),
+                            ),
+                            if (index == 0)
+                              SizedBox.square(
+                                dimension: 16,
+                                child: AnimatedSwitcher(
+                                  duration: kThemeAnimationDuration,
+                                  switchInCurve: Curves.easeInOutCubic,
+                                  switchOutCurve: Curves.easeInOutCubic,
+                                  child: state.refreshing
+                                      // ignore: lines_longer_than_80_chars
+                                      ? const CircularProgressIndicator.adaptive(
+                                          strokeWidth: 2,
+                                        )
+                                      : const SizedBox.shrink(),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ListViewSectionItem(
+                      index: entry.index,
+                      itemCount: entry.count,
+                      child: _MovementTile(entry.movement),
+                    ),
+                  ],
+                );
+              },
               loadingBuilder: (_) => const Padding(
                 padding: EdgeInsets.all(24),
                 child: Center(child: CircularProgressIndicator.adaptive()),
@@ -214,6 +240,56 @@ class _MovementsView extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Keeps pagination based on movements while rounding each date group alone.
+List<({AucorsaCardMovement movement, String title, int index, int count})>
+_groupMovements(
+  BuildContext context,
+  List<AucorsaCardMovement> movements,
+  DateTime now,
+) {
+  final today = DateUtils.dateOnly(now);
+  final yesterday = DateTime(today.year, today.month, today.day - 1);
+  final weekStart = DateTime(
+    today.year,
+    today.month,
+    today.day - (today.weekday - DateTime.monday),
+  );
+  final monthFormat = DateFormat.MMMM(context.l10n.localeName);
+  final sections = <String, List<AucorsaCardMovement>>{};
+
+  String titleFor(AucorsaCardMovement movement) {
+    final date =
+        DateFormat('dd-MM-yyyy').tryParseStrict(movement.date) ??
+        DateFormat('dd/MM/yyyy').tryParseStrict(movement.date);
+    if (date == null) return context.l10n.aucorsaMovementsOther;
+    if (date == today) return context.l10n.aucorsaMovementsToday;
+    if (date == yesterday) return context.l10n.aucorsaMovementsYesterday;
+    if (!date.isBefore(weekStart) && date.isBefore(today)) {
+      return context.l10n.aucorsaMovementsThisWeek;
+    }
+    if (date.year == today.year && date.month == today.month) {
+      return context.l10n.aucorsaMovementsThisMonth;
+    }
+    if (date.year == today.year) return monthFormat.format(date);
+    return date.year.toString();
+  }
+
+  for (final movement in movements) {
+    sections.putIfAbsent(titleFor(movement), () => []).add(movement);
+  }
+
+  return [
+    for (final section in sections.entries)
+      for (final (index, movement) in section.value.indexed)
+        (
+          movement: movement,
+          title: section.key,
+          index: index,
+          count: section.value.length,
+        ),
+  ];
 }
 
 class _MovementsErrorView extends StatelessWidget {
@@ -306,18 +382,15 @@ class _MovementTile extends StatelessWidget {
       subtitle: Text(movementDateLabel),
       trailing: Text(
         '$amountPrefix$unsignedAmount',
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: amountColor,
-          fontWeight: FontWeight.w500,
-        ),
+        style: Theme.of(context).textTheme.titleMedium
+            ?.copyWith(color: amountColor, fontWeight: FontWeight.w500),
       ),
     );
   }
 }
 
-final _lightPendingColor = ColorScheme.fromSeed(
-  seedColor: Colors.amber,
-).primary;
+final _lightPendingColor = ColorScheme.fromSeed(seedColor: Colors.amber)
+    .primary;
 
 final _darkPendingColor = ColorScheme.fromSeed(
   seedColor: Colors.amber,

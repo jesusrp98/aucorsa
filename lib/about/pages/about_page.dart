@@ -86,12 +86,6 @@ class _AboutPageState extends State<AboutPage> {
                       subtitle: Text(context.l10n.authorSubtitle),
                       onTap: () => launchUrlString(Urls.authorProfile),
                     ),
-                    ListViewSectionTile(
-                      leading: const Icon(Symbols.email_rounded),
-                      title: Text(context.l10n.emailTitle),
-                      subtitle: Text(context.l10n.emailSubtitle),
-                      onTap: () => launchUrlString(Urls.emailUrl),
-                    ),
                   ],
                 ),
                 const SizedBox(height: 16),

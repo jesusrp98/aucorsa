@@ -6,6 +6,7 @@ import 'package:aucorsa/bonobus/pages/aucorsa_movements_help_page.dart';
 import 'package:aucorsa/bonobus/pages/aucorsa_movements_page.dart';
 import 'package:aucorsa/bonobus/utils/aucorsa_api.dart';
 import 'package:aucorsa/common/widgets/big_tip.dart';
+import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,11 +80,12 @@ void main() {
       },
     );
 
-    await tester.pumpWidget(_app(site));
+    await tester.pumpWidget(_app(site, now: DateTime(2026, 10, 24)));
     await tester.pumpAndSettle();
 
     expect(site.movementRequests, [(cardNumber, 1), (cardNumber, 2)]);
     expect(find.text('Bus journey'), findsNWidgets(2));
+    expect(find.text('August'), findsOneWidget);
   });
 
   testWidgets('points to the help button when AUCORSA returns no movements', (
@@ -91,10 +93,7 @@ void main() {
   ) async {
     final site = _FakeAucorsaSite(
       loadMovements: ({required cardNumber, required page}) async {
-        return const AucorsaCardMovements(
-          movements: [],
-          hasNextPage: false,
-        );
+        return const AucorsaCardMovements(movements: [], hasNextPage: false);
       },
     );
 
@@ -124,10 +123,7 @@ void main() {
     // The medium app bar paints its title both collapsed and expanded.
     expect(find.text('Help'), findsWidgets);
     expect(find.text('Create an AUCORSA account'), findsOneWidget);
-    expect(
-      find.text('Activate the account from your email'),
-      findsOneWidget,
-    );
+    expect(find.text('Activate the account from your email'), findsOneWidget);
     expect(find.text('Add this card to your account'), findsOneWidget);
   });
 
@@ -151,13 +147,20 @@ void main() {
   testWidgets('shows stored movements while fresh ones are downloaded', (
     tester,
   ) async {
+    const storedMovement = AucorsaCardMovement(
+      date: '16/08/2026',
+      time: '12:00',
+      operation: 'Validación',
+      amount: '-0.72 €',
+    );
     await storage.write(AucorsaMovementsCubit.storageKey(cardNumber), {
       'movements': [
+        storedMovement.toJson(),
         const AucorsaCardMovement(
-          date: '16/08/2026',
+          date: '31/07/2026',
           time: '12:00',
-          operation: 'Validación',
-          amount: '-0.72 €',
+          operation: 'Transbordo',
+          amount: '0.00 €',
         ).toJson(),
       ],
       'nextPage': 2,
@@ -170,22 +173,165 @@ void main() {
           downloaded.future,
     );
 
-    await tester.pumpWidget(_app(site));
+    await tester.pumpWidget(_app(site, now: DateTime(2026, 10, 24)));
     await tester.pump();
 
     expect(find.text('Bus journey'), findsOneWidget);
-    expect(find.byType(LinearProgressIndicator), findsOneWidget);
-    expect(find.byType(CircularProgressIndicator), findsNothing);
+    expect(find.text('July'), findsOneWidget);
+    expect(find.byType(LinearProgressIndicator), findsNothing);
+    final spinner = find.byType(CircularProgressIndicator);
+    expect(spinner, findsOneWidget);
+    final headingCenter = tester.getCenter(find.text('August'));
+    final spinnerCenter = tester.getCenter(spinner);
+    expect(spinnerCenter.dx, greaterThan(headingCenter.dx));
+    expect(spinnerCenter.dy, closeTo(headingCenter.dy, 0.1));
+    final firstTilePosition = tester.getTopLeft(find.text('Bus journey'));
 
     downloaded.complete(
       const AucorsaCardMovements(
-        movements: [],
+        movements: [storedMovement],
         hasNextPage: false,
       ),
     );
     await tester.pumpAndSettle();
 
     expect(find.byType(LinearProgressIndicator), findsNothing);
+    expect(spinner, findsNothing);
+    expect(tester.getTopLeft(find.text('Bus journey')), firstTilePosition);
+  });
+
+  group('date sections', () {
+    testWidgets('groups recent dates, earlier months, and previous years', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(800, 2000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      final sections = {
+        'Today': ['24/10/2026', '24-10-2026'],
+        'Yesterday': ['23/10/2026'],
+        'This week': ['19/10/2026'],
+        'This month': ['18/10/2026'],
+        'September': ['30/09/2026'],
+        'August': ['17/08/2026'],
+        '2025': ['31/12/2025', '01/01/2025'],
+        '2024': ['31/12/2024'],
+      };
+      await _pumpMovements(tester, [
+        for (final dates in sections.values)
+          for (final date in dates) _movement(operation: date, date: date),
+      ], now: DateTime(2026, 10, 24, 0, 1));
+
+      var previousY = 0.0;
+      for (final section in sections.entries) {
+        expect(find.text(section.key), findsOneWidget);
+        final headingY = tester.getTopLeft(find.text(section.key)).dy;
+        expect(headingY, greaterThan(previousY));
+        previousY = headingY;
+        for (final date in section.value) {
+          final tileY = tester.getTopLeft(find.text(date)).dy;
+          expect(tileY, greaterThan(previousY));
+          previousY = tileY;
+        }
+      }
+
+      BorderRadius borderFor(String title) {
+        final section = find.ancestor(
+          of: find.text(title),
+          matching: find.byType(ListViewSectionItem),
+        );
+        final material = tester.widget<Material>(
+          find.descendant(of: section, matching: find.byType(Material)).first,
+        );
+        return material.borderRadius! as BorderRadius;
+      }
+
+      expect(
+        borderFor('24/10/2026'),
+        const BorderRadius.vertical(
+          top: Radius.circular(24),
+          bottom: Radius.circular(4),
+        ),
+      );
+      expect(
+        borderFor('24-10-2026'),
+        const BorderRadius.vertical(
+          top: Radius.circular(4),
+          bottom: Radius.circular(24),
+        ),
+      );
+      expect(borderFor('23/10/2026'), BorderRadius.circular(24));
+    });
+
+    for (final scenario in [
+      (
+        name: 'Monday starts a new week',
+        now: DateTime(2026, 11, 2),
+        dates: ['01/11/2026', '31/10/2026'],
+        headings: ['Yesterday', 'October'],
+        absent: ['Today', 'This week', 'This month'],
+      ),
+      (
+        name: 'recent days take precedence across a month boundary',
+        now: DateTime(2026, 10),
+        dates: ['30/09/2026', '28/09/2026', '27/09/2026'],
+        headings: ['Yesterday', 'This week', 'September'],
+        absent: ['Today', 'This month'],
+      ),
+      (
+        name: 'recent days take precedence across a year boundary',
+        now: DateTime(2027),
+        dates: ['31/12/2026', '28/12/2026', '27/12/2026'],
+        headings: ['Yesterday', 'This week', '2026'],
+        absent: ['Today', 'This month', 'December'],
+      ),
+    ]) {
+      testWidgets(scenario.name, (tester) async {
+        await _pumpMovements(tester, [
+          for (final date in scenario.dates)
+            _movement(operation: date, date: date),
+        ], now: scenario.now);
+
+        for (final heading in scenario.headings) {
+          expect(find.text(heading), findsOneWidget);
+        }
+        for (final heading in scenario.absent) {
+          expect(find.text(heading), findsNothing);
+        }
+      });
+    }
+
+    testWidgets('localizes relative headings and month names in Spanish', (
+      tester,
+    ) async {
+      await _pumpMovements(
+        tester,
+        [
+          for (final date in [
+            '24/10/2026',
+            '23/10/2026',
+            '19/10/2026',
+            '18/10/2026',
+            '30/09/2026',
+          ])
+            _movement(operation: date, date: date),
+        ],
+        now: DateTime(2026, 10, 24),
+        locale: const Locale('es'),
+      );
+
+      for (final heading in [
+        'Hoy',
+        'Ayer',
+        'Esta semana',
+        'Este mes',
+        'septiembre',
+      ]) {
+        expect(find.text(heading), findsOneWidget);
+      }
+    });
   });
 
   group('movement tile', () {
@@ -269,20 +415,23 @@ void main() {
       ]);
 
       expect(find.text('17.08.2026 · 12:00'), findsOneWidget);
+      expect(find.text('Other movements'), findsOneWidget);
     });
   });
 }
 
 Future<void> _pumpMovements(
   WidgetTester tester,
-  List<AucorsaCardMovement> movements,
-) async {
+  List<AucorsaCardMovement> movements, {
+  DateTime? now,
+  Locale locale = const Locale('en'),
+}) async {
   final site = _FakeAucorsaSite(
     loadMovements: ({required cardNumber, required page}) async =>
         AucorsaCardMovements(movements: movements, hasNextPage: false),
   );
 
-  await tester.pumpWidget(_app(site));
+  await tester.pumpWidget(_app(site, now: now, locale: locale));
   await tester.pumpAndSettle();
 }
 
@@ -300,11 +449,19 @@ AucorsaCardMovement _movement({
   activation: activation,
 );
 
-Widget _app(_FakeAucorsaSite site) {
+Widget _app(
+  _FakeAucorsaSite site, {
+  DateTime? now,
+  Locale locale = const Locale('en'),
+}) {
   // The help button leaves the page through the router, so the test drives the
   // same two routes the app registers.
   return MaterialApp.router(
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    locale: locale,
+    localizationsDelegates: const [
+      ...AppLocalizations.localizationsDelegates,
+      ...GlobalMaterialLocalizations.delegates,
+    ],
     supportedLocales: AppLocalizations.supportedLocales,
     routerConfig: GoRouter(
       initialLocation: AucorsaMovementsPage.path,
@@ -319,7 +476,7 @@ Widget _app(_FakeAucorsaSite site) {
 
               return site.cubit;
             },
-            child: const AucorsaMovementsView(),
+            child: AucorsaMovementsView(now: now),
           ),
         ),
         GoRoute(
@@ -342,9 +499,7 @@ class _FakeAucorsaSite {
 
   final List<(String, int)> movementRequests = [];
 
-  new({
-    required this._loadMovements,
-  });
+  new({required this._loadMovements});
 
   late final Dio _client = Dio()
     ..interceptors.add(InterceptorsWrapper(onRequest: _onRequest));

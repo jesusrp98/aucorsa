@@ -43,12 +43,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get authorSubtitle => 'Aplicaciones libres bien diseñadas';
 
   @override
-  String get emailTitle => 'Envíame un correo';
-
-  @override
-  String get emailSubtitle => 'Reporta fallos o solicita funciones';
-
-  @override
   String get dataOriginTitle => 'No afiliado con AUCORSA';
 
   @override
@@ -273,6 +267,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aucorsaCardMovementsSubtitle => 'Consulta los últimos movimientos';
+
+  @override
+  String get aucorsaMovementsToday => 'Hoy';
+
+  @override
+  String get aucorsaMovementsYesterday => 'Ayer';
+
+  @override
+  String get aucorsaMovementsThisWeek => 'Esta semana';
+
+  @override
+  String get aucorsaMovementsThisMonth => 'Este mes';
+
+  @override
+  String get aucorsaMovementsOther => 'Otros movimientos';
 
   @override
   String get aucorsaMovementOnlineTopUp => 'Recarga online';

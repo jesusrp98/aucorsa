@@ -164,18 +164,6 @@ abstract class AppLocalizations {
   /// **'Well-designed free applications'**
   String get authorSubtitle;
 
-  /// No description provided for @emailTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Send me an email'**
-  String get emailTitle;
-
-  /// No description provided for @emailSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Report bugs or request features'**
-  String get emailSubtitle;
-
   /// No description provided for @dataOriginTitle.
   ///
   /// In en, this message translates to:
@@ -577,6 +565,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View recent movements'**
   String get aucorsaCardMovementsSubtitle;
+
+  /// No description provided for @aucorsaMovementsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get aucorsaMovementsToday;
+
+  /// No description provided for @aucorsaMovementsYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get aucorsaMovementsYesterday;
+
+  /// No description provided for @aucorsaMovementsThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get aucorsaMovementsThisWeek;
+
+  /// No description provided for @aucorsaMovementsThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get aucorsaMovementsThisMonth;
+
+  /// No description provided for @aucorsaMovementsOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other movements'**
+  String get aucorsaMovementsOther;
 
   /// No description provided for @aucorsaMovementOnlineTopUp.
   ///
