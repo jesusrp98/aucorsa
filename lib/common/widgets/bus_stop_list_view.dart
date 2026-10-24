@@ -1,5 +1,5 @@
 import 'package:aucorsa/common/widgets/bus_stop_tile.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BusStopListView extends StatelessWidget {
   final List<int> stopIds;

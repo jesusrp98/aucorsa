@@ -1,7 +1,7 @@
 import 'package:aucorsa/about/pages/about_page.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AboutButton extends StatelessWidget {
   const new({super.key});

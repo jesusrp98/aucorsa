@@ -4,9 +4,9 @@ import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:aucorsa/common/widgets/theme_bottom_sheet.dart';
-import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

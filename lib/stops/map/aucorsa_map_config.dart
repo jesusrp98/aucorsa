@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:maplibre/maplibre.dart' as ml;
+import 'package:material_ui/material_ui.dart';
 
 abstract final class AucorsaMapConfig {
   static const defaultCenter = ml.Geographic(

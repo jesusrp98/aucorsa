@@ -2,10 +2,10 @@ import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_scrolling_sheet.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<String?> showBusLineSelector(BuildContext context) =>
     showModalBottomSheet(

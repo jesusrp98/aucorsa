@@ -16,10 +16,10 @@ import 'package:aucorsa/common/widgets/bus_stop_options_dialog.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BusStopTile extends StatelessWidget {
   final int stopId;

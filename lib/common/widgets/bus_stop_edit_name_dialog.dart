@@ -1,9 +1,9 @@
 import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
 import 'package:aucorsa/common/utils/bus_stop_custom_icons.dart';
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> showBusStopEditNameDialog(
   BuildContext context, {

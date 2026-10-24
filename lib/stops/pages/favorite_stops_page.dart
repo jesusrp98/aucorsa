@@ -8,8 +8,8 @@ import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:aucorsa/events/widgets/feria_event_tile.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:aucorsa/stops/widgets/no_favorite_stops_tile.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FavoriteStopsPage extends StatelessWidget {
   static const path = '/favorite-stops';

@@ -1,7 +1,7 @@
 import 'package:aucorsa/bonobus/widgets/bonobus_id_dialog.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('prefills and returns an updated card number', (tester) async {

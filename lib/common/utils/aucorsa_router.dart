@@ -8,9 +8,9 @@ import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/home/pages/home_page.dart';
 import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_transitions/go_transitions.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AucorsaRouter {
   const new _();

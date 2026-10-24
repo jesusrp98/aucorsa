@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ThemeCubit extends HydratedCubit<ThemeMode> {
   new() : super(ThemeMode.system);

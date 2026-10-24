@@ -3,7 +3,7 @@ import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/aucorsa_theme.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/widgets/bus_stop_list_view.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BusLinePage extends StatelessWidget {
   static const path = '/bus-line';

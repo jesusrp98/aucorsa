@@ -2,8 +2,8 @@ import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/aucorsa_bonobus_view.dart';
 import 'package:aucorsa/bonobus/widgets/consorcio_bonobus_view.dart';
 import 'package:aucorsa/bonobus/widgets/empty_bonobus_view.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BonobusPage extends StatelessWidget {
   static const path = '/bonobus';

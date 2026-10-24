@@ -6,8 +6,8 @@ import 'package:aucorsa/stops/map/aucorsa_map_config.dart';
 import 'package:aucorsa/stops/map/aucorsa_map_icons.dart';
 import 'package:aucorsa/stops/map/maplibre_layers.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:maplibre/maplibre.dart' as ml;
+import 'package:material_ui/material_ui.dart';
 
 /// Retains layer and feature-list identity until a real layer input changes.
 ///

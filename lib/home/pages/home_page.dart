@@ -3,15 +3,15 @@ import 'package:aucorsa/bus_lines/pages/bus_lines_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/utils/bus_stop_search.dart';
+import 'package:aucorsa/common/widgets/lucky_navigation_bar.dart';
 import 'package:aucorsa/events/models/events_calendar.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 class HomePage extends StatefulWidget {
   static const path = '/';

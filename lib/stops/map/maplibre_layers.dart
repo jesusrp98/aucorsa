@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:maplibre/maplibre.dart' as ml;
+import 'package:material_ui/material_ui.dart';
 
 /// Layers whose equality represents only their native style configuration.
 ///

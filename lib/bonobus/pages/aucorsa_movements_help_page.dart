@@ -1,5 +1,5 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Explains, step by step, everything AUCORSA requires before the movement
 /// history of a bonobus can be shown inside the app.

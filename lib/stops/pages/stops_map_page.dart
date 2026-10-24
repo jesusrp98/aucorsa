@@ -2,8 +2,8 @@ import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
 import 'package:aucorsa/stops/map/widgets/aucorsa_map.dart';
 import 'package:aucorsa/stops/widgets/bus_line_selector_bar.dart';
 import 'package:aucorsa/stops/widgets/bus_line_selector_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 class StopsMapPage extends StatefulWidget {
   static const path = '/stops-map';

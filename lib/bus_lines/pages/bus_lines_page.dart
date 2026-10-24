@@ -3,9 +3,9 @@ import 'package:aucorsa/bus_lines/pages/bus_line_page.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BusLinesPages extends StatelessWidget {
   static const path = '/bus-lines';

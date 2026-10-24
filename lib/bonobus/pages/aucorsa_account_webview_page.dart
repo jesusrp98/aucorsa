@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:aucorsa/bonobus/utils/aucorsa_api.dart';
 import 'package:aucorsa/bonobus/utils/aucorsa_session.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Signs the user in to their AUCORSA account, popping with `true` once the

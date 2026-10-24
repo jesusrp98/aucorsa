@@ -1,10 +1,10 @@
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_details_view.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   late BonobusCubit cubit;

@@ -1,9 +1,9 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
 import 'package:aucorsa/stops/pages/stops_map_page.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 class NoFavoriteStopsTile extends StatelessWidget {
   const new({super.key});

@@ -14,10 +14,10 @@ import 'package:aucorsa/stops/map/widgets/aucorsa_map_error.dart';
 import 'package:aucorsa/stops/utils/location_permission_utils.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
 import 'package:aucorsa/stops/widgets/location_outside_map_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:maplibre/maplibre.dart' as ml;
+import 'package:material_ui/material_ui.dart';
 
 class AucorsaMap extends StatefulWidget {
   final EdgeInsets? margin;

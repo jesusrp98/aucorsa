@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef SearchFilter<T> = List<String?> Function(T t);
 typedef ResultBuilder<T> = Widget Function(T t);

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:lucky_navigation_bar/lucky_navigation_bar.dart';
+import 'package:aucorsa/common/widgets/lucky_navigation_bar.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AucorsaTheme {
   const new _();

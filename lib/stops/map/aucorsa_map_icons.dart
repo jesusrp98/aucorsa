@@ -1,9 +1,9 @@
 import 'package:aucorsa/common/cubits/bus_stop_custom_data_cubit.dart';
 import 'package:aucorsa/common/utils/bus_stop_custom_icons.dart';
 import 'package:aucorsa/stops/map/aucorsa_map_config.dart';
-import 'package:flutter/material.dart';
 import 'package:maplibre/maplibre.dart' as ml;
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 abstract final class AucorsaMapIcons {
   static const routeArrowId = 'aucorsa-route-arrow';

@@ -8,8 +8,8 @@ import 'package:aucorsa/common/utils/aucorsa_theme.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AucorsaApp extends StatelessWidget {
   static final router = AucorsaRouter.initialize();

@@ -1,8 +1,8 @@
 import 'package:aucorsa/bus_lines/widget/feria_lines_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FeriaEventTile extends StatelessWidget {
   const new({super.key});

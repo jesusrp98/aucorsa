@@ -4,9 +4,9 @@ import 'package:aucorsa/common/utils/bus_line_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_scrolling_sheet.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:aucorsa/events/models/event_id.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> showFeriaLinesDialog(BuildContext context) => showModalBottomSheet(
   context: context,

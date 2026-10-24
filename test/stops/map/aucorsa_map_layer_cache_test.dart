@@ -4,10 +4,10 @@ import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
 import 'package:aucorsa/stops/map/aucorsa_map_icons.dart';
 import 'package:aucorsa/stops/map/aucorsa_map_layer_cache.dart';
 import 'package:aucorsa/stops/map/maplibre_layers.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maplibre/maplibre.dart' as ml;
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   const stopColor = Color(0xFFAAFFAA);

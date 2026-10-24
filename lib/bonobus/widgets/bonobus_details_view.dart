@@ -7,10 +7,10 @@ import 'package:aucorsa/bonobus/widgets/bonobus_options_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/urls.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class BonobusDetailsView extends StatelessWidget {

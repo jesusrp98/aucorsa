@@ -3,9 +3,9 @@ import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:aucorsa/stops/utils/map_path_bearing_utils.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:material_ui/material_ui.dart';
 
 part 'bus_line_selector_state.dart';
 

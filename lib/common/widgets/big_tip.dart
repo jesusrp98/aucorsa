@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Widget that will inform the user about a specific topic.
 /// Information could be transmitted via text, icons or any other widget.

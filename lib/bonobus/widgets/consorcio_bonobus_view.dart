@@ -1,6 +1,6 @@
 import 'package:aucorsa/bonobus/widgets/bonobus_details_view.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_scan_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ConsorcioBonobusView extends StatelessWidget {
   const new({super.key});

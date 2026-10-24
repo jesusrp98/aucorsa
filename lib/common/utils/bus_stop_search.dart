@@ -1,7 +1,7 @@
 import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/utils/search_page.dart';
 import 'package:aucorsa/common/widgets/bus_stop_tile.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> showBusStopSearch({
   required BuildContext context,

@@ -1,7 +1,7 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/utils/date_time_extension.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BonobusBalanceView extends StatelessWidget {
   final String? balance;

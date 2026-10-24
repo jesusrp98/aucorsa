@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> showLocationPermissionDialog(BuildContext context) =>
     showModalBottomSheet(

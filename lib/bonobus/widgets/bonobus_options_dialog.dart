@@ -1,8 +1,8 @@
 import 'package:aucorsa/bonobus/widgets/bonobus_delete_dialog.dart';
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
 import 'package:aucorsa/common/widgets/list_view_section.dart';
-import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> showBonobusOptionsDialog({
   required BuildContext context,
