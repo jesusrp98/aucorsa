@@ -13,7 +13,7 @@ class BusStopCubit extends Cubit<BusStopState> {
   Future<void> fetchEstimations() async {
     emit(state.copyWith(status: AucorsaStateStatus.loading));
 
-    return busServiceCubit
+    return await busServiceCubit
         .requestBusStopData(state.stopId)
         .then(
           (estimations) => emit(

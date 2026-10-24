@@ -93,7 +93,7 @@ class AppGroupSyncCubit extends Cubit<AppGroupSyncState> {
 
     if (_isResyncQueued && !isClosed) {
       _isResyncQueued = false;
-      return syncNow();
+      return await syncNow();
     }
   }
 
@@ -110,6 +110,6 @@ class AppGroupSyncCubit extends Cubit<AppGroupSyncState> {
     await _favoritesSubscription.cancel();
     await _customDataSubscription.cancel();
 
-    return super.close();
+    return await super.close();
   }
 }

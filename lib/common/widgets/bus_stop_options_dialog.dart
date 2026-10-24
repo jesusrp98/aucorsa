@@ -41,7 +41,7 @@ class _BusStopOptionsDialogView extends StatelessWidget {
               await Future<void>.delayed(const Duration(milliseconds: 150));
 
               if (!context.mounted) return;
-              return showBusStopEditNameDialog(context, stopId: stopId);
+              return await showBusStopEditNameDialog(context, stopId: stopId);
             },
           ),
           ListTile(
@@ -55,7 +55,7 @@ class _BusStopOptionsDialogView extends StatelessWidget {
               await Future<void>.delayed(const Duration(milliseconds: 150));
 
               if (!context.mounted) return;
-              return showBusStopDeleteDialog(
+              return await showBusStopDeleteDialog(
                 context: context,
                 onDelete: onDelete,
               );

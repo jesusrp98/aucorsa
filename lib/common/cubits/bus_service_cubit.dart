@@ -44,7 +44,7 @@ class BusServiceCubit extends HydratedCubit<String?> {
     // when the service is unavailable or rejects the client for another reason.
     if (response.statusCode == 403 && canRetry) {
       emit(null);
-      return _requestBusStopData(stopId, canRetry: false);
+      return await _requestBusStopData(stopId, canRetry: false);
     }
 
     if (response.statusCode != 200) {

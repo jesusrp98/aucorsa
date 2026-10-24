@@ -244,7 +244,7 @@ class AucorsaMovementsCubit extends HydratedCubit<AucorsaMovementsState> {
       if (canRefreshNonce && code.contains('nonce')) {
         final freshNonce = await AucorsaApi.loadNonce(_client, cookieHeader);
         _nonce = freshNonce;
-        return _requestMovements(
+        return await _requestMovements(
           page: page,
           cookieHeader: cookieHeader,
           nonce: freshNonce,

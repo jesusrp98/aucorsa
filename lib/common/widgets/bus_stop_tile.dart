@@ -312,10 +312,10 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 
     if (_expanded) {
       unawaited(_requestData());
-      return _controller.forward();
+      return await _controller.forward();
     }
 
-    return _controller.reverse();
+    return await _controller.reverse();
   }
 
   Future<void> _requestData({bool hapticFeedback = false}) async {

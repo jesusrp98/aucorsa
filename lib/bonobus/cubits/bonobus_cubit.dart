@@ -84,7 +84,7 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
       );
     }
 
-    return refresh();
+    return await refresh();
   }
 
   /// Forgets the stored bonobus, along with any account data it left behind.
@@ -182,7 +182,7 @@ class BonobusCubit extends HydratedCubit<BonobusState> {
     if (canRefreshNonce && code.contains('nonce')) {
       final freshNonce = await AucorsaApi.loadNonce(_client);
       _nonce = freshNonce;
-      return _requestCard(
+      return await _requestCard(
         cardNumber: cardNumber,
         nonce: freshNonce,
         canRefreshNonce: false,

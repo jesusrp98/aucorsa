@@ -56,7 +56,7 @@ class _BonobusOptionsDialogView extends StatelessWidget {
               await Future<void>.delayed(_closeDuration);
 
               if (!context.mounted) return;
-              return showBonobusDeleteDialog(
+              return await showBonobusDeleteDialog(
                 context: context,
                 onDelete: onDelete,
               );

@@ -47,7 +47,7 @@ final class OfflineMapInstaller {
 
   Future<InstalledOfflineMap> install() async {
     final cached = _installation;
-    if (cached != null) return cached;
+    if (cached != null) return await cached;
 
     final attempt = _install();
     _installation = attempt;
@@ -158,7 +158,7 @@ final class OfflineMapInstaller {
       await _sha256Of(archive) == manifest.archiveSha256;
 
   Future<String> _sha256Of(File file) async =>
-      compute(_sha256Hex, await file.readAsBytes());
+      await compute(_sha256Hex, await file.readAsBytes());
 
   Future<void> _deleteObsoleteInstallations(
     Directory installationRoot, {
