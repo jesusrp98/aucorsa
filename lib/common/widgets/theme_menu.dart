@@ -21,7 +21,9 @@ class ThemeMenu extends StatelessWidget {
           Semantics(
             selected: themeMode == selectedTheme,
             child: MenuItemButton(
-              onPressed: () => context.read<ThemeCubit>().setThemeMode(themeMode),
+              onPressed: () {
+                context.read<ThemeCubit>().setThemeMode(themeMode);
+              },
               style: themeMode == selectedTheme
                   ? ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(

@@ -6,6 +6,7 @@ import 'package:aucorsa/common/cubits/theme_cubit.dart';
 import 'package:aucorsa/common/utils/aucorsa_router.dart';
 import 'package:aucorsa/common/utils/aucorsa_theme.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
+import 'package:aucorsa/live_activity/live_activity_cubit.dart';
 import 'package:aucorsa/stops/cubits/bus_line_selector_cubit.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,12 @@ class AucorsaApp extends StatelessWidget {
         const BlocProvider(create: BusLineSelectorCubit.new),
         BlocProvider(create: (_) => BusStopCustomDataCubit()),
         BlocProvider(create: (_) => BonobusCubit()),
+        BlocProvider(
+          lazy: false,
+          create: (context) => LiveActivityCubit(
+            customData: context.read<BusStopCustomDataCubit>(),
+          ),
+        ),
 
         // Must come after the two cubits it reads, and must not be lazy:
         // nothing in the UI watches it, so a lazy provider would never build it

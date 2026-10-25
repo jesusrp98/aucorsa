@@ -53,6 +53,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      // An activity link has an explicit destination, even with no favorites.
+      if (widget.state.uri.path != FavoriteStopsPage.path ||
+          widget.state.uri.queryParameters.containsKey('stop')) {
+        return;
+      }
       // Dont redirect if there are events scheduled
       if (EventsCalendar.currentEvents.isNotEmpty) return;
 

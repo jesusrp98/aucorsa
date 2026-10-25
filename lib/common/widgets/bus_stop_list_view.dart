@@ -4,8 +4,9 @@ import 'package:material_ui/material_ui.dart';
 class BusStopListView extends StatelessWidget {
   final List<int> stopIds;
   final EdgeInsets? padding;
+  final Widget Function(BuildContext context, int stopId)? stopBuilder;
 
-  const new({required this.stopIds, this.padding, super.key});
+  const new({required this.stopIds, this.padding, this.stopBuilder, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class BusStopListView extends StatelessWidget {
                   ? const Radius.circular(24)
                   : const Radius.circular(4),
             ),
-            child: BusStopTile(stopId: stopIds[index]),
+            child:
+                stopBuilder?.call(context, stopIds[index]) ??
+                BusStopTile(stopId: stopIds[index]),
           ),
         ),
       ),

@@ -29,7 +29,7 @@ public enum EstimationParser {
     )
 
     private static let arrivalPattern = try! NSRegularExpression(
-        pattern: #"<strong>(.*?)</strong>"#,
+        pattern: #"<strong\b[^>]*>(.*?)</strong>"#,
         options: [.dotMatchesLineSeparators]
     )
 
@@ -61,11 +61,11 @@ public enum EstimationParser {
 
     /// `"3 minutos"` -> `3`, `"1 minuto"` -> `1`.
     ///
-    /// The Dart original falls back to zero when the leading number is missing;
-    /// this drops the entry instead. A bus "arriving in 0 minutes" is a worse
-    /// answer for Siri to speak than one estimate fewer.
+    /// AUCORSA marks imminent buses as `<strong class="blinker">ahora</strong>`.
+    /// Recognize that explicit value; unknown text still must not imply arrival.
     static func minutes(from text: String) -> Int? {
-        let decoded = decodeEntities(text)
+        let decoded = decodeEntities(text).trimmingCharacters(in: .whitespacesAndNewlines)
+        if decoded.lowercased() == "ahora" { return 0 }
         guard let match = firstMatch(minutesPattern, in: decoded) else { return nil }
         return Int(match)
     }

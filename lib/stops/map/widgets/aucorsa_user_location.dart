@@ -50,7 +50,7 @@ class AucorsaUserLocation extends StatelessWidget {
 class AucorsaLocationIndicator extends StatefulWidget {
   static const size = 128.0;
 
-  /// Compass heading in degrees, or null when a reliable heading is unavailable.
+  /// Compass heading in degrees, or null when no reliable heading is available.
   final double? heading;
 
   const new({required this.heading, super.key});
@@ -70,23 +70,25 @@ class _AucorsaLocationIndicatorState extends State<AucorsaLocationIndicator>
   // Keep the white ring and heading beam stationary throughout the pulse.
   late final dotRadius = TweenSequence<double>([
     TweenSequenceItem(
-      tween: Tween(
-        begin: 8.0,
+      tween: Tween<double>(
+        begin: 8,
         end: 6.75,
       ).chain(CurveTween(curve: Curves.easeInOutSine)),
       weight: 1,
     ),
     TweenSequenceItem(
-      tween: Tween(
+      tween: Tween<double>(
         begin: 6.75,
-        end: 8.0,
+        end: 8,
       ).chain(CurveTween(curve: Curves.easeInOutSine)),
       weight: 1,
     ),
-    TweenSequenceItem(tween: ConstantTween(8.0), weight: 1),
+    TweenSequenceItem(tween: ConstantTween(8), weight: 1),
   ]).animate(pulseController);
 
   double turns = 0;
+  // Snap straight to the first reading instead of sweeping in from north.
+  bool animateTurns = false;
   bool get hasHeading => widget.heading?.isFinite ?? false;
 
   @override
@@ -116,9 +118,15 @@ class _AucorsaLocationIndicatorState extends State<AucorsaLocationIndicator>
   @override
   void didUpdateWidget(AucorsaLocationIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
+    animateTurns = hasHeading && (oldWidget.heading?.isFinite ?? false);
     if (!hasHeading) return;
 
     final nextTurns = widget.heading! / 360;
+    if (!animateTurns) {
+      turns = nextTurns;
+      return;
+    }
+
     // Cross north using the shortest arc, rather than spinning a full circle.
     turns += (nextTurns - turns + 0.5) % 1 - 0.5;
   }
@@ -127,7 +135,9 @@ class _AucorsaLocationIndicatorState extends State<AucorsaLocationIndicator>
   Widget build(BuildContext context) => RepaintBoundary(
     child: AnimatedRotation(
       turns: turns,
-      duration: const Duration(milliseconds: 180),
+      duration: animateTurns
+          ? const Duration(milliseconds: 180)
+          : Duration.zero,
       curve: Curves.easeOut,
       child: CustomPaint(
         size: const Size.square(AucorsaLocationIndicator.size),
@@ -145,10 +155,8 @@ class _LocationIndicatorPainter extends CustomPainter {
   final bool showHeading;
   final Animation<double> dotRadius;
 
-  _LocationIndicatorPainter({
-    required this.showHeading,
-    required this.dotRadius,
-  }) : super(repaint: dotRadius);
+  new({required this.showHeading, required this.dotRadius})
+    : super(repaint: dotRadius);
 
   @override
   void paint(Canvas canvas, Size size) {

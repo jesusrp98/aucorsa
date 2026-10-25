@@ -5,10 +5,12 @@ class AucorsaScrollingSheet extends StatelessWidget {
 
   final double initialSheetSize;
   final ScrollableWidgetBuilder builder;
+  final bool showDragHandle;
 
   const new({
     required this.builder,
     this.initialSheetSize = 0.72,
+    this.showDragHandle = true,
     super.key,
   });
 
@@ -27,22 +29,26 @@ class AucorsaScrollingSheet extends StatelessWidget {
         removeRight: true,
         child: Scaffold(
           backgroundColor: backgroundColor,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kMinInteractiveDimension),
-            child: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: backgroundColor,
-              centerTitle: true,
-              title: Container(
-                height: _dragHandleSize.height,
-                width: _dragHandleSize.width,
-                decoration: ShapeDecoration(
-                  shape: const StadiumBorder(),
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-          ),
+          appBar: showDragHandle
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(
+                    kMinInteractiveDimension,
+                  ),
+                  child: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: backgroundColor,
+                    centerTitle: true,
+                    title: Container(
+                      height: _dragHandleSize.height,
+                      width: _dragHandleSize.width,
+                      decoration: ShapeDecoration(
+                        shape: const StadiumBorder(),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                )
+              : null,
           body: builder(context, scrollController),
         ),
       ),

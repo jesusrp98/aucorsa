@@ -1,0 +1,4 @@
+// Copy to LiveActivityBackend.xcconfig (not tracked) and set the host of your
+// deployed liveActivitySessions function, without https:// (xcconfig files
+// treat // as a comment). Used only by the `personal` flavor.
+LIVE_ACTIVITY_BACKEND_HOST = europe-west1-YOUR-PROJECT-ID.cloudfunctions.net

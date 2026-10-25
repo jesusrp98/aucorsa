@@ -1,0 +1,10 @@
+.firebase/
+firebase-debug*.log
+functions/node_modules/
+functions/lib/
+*.local
+
+# Your Firebase project and APNs key: see README.md and functions/.env.example.
+.firebaserc
+functions/.env.*
+!functions/.env.example

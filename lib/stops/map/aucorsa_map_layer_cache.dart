@@ -12,8 +12,8 @@ import 'package:material_ui/material_ui.dart';
 /// Retains layer and feature-list identity until a real layer input changes.
 ///
 /// Reusing the layers prevents unnecessary native source and style updates.
-/// The caller also memoizes the `MapLibreMap` widget using this list's identity,
-/// preventing unchanged layers from reaching `didUpdateWidget`.
+/// The caller also memoizes the `MapLibreMap` widget using the list's identity
+/// to prevent unchanged layers from reaching `didUpdateWidget`.
 final class AucorsaMapLayerCache {
   BusLineSelectorState? _lineState;
   List<int>? _stopIconCodes;

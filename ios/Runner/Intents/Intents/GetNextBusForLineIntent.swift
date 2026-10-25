@@ -1,3 +1,6 @@
+#if LIVE_ACTIVITIES
+import ActivityKit
+#endif
 import AppIntents
 import AucorsaKit
 import Foundation
@@ -25,9 +28,19 @@ struct GetNextBusForLineIntent: AppIntent {
         )
     }
 
+    // Two declarations, because the App Intents metadata processor can't
+    // read `#if` inside one. The extra parameter shows under "Show More".
+    #if LIVE_ACTIVITIES
+    static var parameterSummary: some ParameterSummary {
+        Summary("Get the next line \(\.$line) bus at \(\.$stop)", table: "Intents") {
+            \.$startsLiveActivity
+        }
+    }
+    #else
     static var parameterSummary: some ParameterSummary {
         Summary("Get the next line \(\.$line) bus at \(\.$stop)", table: "Intents")
     }
+    #endif
 
     @Parameter(
         title: LocalizedStringResource("Line", table: "Intents"),
@@ -45,6 +58,19 @@ struct GetNextBusForLineIntent: AppIntent {
     )
     var stop: BusStopEntity?
 
+    #if LIVE_ACTIVITIES
+    // Only builds with a Live Activity backend (the `personal` flavor) offer it.
+    @Parameter(
+        title: LocalizedStringResource("Start Live Activity", table: "Intents"),
+        description: LocalizedStringResource(
+            "Follows the line on the Lock Screen and in the Dynamic Island for 15 minutes.",
+            table: "Intents"
+        ),
+        default: false
+    )
+    var startsLiveActivity: Bool
+    #endif
+
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let target = try await resolvedStop()
@@ -57,6 +83,10 @@ struct GetNextBusForLineIntent: AppIntent {
         }
 
         let match = estimations.first { $0.lineID == line.id }
+
+        #if LIVE_ACTIVITIES
+        if startsLiveActivity { await startLiveActivity(at: target) }
+        #endif
 
         return .result(
             dialog: ArrivalsFormatter.dialog(
@@ -117,3 +147,29 @@ struct GetNextBusForLineIntent: AppIntent {
         return stop
     }
 }
+
+#if LIVE_ACTIVITIES
+/// In builds with a Live Activity backend, this intent is left out of the
+/// intents extension, so iOS runs it in the app's process; as a
+/// `LiveActivityIntent` it may then start an activity even while Aucorsa is
+/// closed.
+extension GetNextBusForLineIntent: LiveActivityIntent {
+    /// Best-effort: the spoken answer doesn't depend on it.
+    @MainActor
+    fileprivate func startLiveActivity(at stop: BusStopEntity) async {
+        guard let backend = LiveActivityBackend.configured else { return }
+        do {
+            let activity = try await BusArrivalActivityStarter.start(
+                stopID: stop.id, lineID: line.id, name: stop.displayName,
+                language: Bundle.main.preferredLocalizations.first == "es" ? "es" : "en",
+                endingPrevious: { await BusArrivalActivityStarter.endAll(unregisteringFrom: backend) }
+            )
+            NotificationCenter.default.post(name: BusArrivalActivityStarter.didStartNotification, object: nil)
+            try await BusArrivalActivityStarter.registerFirstPushToken(of: activity, with: backend)
+            NSLog("Live Activity started from a shortcut and registered for server refreshes")
+        } catch {
+            NSLog("Live Activity from a shortcut failed: %@", String(reflecting: error))
+        }
+    }
+}
+#endif

@@ -1,4 +1,5 @@
 import 'package:aucorsa/common/utils/app_localizations_extension.dart';
+import 'package:aucorsa/common/widgets/sheet_primary_button.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -33,9 +34,8 @@ class _BusStopDeleteDialogView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               context.l10n.deleteStopTitle,
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.titleLarge
+                  ?.copyWith(fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
@@ -50,23 +50,12 @@ class _BusStopDeleteDialogView extends StatelessWidget {
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  minimumSize: const Size.fromHeight(56),
-                  textStyle: Theme.of(context).textTheme.titleMedium,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                ),
+              child: SheetPrimaryButton(
+                label: context.l10n.deleteStopCta,
                 onPressed: () {
                   Navigator.of(context).pop();
                   return onDelete();
                 },
-                child: Text(
-                  context.l10n.deleteStopCta,
-                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -80,9 +69,9 @@ class _BusStopDeleteDialogView extends StatelessWidget {
                   minimumSize: const Size.fromHeight(56),
                   textStyle: Theme.of(context).textTheme.titleMedium,
                   foregroundColor: Theme.of(context).colorScheme.onSurface,
-                  backgroundColor: Theme.of(
-                    context,
-                  ).colorScheme.surfaceContainerHighest,
+                  backgroundColor: Theme.of(context)
+                      .colorScheme
+                      .surfaceContainerHighest,
                 ),
                 onPressed: Navigator.of(context).pop,
                 child: Text(

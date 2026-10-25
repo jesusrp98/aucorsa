@@ -34,9 +34,21 @@ public actor AucorsaClient {
             configuration.timeoutIntervalForRequest = 10
             configuration.timeoutIntervalForResource = 20
             configuration.waitsForConnectivity = false
+            // Arrival responses and pages containing a nonce must not be
+            // replayed from URLSession's persistent HTTP cache.
+            configuration.urlCache = nil
+            // This is a public, anonymous WordPress API. Cookies from other
+            // app web sessions can make its public nonce fail validation.
+            configuration.httpCookieStorage = nil
+            configuration.httpShouldSetCookies = false
             self.session = URLSession(configuration: configuration)
         }
         self.nonceStore = NonceStore()
+    }
+
+    init(session: URLSession, nonceStore: NonceStore) {
+        self.session = session
+        self.nonceStore = nonceStore
     }
 
     // MARK: - Public API
@@ -61,7 +73,7 @@ public actor AucorsaClient {
     private func estimationsHTML(
         forStop stopID: Int, canRetry: Bool
     ) async throws -> String {
-        let nonce = try await currentNonce()
+        let nonce = try await currentNonce(forceRefresh: !canRetry)
 
         var components = URLComponents(
             url: Self.estimationsURL, resolvingAgainstBaseURL: false
@@ -96,10 +108,19 @@ public actor AucorsaClient {
         return html
     }
 
-    private func currentNonce() async throws -> String {
-        if let cached = nonceStore.load() { return cached }
+    private func currentNonce(forceRefresh: Bool = false) async throws -> String {
+        if !forceRefresh, let cached = nonceStore.load() { return cached }
 
-        let (data, response) = try await perform(request(for: Self.homepageURL))
+        var homepageURL = Self.homepageURL
+        if forceRefresh {
+            // A rejected nonce can also live in a proxy's cached homepage.
+            // Use a fresh URL for the single recovery attempt, rather than
+            // downloading that same cached page and retrying the old nonce.
+            var components = URLComponents(url: homepageURL, resolvingAgainstBaseURL: false)!
+            components.queryItems = [URLQueryItem(name: "_aucorsa_nonce_refresh", value: UUID().uuidString)]
+            homepageURL = components.url!
+        }
+        let (data, response) = try await perform(request(for: homepageURL))
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw AucorsaError.serviceUnavailable(
                 statusCode: (response as? HTTPURLResponse)?.statusCode
@@ -129,7 +150,9 @@ public actor AucorsaClient {
     }
 
     private func request(for url: URL) -> URLRequest {
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
+        request.httpShouldHandleCookies = false
+        request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
         request.setValue("https://aucorsa.es/", forHTTPHeaderField: "Referer")
         // An explicit User-Agent is required, not cosmetic: the origin sits
         // behind Cloudflare, which rejects several default library agents with
@@ -147,7 +170,14 @@ public actor AucorsaClient {
 
     private func perform(_ request: URLRequest) async throws -> (Data, URLResponse) {
         do {
-            return try await session.data(for: request)
+            let result = try await session.data(for: request)
+            if let response = result.1 as? HTTPURLResponse, response.statusCode >= 400 {
+                let code = (try? JSONSerialization.jsonObject(with: result.0) as? [String: Any])?["code"] as? String
+                NSLog("Aucorsa request failed: host=%@ status=%ld apiCode=%@ cache=%@", request.url?.host ?? "",
+                      response.statusCode, code ?? "non-JSON response",
+                      response.value(forHTTPHeaderField: "CF-Cache-Status") ?? "none")
+            }
+            return result
         } catch {
             Self.logger.error("Request failed: \(error.localizedDescription)")
             throw AucorsaError.serviceUnavailable(statusCode: nil)

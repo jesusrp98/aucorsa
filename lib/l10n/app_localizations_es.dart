@@ -312,4 +312,24 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aucorsaNoMovementsSubtitle =>
       'AUCORSA no ha devuelto movimientos para este bonobús. Consulta el botón de ayuda de arriba para comprobar que la tarjeta está vinculada a tu cuenta.';
+
+  @override
+  String get liveActivityDisabled =>
+      'Las actividades en directo están desactivadas. Actívalas para Aucorsa en los ajustes de iOS.';
+
+  @override
+  String get liveActivityFailed =>
+      'No se pudo actualizar la actividad en directo. Comprueba la conexión e inténtalo de nuevo.';
+
+  @override
+  String get liveActivityInvalidStop => 'Esta parada no está disponible.';
+
+  @override
+  String get estimationsRefreshFailed =>
+      'No se pudo actualizar. Se muestran las últimas estimaciones recibidas.';
+
+  @override
+  String liveActivityTargeting(String line, String stop) {
+    return 'Siguiendo la línea $line en $stop';
+  }
 }

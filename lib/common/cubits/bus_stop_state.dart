@@ -6,22 +6,26 @@ class BusStopState extends Equatable {
   final List<BusStopLineEstimation> estimations;
   final AucorsaStateStatus status;
   final int stopId;
+  final DateTime? fetchedAt;
 
   const new({
     required this.stopId,
     this.estimations = const [],
     this.status = AucorsaStateStatus.initial,
+    this.fetchedAt,
   });
 
   BusStopState copyWith({
     List<BusStopLineEstimation>? estimations,
     AucorsaStateStatus? status,
+    DateTime? fetchedAt,
   }) => BusStopState(
     estimations: estimations ?? this.estimations,
     status: status ?? this.status,
     stopId: stopId,
+    fetchedAt: fetchedAt ?? this.fetchedAt,
   );
 
   @override
-  List<Object?> get props => [estimations, status, stopId];
+  List<Object?> get props => [estimations, status, stopId, fetchedAt];
 }

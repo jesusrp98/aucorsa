@@ -14,5 +14,6 @@ import UIKit
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
 
     AppGroupChannel.register(with: engineBridge.applicationRegistrar.messenger())
+    LiveActivityChannel.register(with: engineBridge.applicationRegistrar.messenger())
   }
 }

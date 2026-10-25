@@ -114,5 +114,20 @@
     "aucorsaMovementsUnavailableTitle": "Movement history unavailable",
     "aucorsaMovementsUnavailableSubtitle": "We couldn't load the movement history for this bonobus. Check the help button at the top and try again.",
     "aucorsaNoMovementsTitle": "No movements",
-    "aucorsaNoMovementsSubtitle": "AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account."
+    "aucorsaNoMovementsSubtitle": "AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account.",
+    "liveActivityDisabled": "Live Activities are disabled. Enable them for Aucorsa in iOS Settings.",
+    "liveActivityFailed": "Could not update the Live Activity. Check your connection and try again.",
+    "liveActivityInvalidStop": "This stop is not available.",
+    "estimationsRefreshFailed": "Could not refresh. These are the last received estimates.",
+    "liveActivityTargeting": "Targeting line {line} at {stop}",
+    "@liveActivityTargeting": {
+        "placeholders": {
+            "line": {
+                "type": "String"
+            },
+            "stop": {
+                "type": "String"
+            }
+        }
+    }
 }

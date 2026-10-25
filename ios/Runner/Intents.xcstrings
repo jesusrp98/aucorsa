@@ -430,6 +430,28 @@
           }
         }
       }
+    },
+    "Start Live Activity": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar actividad en directo"
+          }
+        }
+      }
+    },
+    "Follows the line on the Lock Screen and in the Dynamic Island for 15 minutes.": {
+      "extractionState": "manual",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue la línea en la pantalla de bloqueo y en la Dynamic Island durante 15 minutos."
+          }
+        }
+      }
     }
   }
 }

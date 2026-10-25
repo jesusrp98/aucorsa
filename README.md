@@ -38,6 +38,13 @@ Feature set is small by design, because the app aims to be as lean as possible.
 - **Bus lines and stops**: detailed list of all available bus lines & stops.
 - **Favorites**: save your favorite bus stops for quick access.
 - **Search**: you can serach by name or by stop ID.
+- **Live Activities (iOS, self-hosted)**: follow a bus line in the Dynamic
+  Island and on the Lock Screen, refreshed every 30 seconds even in the
+  background by a small [Firebase backend](backend/README.md) you deploy
+  yourself. Available when you build the `personal` flavor against your own
+  backend, which can also start one from the Siri shortcut; App Store builds
+  don't include it.
+  See [behavior and setup](docs/live-activities.md).
 
 ## Data provided by AUCORSA
 

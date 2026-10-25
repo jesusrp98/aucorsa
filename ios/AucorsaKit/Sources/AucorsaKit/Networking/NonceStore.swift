@@ -13,10 +13,15 @@ struct NonceStore: Sendable {
 
     private let valueKey = "aucorsa.nonce.value"
     private let dateKey = "aucorsa.nonce.storedAt"
+    private let suiteName: String
+
+    init(suiteName: String = AppGroup.identifier) {
+        self.suiteName = suiteName
+    }
 
     /// Falls back to standard defaults so the client still works before the App
     /// Group is provisioned (it just does not share the nonce with the app).
-    private var defaults: UserDefaults { AppGroup.defaults ?? .standard }
+    private var defaults: UserDefaults { UserDefaults(suiteName: suiteName) ?? .standard }
 
     func load(now: Date = Date()) -> String? {
         guard

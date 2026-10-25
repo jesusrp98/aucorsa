@@ -1,0 +1,2 @@
+// Keep the extension's version identical to Flutter's host app on every build.
+#include "../Flutter/Generated.xcconfig"

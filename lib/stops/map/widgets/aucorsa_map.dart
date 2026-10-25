@@ -16,6 +16,7 @@ import 'package:aucorsa/stops/utils/location_permission_utils.dart';
 import 'package:aucorsa/stops/widgets/bus_line_selector_dialog.dart';
 import 'package:aucorsa/stops/widgets/bus_stop_dialog.dart';
 import 'package:aucorsa/stops/widgets/location_outside_map_dialog.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:maplibre/maplibre.dart' as ml;
@@ -35,7 +36,11 @@ class _AucorsaMapState extends State<AucorsaMap> {
   final followLocation = ValueNotifier<bool>(false);
   final currentPosition = ValueNotifier<Position?>(null);
   final layerCache = AucorsaMapLayerCache();
+  final activePointers = <int>{};
   StreamSubscription<Position>? positionSubscription;
+  int? tapPointer;
+  Offset tapDownPosition = Offset.zero;
+  Duration tapDownTimeStamp = Duration.zero;
 
   ml.MapController? mapController;
   Brightness? mapStyleBrightness;
@@ -150,7 +155,14 @@ class _AucorsaMapState extends State<AucorsaMap> {
     return Stack(
       children: [
         Positioned.fill(
-          child: _buildMap(busLineSelectorState, customDataState, brightness),
+          // Native map clicks only fire once the double-tap window expires,
+          // so stop taps are detected here to open the sheet right away.
+          child: Listener(
+            onPointerDown: _onPointerDown,
+            onPointerUp: _onPointerUp,
+            onPointerCancel: _onPointerCancel,
+            child: _buildMap(busLineSelectorState, customDataState, brightness),
+          ),
         ),
         if (preparedMap != null)
           Positioned(
@@ -270,14 +282,11 @@ class _AucorsaMapState extends State<AucorsaMap> {
     try {
       positionSubscription ??=
           Geolocator.getPositionStream(
-            locationSettings: const LocationSettings(
-              accuracy: LocationAccuracy.best,
-              distanceFilter: 1,
-            ),
+            locationSettings: const LocationSettings(distanceFilter: 1),
           ).listen(
             _onPositionChanged,
             onError: (Object error) {
-              // Keep the last fix visible, but allow the location button to retry.
+              // Keep the last fix visible; let the location button retry.
               unawaited(positionSubscription?.cancel());
               positionSubscription = null;
               if (mounted) followLocation.value = false;
@@ -327,15 +336,36 @@ class _AucorsaMapState extends State<AucorsaMap> {
       return;
     }
 
-    if (event case ml.MapEventClick(:final screenPoint)) {
-      _handleMapClick(screenPoint);
-      return;
-    }
-
     if (event case ml.MapEventMoveCamera(:final camera)) {
       final nextRotation = camera.bearing * pi / 180;
       if (nextRotation != rotation.value) rotation.value = nextRotation;
     }
+  }
+
+  void _onPointerDown(PointerDownEvent event) {
+    activePointers.add(event.pointer);
+    final isSingleTouch =
+        activePointers.length == 1 && event.buttons == kPrimaryButton;
+    tapPointer = isSingleTouch ? event.pointer : null;
+    tapDownPosition = event.localPosition;
+    tapDownTimeStamp = event.timeStamp;
+  }
+
+  void _onPointerUp(PointerUpEvent event) {
+    activePointers.remove(event.pointer);
+    if (tapPointer != event.pointer) return;
+
+    tapPointer = null;
+    final distance = (event.localPosition - tapDownPosition).distance;
+    final duration = event.timeStamp - tapDownTimeStamp;
+    if (distance > kTouchSlop || duration > kLongPressTimeout) return;
+
+    _handleMapClick(event.localPosition);
+  }
+
+  void _onPointerCancel(PointerCancelEvent event) {
+    activePointers.remove(event.pointer);
+    if (tapPointer == event.pointer) tapPointer = null;
   }
 
   void _handleMapClick(Offset screenPoint) {

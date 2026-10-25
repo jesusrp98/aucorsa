@@ -72,5 +72,20 @@
 			<string>UIInterfaceOrientationLandscapeLeft</string>
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
+		<key>NSSupportsLiveActivities</key>
+		<string>$(LIVE_ACTIVITIES_ENABLED)</string>
+		<key>NSSupportsLiveActivitiesFrequentUpdates</key>
+		<string>$(LIVE_ACTIVITIES_ENABLED)</string>
+		<key>LiveActivityBackendHost</key>
+		<string>$(LIVE_ACTIVITY_BACKEND_HOST)</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>com.chechu.aucorsa</string>
+				<key>CFBundleURLSchemes</key>
+				<array><string>aucorsa</string></array>
+			</dict>
+		</array>
 	</dict>
 </plist>

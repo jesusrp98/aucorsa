@@ -13,11 +13,14 @@ import 'package:aucorsa/common/utils/bus_stop_utils.dart';
 import 'package:aucorsa/common/widgets/aucorsa_shimmer.dart';
 import 'package:aucorsa/common/widgets/bus_line_tile.dart';
 import 'package:aucorsa/common/widgets/bus_stop_options_menu.dart';
+import 'package:aucorsa/live_activity/live_activity_controls.dart';
 import 'package:aucorsa/stops/cubits/favorite_stops_cubit.dart';
+import 'package:aucorsa/stops/pages/favorite_stops_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -25,7 +28,15 @@ class BusStopTile extends StatelessWidget {
   final int stopId;
   final bool alwaysExpanded;
 
-  const new({required this.stopId, super.key, this.alwaysExpanded = false});
+  /// A new non-null value opens the card without changing its tap behavior.
+  final Object? expandRequest;
+
+  const new({
+    required this.stopId,
+    super.key,
+    this.alwaysExpanded = false,
+    this.expandRequest,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,11 @@ class BusStopTile extends StatelessWidget {
         busServiceCubit: context.read<BusServiceCubit>(),
         stopId: stopId,
       ),
-      child: _BusStopTileView(stopId: stopId, alwaysExpanded: alwaysExpanded),
+      child: _BusStopTileView(
+        stopId: stopId,
+        alwaysExpanded: alwaysExpanded,
+        expandRequest: expandRequest,
+      ),
     );
   }
 }
@@ -42,8 +57,13 @@ class BusStopTile extends StatelessWidget {
 class _BusStopTileView extends StatefulWidget {
   final int stopId;
   final bool alwaysExpanded;
+  final Object? expandRequest;
 
-  const new({required this.stopId, this.alwaysExpanded = false});
+  const new({
+    required this.stopId,
+    this.alwaysExpanded = false,
+    this.expandRequest,
+  });
 
   @override
   State<_BusStopTileView> createState() => _BusStopTileViewState();
@@ -61,7 +81,7 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   late final Animation<double> _iconTurns;
   late final AnimationController _controller;
 
-  late var _expanded = widget.alwaysExpanded;
+  late var _expanded = widget.alwaysExpanded || widget.expandRequest != null;
 
   @override
   void initState() {
@@ -71,14 +91,27 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 
     _controller = AnimationController(
       duration: _duration,
-      value: widget.alwaysExpanded ? 1 : 0,
+      value: _expanded ? 1 : 0,
       vsync: this,
     );
 
     _heightFactor = _controller.drive(_easeInCurve);
     _iconTurns = _controller.drive(_halfTurn.chain(_easeInCurve));
 
-    if (widget.alwaysExpanded) {
+    if (_expanded) {
+      unawaited(_requestData());
+    }
+    _updateAutoRefresh();
+  }
+
+  @override
+  void didUpdateWidget(covariant _BusStopTileView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.expandRequest != null &&
+        widget.expandRequest != oldWidget.expandRequest) {
+      _expanded = true;
+      _controller.value = 1;
+      _updateAutoRefresh();
       unawaited(_requestData());
     }
   }
@@ -93,6 +126,9 @@ class _BusStopTileViewState extends State<_BusStopTileView>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    context.read<BusStopCubit>().setAutoRefresh(
+      enabled: _expanded && state == AppLifecycleState.resumed,
+    );
     // Refresh data when the app is resumed and it's expanded
     if (_expanded && state == AppLifecycleState.resumed) {
       unawaited(_requestData());
@@ -183,13 +219,15 @@ class _BusStopTileViewState extends State<_BusStopTileView>
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Flexible(
+                          Flexible(
                             child: AnimatedSize(
                               alignment: Alignment.topCenter,
                               duration: _duration,
                               curve: _curve,
                               child: SingleChildScrollView(
-                                child: _BusStopTileBody(),
+                                child: _BusStopTileBody(
+                                  stopName: _resolveTitle(busStopCustomData),
+                                ),
                               ),
                             ),
                           ),
@@ -282,9 +320,17 @@ class _BusStopTileViewState extends State<_BusStopTileView>
   }
 
   Future<void> _onTap() async {
-    if (widget.alwaysExpanded) return Navigator.of(context).pop();
+    if (widget.alwaysExpanded) {
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      } else {
+        context.go(FavoriteStopsPage.path);
+      }
+      return;
+    }
 
     setState(() => _expanded = !_expanded);
+    _updateAutoRefresh();
 
     if (_expanded) {
       unawaited(_requestData());
@@ -292,6 +338,15 @@ class _BusStopTileViewState extends State<_BusStopTileView>
     }
 
     return await _controller.reverse();
+  }
+
+  void _updateAutoRefresh() {
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    context.read<BusStopCubit>().setAutoRefresh(
+      enabled:
+          _expanded &&
+          (lifecycle == null || lifecycle == AppLifecycleState.resumed),
+    );
   }
 
   Future<void> _requestData({bool hapticFeedback = false}) async {
@@ -360,7 +415,9 @@ class _BusStopTileLoading extends StatelessWidget {
 }
 
 class _BusStopTileBody extends StatelessWidget {
-  const new();
+  const new({required this.stopName});
+
+  final String stopName;
 
   @override
   Widget build(BuildContext context) {
@@ -373,8 +430,7 @@ class _BusStopTileBody extends StatelessWidget {
       );
     }
 
-    if (busStopState.status == AucorsaStateStatus.error ||
-        busStopState.estimations.isEmpty) {
+    if (busStopState.estimations.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -404,55 +460,69 @@ class _BusStopTileBody extends StatelessWidget {
 
     return Column(
       children: [
+        if (busStopState.status == AucorsaStateStatus.error)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              context.l10n.estimationsRefreshFailed,
+              style: Theme.of(context).textTheme.bodySmall
+                  ?.copyWith(color: Theme.of(context).colorScheme.error),
+            ),
+          ),
         for (final lineEstimation in filteredLineEstimations)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: 8,
-            children: [
-              Expanded(
-                flex: 4,
-                child: BusLineTile(
-                  lineId: lineEstimation.lineId,
-                  padding: EdgeInsets.zero,
+          TargetBusLine(
+            stopID: busStopState.stopId,
+            stopName: stopName,
+            lineID: lineEstimation.lineId,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 8,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: BusLineTile(
+                    lineId: lineEstimation.lineId,
+                    padding: EdgeInsets.zero,
+                  ),
                 ),
-              ),
-              Flexible(
-                child: busStopState.status == AucorsaStateStatus.loading
-                    ? AucorsaShimmer(
-                        child: Container(
-                          height: 16,
-                          width: 48,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2),
+                Flexible(
+                  child: busStopState.status == AucorsaStateStatus.loading
+                      ? AucorsaShimmer(
+                          child: Container(
+                            height: 16,
+                            width: 48,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              color: Colors.white,
                             ),
-                            color: Colors.white,
                           ),
-                        ),
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          for (final estimation in lineEstimation.estimations)
-                            DefaultTextStyle(
-                              style: Theme.of(context).textTheme.bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.w500),
-                              child: estimation == Duration.zero
-                                  ? const _BusStopCloseEstimation()
-                                  : AutoSizeText(
-                                      estimation.pretty(
-                                        abbreviated: true,
-                                        delimiter: ' ',
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            for (final estimation in lineEstimation.estimations)
+                              DefaultTextStyle(
+                                style: Theme.of(context).textTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.w500),
+                                child: estimation == Duration.zero
+                                    ? const _BusStopCloseEstimation()
+                                    : AutoSizeText(
+                                        estimation.pretty(
+                                          abbreviated: true,
+                                          delimiter: ' ',
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.end,
                                       ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.end,
-                                    ),
-                            ),
-                        ],
-                      ),
-              ),
-            ],
+                              ),
+                          ],
+                        ),
+                ),
+              ],
+            ),
           ),
       ],
     );

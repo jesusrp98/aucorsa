@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D31000000000000000000002 /* aucorsa.icon in Resources */ = {isa = PBXBuildFile; fileRef = D31000000000000000000001 /* aucorsa.icon */; };
 		017A64576E448375EEA2E5A9 /* BusStopEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77549057EB2E841E09D9F51A /* BusStopEntity.swift */; };
 		0DAC61F893A7B8B2948B0778 /* AppShortcuts.strings in Resources */ = {isa = PBXBuildFile; fileRef = A90F94564C748BA137FC7289 /* AppShortcuts.strings */; };
 		10A57AE76396BF47402494BC /* SystemAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E328896C7B893C56544A3958 /* SystemAppearance.swift */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		1721C2E90F59AF28DE06624C /* BusArrivalLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C56B555F55A05140355BD2 /* BusArrivalLiveActivity.swift */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
+		431E35B785B3570B419B2F1A /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9D17E86F24ABB38D3767E3A9 /* AucorsaKit */; };
+		45AA13AC3B8DC6EFC608E314 /* BusArrivalAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFBCEC3B9335961E68AAB17 /* BusArrivalAttributes.swift */; };
 		4B91546C36719E3F389CD997 /* ArrivalsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5401F4D370FB574334A516FB /* ArrivalsFormatter.swift */; };
+		53804F940B77316DD6A590EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1940E08FA820D43938C21CB8 /* Foundation.framework */; };
 		5891FAD18164CB61EA30FEF3 /* BusStopQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2347EDA0B05D503915B4B86C /* BusStopQuery.swift */; };
 		5CECD8D4F555E35310340C5C /* Intents.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */; };
 		72FBAAA1A0E5FDED060182C4 /* ArrivalsSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF10AAB72518F3FF320549D /* ArrivalsSnippetView.swift */; };
@@ -26,9 +29,10 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		9C632A6B74B7D054AB6BBB56 /* AppGroupChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07975689DEA4B3CEDD623B01 /* AppGroupChannel.swift */; };
+		BE1BC950BBCA553E4011CCC4 /* BusArrivalAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFBCEC3B9335961E68AAB17 /* BusArrivalAttributes.swift */; };
 		C5CEDE6452D0696092CFD68D /* GetStopArrivalsIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F5CD8D0AADA7DF9BA00C4 /* GetStopArrivalsIntent.swift */; };
+		C7E1D1506729023BDF5E5CE2 /* LiveActivityChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C89A22072161F5ECB92B49 /* LiveActivityChannel.swift */; };
 		CF7D9187A9C33378375D4662 /* BusLineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5566B094123FD16BF52A39CC /* BusLineEntity.swift */; };
-		DB20DA12376C16373532A130 /* GetNextBusForLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */; };
 		D10000000000000000000002 /* IntentServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10000000000000000000001 /* IntentServices.swift */; };
 		D21000000000000000000001 /* AppIntentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20000000000000000000001 /* AppIntentsExtension.swift */; };
 		D21000000000000000000002 /* BusStopEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77549057EB2E841E09D9F51A /* BusStopEntity.swift */; };
@@ -46,8 +50,11 @@
 		D2100000000000000000000E /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = D26000000000000000000001 /* AucorsaKit */; };
 		D2100000000000000000000F /* AucorsaIntentsExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000004 /* AucorsaIntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D21000000000000000000010 /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = D26000000000000000000002 /* AucorsaKit */; };
+		D31000000000000000000002 /* aucorsa.icon in Resources */ = {isa = PBXBuildFile; fileRef = D31000000000000000000001 /* aucorsa.icon */; };
+		DB20DA12376C16373532A130 /* GetNextBusForLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */; };
 		E8873D8A39C721875228AF95 /* AucorsaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 783F279C07D82B86433C2E3F /* AucorsaKit */; };
 		F6FF3444A07A3084AED26DFF /* IntentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C139C23AF8527FD76BA635B /* IntentError.swift */; };
+		FF42A1EE3C09948DD6C151A8 /* AucorsaLiveActivity.appex in Embed Live Activity */ = {isa = PBXBuildFile; fileRef = 542AD2E7170DE209484BB503 /* AucorsaLiveActivity.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +64,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 97C146ED1CF9000F007C117D;
 			remoteInfo = Runner;
+		};
+		BAA2971086CF4646BF970A7D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4220EF24E2636403FA759ED1;
+			remoteInfo = AucorsaLiveActivity;
 		};
 		D23000000000000000000001 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -68,6 +82,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5F88C18E14849A98D77D513B /* Embed Live Activity */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FF42A1EE3C09948DD6C151A8 /* AucorsaLiveActivity.appex in Embed Live Activity */,
+			);
+			name = "Embed Live Activity";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -92,19 +117,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D31000000000000000000001 /* aucorsa.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = aucorsa.icon; sourceTree = "<group>"; };
 		07975689DEA4B3CEDD623B01 /* AppGroupChannel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppGroupChannel.swift; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		1940E08FA820D43938C21CB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		19C56B555F55A05140355BD2 /* BusArrivalLiveActivity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusArrivalLiveActivity.swift; sourceTree = "<group>"; };
 		2347EDA0B05D503915B4B86C /* BusStopQuery.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusStopQuery.swift; sourceTree = "<group>"; };
 		24683AA7EDA43014F5BF61CA /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		2AF10AAB72518F3FF320549D /* ArrivalsSnippetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArrivalsSnippetView.swift; sourceTree = "<group>"; };
+		2AFBCEC3B9335961E68AAB17 /* BusArrivalAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusArrivalAttributes.swift; sourceTree = "<group>"; };
 		2FFBC798A50F880BF09FA11B /* GetNextBusForLineIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetNextBusForLineIntent.swift; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		371D4B2B01054C04C32A0A97 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
+		45C89A22072161F5ECB92B49 /* LiveActivityChannel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LiveActivityChannel.swift; sourceTree = "<group>"; };
 		5155EC672FA3B12D8BED989C /* BusStopEntity+Spotlight.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "BusStopEntity+Spotlight.swift"; sourceTree = "<group>"; };
 		5401F4D370FB574334A516FB /* ArrivalsFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArrivalsFormatter.swift; sourceTree = "<group>"; };
+		542AD2E7170DE209484BB503 /* AucorsaLiveActivity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AucorsaLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5566B094123FD16BF52A39CC /* BusLineEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusLineEntity.swift; sourceTree = "<group>"; };
 		6DC9E834567958FB183F0E58 /* Runner.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -123,13 +153,18 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C139C23AF8527FD76BA635B /* IntentError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IntentError.swift; sourceTree = "<group>"; };
 		A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; path = Intents.xcstrings; sourceTree = "<group>"; };
+		A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Configuration.xcconfig; sourceTree = "<group>"; };
 		C71F5CD8D0AADA7DF9BA00C4 /* GetStopArrivalsIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetStopArrivalsIntent.swift; sourceTree = "<group>"; };
 		D10000000000000000000001 /* IntentServices.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IntentServices.swift; sourceTree = "<group>"; };
 		D20000000000000000000001 /* AppIntentsExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppIntentsExtension.swift; sourceTree = "<group>"; };
 		D20000000000000000000002 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D20000000000000000000003 /* AucorsaIntentsExtension.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AucorsaIntentsExtension.entitlements; sourceTree = "<group>"; };
 		D20000000000000000000004 /* AucorsaIntentsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = AucorsaIntentsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D31000000000000000000001 /* aucorsa.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = aucorsa.icon; sourceTree = "<group>"; };
 		E328896C7B893C56544A3958 /* SystemAppearance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SystemAppearance.swift; sourceTree = "<group>"; };
+		2EE212FC1BDD386184963164 /* Personal-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Personal-Debug.xcconfig"; path = "Flutter/Personal-Debug.xcconfig"; sourceTree = "<group>"; };
+		2C52D8F379CBD0424B4474B0 /* Personal-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Personal-Release.xcconfig"; path = "Flutter/Personal-Release.xcconfig"; sourceTree = "<group>"; };
+		8E1E36971BA39BBFC7F42E09 /* RunnerPersonal.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = RunnerPersonal.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +182,15 @@
 			files = (
 				78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */,
 				E8873D8A39C721875228AF95 /* AucorsaKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9262578CB8A99B3D6E69B8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53804F940B77316DD6A590EF /* Foundation.framework in Frameworks */,
+				431E35B785B3570B419B2F1A /* AucorsaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,12 +229,48 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		1D3F7313A9553D2F9C49E5F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3246D73FF04ACBA8855279C3 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		22B26F3E68F5311CA98B7A94 /* LiveActivities */ = {
+			isa = PBXGroup;
+			children = (
+				2AFBCEC3B9335961E68AAB17 /* BusArrivalAttributes.swift */,
+			);
+			name = LiveActivities;
+			path = LiveActivities;
+			sourceTree = "<group>";
+		};
+		3246D73FF04ACBA8855279C3 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1940E08FA820D43938C21CB8 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		331C8082294A63A400263BE5 /* RunnerTests */ = {
 			isa = PBXGroup;
 			children = (
 				331C807B294A618700263BE5 /* RunnerTests.swift */,
 			);
 			path = RunnerTests;
+			sourceTree = "<group>";
+		};
+		6EED0DFDBF85087298DAF696 /* AucorsaLiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				19C56B555F55A05140355BD2 /* BusArrivalLiveActivity.swift */,
+				371D4B2B01054C04C32A0A97 /* Info.plist */,
+				A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */,
+			);
+			name = AucorsaLiveActivity;
+			path = AucorsaLiveActivity;
 			sourceTree = "<group>";
 		};
 		8A094E36ABDA958541E944FD /* Views */ = {
@@ -209,6 +289,8 @@
 				3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */,
 				9740EEB21CF90195004384FC /* Debug.xcconfig */,
 				7AFA3C8E1D35360C0083082E /* Release.xcconfig */,
+				2EE212FC1BDD386184963164 /* Personal-Debug.xcconfig */,
+				2C52D8F379CBD0424B4474B0 /* Personal-Release.xcconfig */,
 				9740EEB31CF90195004384FC /* Generated.xcconfig */,
 			);
 			name = Flutter;
@@ -222,6 +304,9 @@
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				D27000000000000000000001 /* AucorsaIntentsExtension */,
+				22B26F3E68F5311CA98B7A94 /* LiveActivities */,
+				1D3F7313A9553D2F9C49E5F1 /* Frameworks */,
+				6EED0DFDBF85087298DAF696 /* AucorsaLiveActivity */,
 			);
 			sourceTree = "<group>";
 		};
@@ -231,6 +316,7 @@
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
 				D20000000000000000000004 /* AucorsaIntentsExtension.appex */,
+				542AD2E7170DE209484BB503 /* AucorsaLiveActivity.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,12 +334,24 @@
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				6DC9E834567958FB183F0E58 /* Runner.entitlements */,
+				8E1E36971BA39BBFC7F42E09 /* RunnerPersonal.entitlements */,
 				07975689DEA4B3CEDD623B01 /* AppGroupChannel.swift */,
 				FDB0FFF627964300F5BE0777 /* Intents */,
 				A16383A4B60FDAA2D7BDD83E /* Intents.xcstrings */,
 				A90F94564C748BA137FC7289 /* AppShortcuts.strings */,
+				45C89A22072161F5ECB92B49 /* LiveActivityChannel.swift */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		D27000000000000000000001 /* AucorsaIntentsExtension */ = {
+			isa = PBXGroup;
+			children = (
+				D20000000000000000000001 /* AppIntentsExtension.swift */,
+				D20000000000000000000002 /* Info.plist */,
+				D20000000000000000000003 /* AucorsaIntentsExtension.entitlements */,
+			);
+			path = AucorsaIntentsExtension;
 			sourceTree = "<group>";
 		};
 		FDB0FFF627964300F5BE0777 /* Intents */ = {
@@ -277,16 +375,6 @@
 			);
 			name = Intents;
 			path = Intents;
-			sourceTree = "<group>";
-		};
-		D27000000000000000000001 /* AucorsaIntentsExtension */ = {
-			isa = PBXGroup;
-			children = (
-				D20000000000000000000001 /* AppIntentsExtension.swift */,
-				D20000000000000000000002 /* Info.plist */,
-				D20000000000000000000003 /* AucorsaIntentsExtension.entitlements */,
-			);
-			path = AucorsaIntentsExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +401,26 @@
 			productReference = 331C8081294A63A400263BE5 /* RunnerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4220EF24E2636403FA759ED1 /* AucorsaLiveActivity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09B734873EEEADC1CE429F22 /* Build configuration list for PBXNativeTarget "AucorsaLiveActivity" */;
+			buildPhases = (
+				D3205C5E0BA0EA222ADACD6F /* Sources */,
+				C9262578CB8A99B3D6E69B8C /* Frameworks */,
+				EB341F89D7E54679515FAFC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AucorsaLiveActivity;
+			packageProductDependencies = (
+				9D17E86F24ABB38D3767E3A9 /* AucorsaKit */,
+			);
+			productName = AucorsaLiveActivity;
+			productReference = 542AD2E7170DE209484BB503 /* AucorsaLiveActivity.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
@@ -323,12 +431,14 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				D22000000000000000000004 /* Embed ExtensionKit Extensions */,
+				5F88C18E14849A98D77D513B /* Embed Live Activity */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				D23000000000000000000002 /* PBXTargetDependency */,
+				4A68FCC206A4D9A8AADE9B4B /* PBXTargetDependency */,
 			);
 			name = Runner;
 			packageProductDependencies = (
@@ -399,10 +509,11 @@
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-				targets = (
-					97C146ED1CF9000F007C117D /* Runner */,
-					331C8080294A63A400263BE5 /* RunnerTests */,
-					D24000000000000000000001 /* AucorsaIntentsExtension */,
+			targets = (
+				97C146ED1CF9000F007C117D /* Runner */,
+				331C8080294A63A400263BE5 /* RunnerTests */,
+				D24000000000000000000001 /* AucorsaIntentsExtension */,
+				4220EF24E2636403FA759ED1 /* AucorsaLiveActivity */,
 			);
 		};
 /* End PBXProject section */
@@ -434,6 +545,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2100000000000000000000D /* Intents.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB341F89D7E54679515FAFC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +619,8 @@
 				96A5F9A9963D1E8387B0AEE7 /* BusStopEntity+Spotlight.swift in Sources */,
 				10A57AE76396BF47402494BC /* SystemAppearance.swift in Sources */,
 				D10000000000000000000002 /* IntentServices.swift in Sources */,
+				45AA13AC3B8DC6EFC608E314 /* BusArrivalAttributes.swift in Sources */,
+				C7E1D1506729023BDF5E5CE2 /* LiveActivityChannel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,6 +643,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D3205C5E0BA0EA222ADACD6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1721C2E90F59AF28DE06624C /* BusArrivalLiveActivity.swift in Sources */,
+				BE1BC950BBCA553E4011CCC4 /* BusArrivalAttributes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -530,6 +659,12 @@
 			isa = PBXTargetDependency;
 			target = 97C146ED1CF9000F007C117D /* Runner */;
 			targetProxy = 331C8085294A63A400263BE5 /* PBXContainerItemProxy */;
+		};
+		4A68FCC206A4D9A8AADE9B4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AucorsaLiveActivity;
+			target = 4220EF24E2636403FA759ED1 /* AucorsaLiveActivity */;
+			targetProxy = BAA2971086CF4646BF970A7D /* PBXContainerItemProxy */;
 		};
 		D23000000000000000000002 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -619,6 +754,58 @@
 			};
 			name = Profile;
 		};
+		D0F140C3DFE729D812DA5A95 /* Profile-personal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Profile-personal";
+		};
 		249021D4217E4FDB00AE95B9 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
@@ -644,6 +831,31 @@
 			};
 			name = Profile;
 		};
+		CBD3F3F8DAADC6889FDF3884 /* Profile-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C52D8F379CBD0424B4474B0 /* Personal-Release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = aucorsa;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/RunnerPersonal.entitlements;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Profile-personal";
+		};
 		331C8088294A63A400263BE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -662,6 +874,24 @@
 			};
 			name = Debug;
 		};
+		662424D62423AB5A537CD4AA /* Debug-personal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.RunnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
+			};
+			name = "Debug-personal";
+		};
 		331C8089294A63A400263BE5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -678,6 +908,22 @@
 			};
 			name = Release;
 		};
+		60AD7785EF62AE9474C4591E /* Release-personal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.RunnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
+			};
+			name = "Release-personal";
+		};
 		331C808A294A63A400263BE5 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -693,6 +939,78 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
 			};
 			name = Profile;
+		};
+		D0AB1BEAE0CC06814D797831 /* Profile-personal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.RunnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
+			};
+			name = "Profile-personal";
+		};
+		62FDC611C44FD21BB8088C6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AucorsaLiveActivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.LiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1C7022F7311E0488C645A5DC /* Release-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AucorsaLiveActivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.LiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-personal";
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -751,6 +1069,63 @@
 			};
 			name = Debug;
 		};
+		C370E831FA47273B127B75FA /* Debug-personal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-personal";
+		};
 		97C147041CF9000F007C117D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -805,6 +1180,60 @@
 			};
 			name = Release;
 		};
+		3319E2C6C2B5476E0AA2CC97 /* Release-personal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-personal";
+		};
 		97C147061CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
@@ -830,6 +1259,32 @@
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
+		};
+		84BF19133781629015A3494D /* Debug-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EE212FC1BDD386184963164 /* Personal-Debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = aucorsa;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/RunnerPersonal.entitlements;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Debug-personal";
 		};
 		97C147071CF9000F007C117D /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -859,6 +1314,88 @@
 			};
 			name = Release;
 		};
+		7EF42860D944C267FF965BC1 /* Release-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C52D8F379CBD0424B4474B0 /* Personal-Release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = aucorsa;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/RunnerPersonal.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Release-personal";
+		};
+		A53E15E891D26B3A1A055738 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AucorsaLiveActivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.LiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3FEEBAB9E00C5A9DD9505DC0 /* Debug-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AucorsaLiveActivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.LiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-personal";
+		};
 		D25000000000000000000002 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
@@ -887,6 +1424,35 @@
 			};
 			name = Debug;
 		};
+		CCE137BB18A982BC987E4202 /* Debug-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
+			buildSettings = {
+				EXCLUDED_SOURCE_FILE_NAMES = GetNextBusForLineIntent.swift;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = AucorsaIntentsExtension/AucorsaIntentsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				INFOPLIST_FILE = AucorsaIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.Intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG APP_INTENTS_EXTENSION";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-personal";
+		};
 		D25000000000000000000003 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
@@ -913,6 +1479,34 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+		037639AFC3049141E392B0B0 /* Release-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			buildSettings = {
+				EXCLUDED_SOURCE_FILE_NAMES = GetNextBusForLineIntent.swift;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = AucorsaIntentsExtension/AucorsaIntentsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				INFOPLIST_FILE = AucorsaIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.Intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) APP_INTENTS_EXTENSION";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-personal";
 		};
 		D25000000000000000000004 /* Profile */ = {
 			isa = XCBuildConfiguration;
@@ -941,15 +1535,115 @@
 			};
 			name = Profile;
 		};
+		37C87C333A72AB430B454A2D /* Profile-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			buildSettings = {
+				EXCLUDED_SOURCE_FILE_NAMES = GetNextBusForLineIntent.swift;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = AucorsaIntentsExtension/AucorsaIntentsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				INFOPLIST_FILE = AucorsaIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.Intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) APP_INTENTS_EXTENSION";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Profile-personal";
+		};
+		D5925097DE36EAE711010C69 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AucorsaLiveActivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.LiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Profile;
+		};
+		DE329687BD58433CE50291AF /* Profile-personal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A58BA88B928B1E8DD59726C8 /* Configuration.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = N426GUMBFG;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AucorsaLiveActivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chechu.aucorsa.LiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Profile-personal";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		09B734873EEEADC1CE429F22 /* Build configuration list for PBXNativeTarget "AucorsaLiveActivity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62FDC611C44FD21BB8088C6D /* Release */,
+				1C7022F7311E0488C645A5DC /* Release-personal */,
+				A53E15E891D26B3A1A055738 /* Debug */,
+				3FEEBAB9E00C5A9DD9505DC0 /* Debug-personal */,
+				D5925097DE36EAE711010C69 /* Profile */,
+				DE329687BD58433CE50291AF /* Profile-personal */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		331C8087294A63A400263BE5 /* Build configuration list for PBXNativeTarget "RunnerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				331C8088294A63A400263BE5 /* Debug */,
+				662424D62423AB5A537CD4AA /* Debug-personal */,
 				331C8089294A63A400263BE5 /* Release */,
+				60AD7785EF62AE9474C4591E /* Release-personal */,
 				331C808A294A63A400263BE5 /* Profile */,
+				D0AB1BEAE0CC06814D797831 /* Profile-personal */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -958,8 +1652,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97C147031CF9000F007C117D /* Debug */,
+				C370E831FA47273B127B75FA /* Debug-personal */,
 				97C147041CF9000F007C117D /* Release */,
+				3319E2C6C2B5476E0AA2CC97 /* Release-personal */,
 				249021D3217E4FDB00AE95B9 /* Profile */,
+				D0F140C3DFE729D812DA5A95 /* Profile-personal */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -968,8 +1665,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97C147061CF9000F007C117D /* Debug */,
+				84BF19133781629015A3494D /* Debug-personal */,
 				97C147071CF9000F007C117D /* Release */,
+				7EF42860D944C267FF965BC1 /* Release-personal */,
 				249021D4217E4FDB00AE95B9 /* Profile */,
+				CBD3F3F8DAADC6889FDF3884 /* Profile-personal */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -978,8 +1678,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D25000000000000000000002 /* Debug */,
+				CCE137BB18A982BC987E4202 /* Debug-personal */,
 				D25000000000000000000003 /* Release */,
+				037639AFC3049141E392B0B0 /* Release-personal */,
 				D25000000000000000000004 /* Profile */,
+				37C87C333A72AB430B454A2D /* Profile-personal */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1002,6 +1705,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AucorsaKit;
 		};
+		78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FlutterGeneratedPluginSwiftPackage;
+		};
+		9D17E86F24ABB38D3767E3A9 /* AucorsaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AucorsaKit;
+		};
 		D26000000000000000000001 /* AucorsaKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AucorsaKit;
@@ -1009,10 +1720,6 @@
 		D26000000000000000000002 /* AucorsaKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AucorsaKit;
-		};
-		78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FlutterGeneratedPluginSwiftPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

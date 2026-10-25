@@ -1,0 +1,24 @@
+{
+  "name": "aucorsa-live-activity-backend",
+  "description": "Pushes bus arrival updates to Aucorsa's Live Activities.",
+  "private": true,
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test lib/test/*.test.js",
+    "test:firestore": "firebase emulators:exec --only firestore --project demo-aucorsa \"npm test\"",
+    "catalog": "node scripts/generate-catalog.mjs",
+    "probe": "tsc && node lib/probe-cli.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.10.0",
+    "firebase-functions": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^7.0.2"
+  }
+}

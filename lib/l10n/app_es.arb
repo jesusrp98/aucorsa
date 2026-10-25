@@ -107,5 +107,10 @@
     "aucorsaMovementsUnavailableTitle": "Historial de movimientos no disponible",
     "aucorsaMovementsUnavailableSubtitle": "No hemos podido cargar los movimientos de este bonobús. Consulta el botón de ayuda de arriba e inténtalo de nuevo.",
     "aucorsaNoMovementsTitle": "No hay movimientos",
-    "aucorsaNoMovementsSubtitle": "AUCORSA no ha devuelto movimientos para este bonobús. Consulta el botón de ayuda de arriba para comprobar que la tarjeta está vinculada a tu cuenta."
+    "aucorsaNoMovementsSubtitle": "AUCORSA no ha devuelto movimientos para este bonobús. Consulta el botón de ayuda de arriba para comprobar que la tarjeta está vinculada a tu cuenta.",
+    "liveActivityDisabled": "Las actividades en directo están desactivadas. Actívalas para Aucorsa en los ajustes de iOS.",
+    "liveActivityFailed": "No se pudo actualizar la actividad en directo. Comprueba la conexión e inténtalo de nuevo.",
+    "liveActivityInvalidStop": "Esta parada no está disponible.",
+    "estimationsRefreshFailed": "No se pudo actualizar. Se muestran las últimas estimaciones recibidas.",
+    "liveActivityTargeting": "Siguiendo la línea {line} en {stop}"
 }

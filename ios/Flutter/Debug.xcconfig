@@ -1,1 +1,6 @@
 #include "Generated.xcconfig"
+
+// Live Activities need a self-hosted backend, so only the `personal` flavor
+// turns them on. See docs/live-activities.md.
+LIVE_ACTIVITIES_ENABLED = NO
+LIVE_ACTIVITY_BACKEND_HOST =

@@ -1,6 +1,7 @@
 import 'package:aucorsa/bonobus/cubits/bonobus_cubit.dart';
 import 'package:aucorsa/bonobus/widgets/bonobus_details_view.dart';
 import 'package:aucorsa/l10n/app_localizations.dart';
+import 'package:aucorsa/live_activity/live_activity_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -36,9 +37,7 @@ void main() {
     await tester.pumpWidget(
       _TestApp(
         cubit: cubit,
-        child: BonobusDetailsView(
-          onViewMovements: () => tapped = true,
-        ),
+        child: BonobusDetailsView(onViewMovements: () => tapped = true),
       ),
     );
 
@@ -57,9 +56,7 @@ void main() {
     await tester.pumpWidget(
       _TestApp(
         cubit: cubit,
-        child: BonobusDetailsView(
-          onDelete: () async => deleted = true,
-        ),
+        child: BonobusDetailsView(onDelete: () async => deleted = true),
       ),
     );
 
@@ -135,7 +132,13 @@ class _TestApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: BlocProvider.value(value: cubit, child: child),
+    home: MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: cubit),
+        BlocProvider(create: (_) => LiveActivityCubit()),
+      ],
+      child: child,
+    ),
   );
 }
 

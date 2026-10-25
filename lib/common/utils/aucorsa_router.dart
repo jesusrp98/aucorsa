@@ -30,6 +30,13 @@ class AucorsaRouter {
       initialLocation: FavoriteStopsPage.path,
       navigatorKey: _rootNavigatorKey,
       routes: [
+        GoRoute(
+          path: '/stops/:stopID',
+          redirect: (_, state) => Uri(
+            path: FavoriteStopsPage.path,
+            queryParameters: {'stop': state.pathParameters['stopID']},
+          ).toString(),
+        ),
         ShellRoute(
           navigatorKey: _shellNavigatorKey,
           builder: (context, state, child) =>
@@ -37,8 +44,21 @@ class AucorsaRouter {
           routes: [
             GoRoute(
               path: FavoriteStopsPage.path,
-              builder: (_, _) => const FavoriteStopsPage(),
-              pageBuilder: GoTransitions.fade.call,
+              // Keep the page state while delivering each new stop request.
+              // GoTransitionRoute retains its original child on route updates.
+              pageBuilder: (_, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: FavoriteStopsPage(
+                  stopToOpen: state.uri.queryParameters['stop'],
+                ),
+                transitionDuration: GoTransition.defaultDuration,
+                transitionsBuilder: (_, animation, _, child) => FadeTransition(
+                  opacity: animation.drive(
+                    CurveTween(curve: GoTransition.defaultCurve),
+                  ),
+                  child: child,
+                ),
+              ),
             ),
             GoRoute(
               path: BonobusPage.path,

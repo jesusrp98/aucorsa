@@ -67,6 +67,14 @@ struct EstimationParserTests {
         #expect(EstimationParser.minutes(from: "") == nil)
     }
 
+    @Test("An arriving bus is retained before the later bus")
+    func imminentArrival() throws {
+        let parsed = EstimationParser.parse(try Self.fixture("estimations_arriving_now"))
+        #expect(parsed.first?.lineID == "1")
+        #expect(parsed.first?.arrivals == [0, 19])
+        #expect(EstimationParser.minutes(from: " AHORA ") == 0)
+    }
+
     @Test("Letter line ids survive parsing")
     func letterLineIDs() {
         // O1/O2/C2/E/N all appear in live responses.

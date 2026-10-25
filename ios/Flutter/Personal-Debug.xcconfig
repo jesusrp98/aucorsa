@@ -1,0 +1,9 @@
+#include "Debug.xcconfig"
+
+// The `personal` flavor: Live Activities, refreshed by your own backend.
+// Its host goes in ios/LiveActivityBackend.xcconfig, which is not tracked; copy
+// ios/LiveActivityBackend.example.xcconfig. Without it, the feature stays off.
+LIVE_ACTIVITIES_ENABLED = YES
+// Adds the shortcut option that starts a Live Activity (see GetNextBusForLineIntent).
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) LIVE_ACTIVITIES
+#include? "../LiveActivityBackend.xcconfig"

@@ -51,3 +51,6 @@ app.*.map.json
 /assets/offline_map.zip
 /assets/.map.generate-*/
 /assets/.map.backup-*/
+
+# Self-hosted Live Activity backend (see ios/LiveActivityBackend.example.xcconfig)
+/ios/LiveActivityBackend.xcconfig

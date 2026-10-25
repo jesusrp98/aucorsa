@@ -66,9 +66,7 @@ class _EmptyProviderView extends StatelessWidget {
           context.l10n.bonobus,
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
-        actions: const [
-          AboutButton(),
-        ],
+        actions: const [AboutButton()],
       ),
       body: SafeArea(
         child: Center(
@@ -85,9 +83,7 @@ class _EmptyProviderView extends StatelessWidget {
                     ),
                     minimumSize: const Size.fromHeight(56),
                     textStyle: Theme.of(context).textTheme.titleMedium,
-                    foregroundColor: Theme.of(
-                      context,
-                    ).colorScheme.onPrimary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () => onSelect(BonobusProvider.aucorsa),
@@ -102,18 +98,11 @@ class _EmptyProviderView extends StatelessWidget {
                       ),
                       minimumSize: const Size.fromHeight(56),
                       textStyle: Theme.of(context).textTheme.titleMedium,
-                      foregroundColor: Theme.of(
-                        context,
-                      ).colorScheme.onPrimary,
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () => onSelect(BonobusProvider.consorcio),
-                    child: AutoSizeText(
-                      context.l10n.consorcio,
-                      maxLines: 1,
-                    ),
+                    child: AutoSizeText(context.l10n.consorcio, maxLines: 1),
                   ),
               ],
             ),
@@ -140,9 +129,7 @@ class _ScanBonobusView extends StatelessWidget {
           context.l10n.bonobus,
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
-        actions: const [
-          AboutButton(),
-        ],
+        actions: const [AboutButton()],
       ),
       body: SafeArea(
         child: Stack(
@@ -159,9 +146,8 @@ class _ScanBonobusView extends StatelessWidget {
                 title: Text(context.l10n.scanBonobusTitle),
                 subtitle: Text(context.l10n.scanBonobusSubtitle),
                 action: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                  ).copyWith(top: 72),
+                  padding: const EdgeInsets.symmetric(horizontal: 8)
+                      .copyWith(top: 72),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -170,9 +156,9 @@ class _ScanBonobusView extends StatelessWidget {
                       minimumSize: const Size.fromHeight(56),
                       textStyle: Theme.of(context).textTheme.titleMedium,
                       foregroundColor: Theme.of(context).colorScheme.onSurface,
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerHighest,
+                      backgroundColor: Theme.of(context)
+                          .colorScheme
+                          .surfaceContainerHighest,
                     ),
                     onPressed: onCancel,
                     child: Text(

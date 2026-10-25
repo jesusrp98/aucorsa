@@ -46,7 +46,7 @@ class _AucorsaBonobusViewState extends State<AucorsaBonobusView> {
   void _showError(BuildContext context, String error) {
     final cubit = context.read<BonobusCubit>();
     ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
+      ..removeCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
           content: Text(error.isEmpty ? context.l10n.aucorsaDataError : error),

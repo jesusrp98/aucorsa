@@ -649,6 +649,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AUCORSA did not return any movements for this bonobus. Check the help button at the top to make sure this card is linked to your account.'**
   String get aucorsaNoMovementsSubtitle;
+
+  /// No description provided for @liveActivityDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Activities are disabled. Enable them for Aucorsa in iOS Settings.'**
+  String get liveActivityDisabled;
+
+  /// No description provided for @liveActivityFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not update the Live Activity. Check your connection and try again.'**
+  String get liveActivityFailed;
+
+  /// No description provided for @liveActivityInvalidStop.
+  ///
+  /// In en, this message translates to:
+  /// **'This stop is not available.'**
+  String get liveActivityInvalidStop;
+
+  /// No description provided for @estimationsRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not refresh. These are the last received estimates.'**
+  String get estimationsRefreshFailed;
+
+  /// No description provided for @liveActivityTargeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Targeting line {line} at {stop}'**
+  String liveActivityTargeting(String line, String stop);
 }
 
 class _AppLocalizationsDelegate
